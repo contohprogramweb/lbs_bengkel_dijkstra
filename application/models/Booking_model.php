@@ -725,3 +725,322 @@ class Booking_model extends CI_Model {
 
 /* End of file Booking_model.php */
 /* Location: ./application/models/Booking_model.php */
+
+    // ================================================================
+    // WORKSHOP BOOKING MANAGEMENT (for Order Controller)
+    // ================================================================
+
+    /**
+     * Get bookings for a workshop with filtering
+     *
+     * @param int $workshop_id
+     * @param array $filters
+     * @return array
+     */
+    public function get_workshop_bookings($workshop_id, $filters = [])
+    {
+        $this->db->select('b.*, u.name as user_name, u.phone as user_phone, v.brand, v.model, v.license_plate');
+        $this->db->from($this->table_bookings . ' b');
+        $this->db->join($this->table_users . ' u', 'b.user_id = u.id', 'left');
+        $this->db->join($this->table_vehicles . ' v', 'b.vehicle_id = v.id', 'left');
+        $this->db->where('b.workshop_id', $workshop_id);
+        $this->db->where('b.is_deleted', 0);
+
+        if (!empty($filters['status'])) {
+            $this->db->where('b.status', $filters['status']);
+        }
+
+        if (!empty($filters['approval_status'])) {
+            $this->db->where('b.approval_status', $filters['approval_status']);
+        }
+
+        if (!empty($filters['search'])) {
+            $this->db->group_start();
+            $this->db->like('b.booking_number', $filters['search']);
+            $this->db->or_like('u.name', $filters['search']);
+            $this->db->or_like('v.license_plate', $filters['search']);
+            $this->db->group_end();
+        }
+
+        if (!empty($filters['start_date'])) {
+            $this->db->where('b.scheduled_date >=', $filters['start_date']);
+        }
+
+        if (!empty($filters['end_date'])) {
+            $this->db->where('b.scheduled_date <=', $filters['end_date']);
+        }
+
+        if (!empty($filters['limit'])) {
+            $this->db->limit($filters['limit']);
+        }
+
+        $this->db->order_by('b.scheduled_date', 'DESC');
+        $this->db->order_by('b.scheduled_time', 'DESC');
+
+        return $this->db->get()->result_array();
+    }
+
+    /**
+     * Get booking statistics for workshop
+     *
+     * @param int $workshop_id
+     * @return array
+     */
+    public function get_workshop_booking_stats($workshop_id)
+    {
+        $stats = [];
+
+        // Total bookings
+        $this->db->select('COUNT(*) as total');
+        $this->db->from($this->table_bookings);
+        $this->db->where('workshop_id', $workshop_id);
+        $this->db->where('is_deleted', 0);
+        $stats['total'] = $this->db->get()->row()->total ?? 0;
+
+        // Pending bookings
+        $this->db->select('COUNT(*) as pending');
+        $this->db->where('workshop_id', $workshop_id);
+        $this->db->where('status', 'pending');
+        $stats['pending'] = $this->db->get()->row()->pending ?? 0;
+
+        // Accepted bookings
+        $this->db->select('COUNT(*) as accepted');
+        $this->db->where('workshop_id', $workshop_id);
+        $this->db->where('status', 'accepted');
+        $stats['accepted'] = $this->db->get()->row()->accepted ?? 0;
+
+        // Processed bookings
+        $this->db->select('COUNT(*) as processed');
+        $this->db->where('workshop_id', $workshop_id);
+        $this->db->where('status', 'processed');
+        $stats['processed'] = $this->db->get()->row()->processed ?? 0;
+
+        // Completed bookings
+        $this->db->select('COUNT(*) as completed');
+        $this->db->where('workshop_id', $workshop_id);
+        $this->db->where('status', 'completed');
+        $stats['completed'] = $this->db->get()->row()->completed ?? 0;
+
+        // Pending approvals
+        $this->db->select('COUNT(*) as pending_approval');
+        $this->db->where('workshop_id', $workshop_id);
+        $this->db->where('approval_status', 'pending');
+        $stats['pending_approval'] = $this->db->get()->row()->pending_approval ?? 0;
+
+        return $stats;
+    }
+
+    // ================================================================
+    // USER BOOKING STATISTICS (for Booking_management Controller)
+    // ================================================================
+
+    /**
+     * Get booking statistics for user
+     *
+     * @param int $user_id
+     * @return array
+     */
+    public function get_user_booking_stats($user_id)
+    {
+        $stats = [];
+
+        // Total bookings
+        $this->db->select('COUNT(*) as total');
+        $this->db->from($this->table_bookings);
+        $this->db->where('user_id', $user_id);
+        $this->db->where('is_deleted', 0);
+        $stats['total'] = $this->db->get()->row()->total ?? 0;
+
+        // Pending bookings
+        $this->db->select('COUNT(*) as pending');
+        $this->db->where('user_id', $user_id);
+        $this->db->where('status', 'pending');
+        $stats['pending'] = $this->db->get()->row()->pending ?? 0;
+
+        // Completed bookings
+        $this->db->select('COUNT(*) as completed');
+        $this->db->where('user_id', $user_id);
+        $this->db->where('status', 'completed');
+        $stats['completed'] = $this->db->get()->row()->completed ?? 0;
+
+        // Upcoming bookings
+        $this->db->select('COUNT(*) as upcoming');
+        $this->db->where('user_id', $user_id);
+        $this->db->where_in('status', ['pending', 'accepted', 'processed']);
+        $this->db->where('scheduled_date >=', date('Y-m-d'));
+        $stats['upcoming'] = $this->db->get()->row()->upcoming ?? 0;
+
+        return $stats;
+    }
+
+    /**
+     * Get pending approvals for user
+     *
+     * @param int $user_id
+     * @return array
+     */
+    public function get_user_pending_approvals($user_id)
+    {
+        $this->db->select('ba.*, b.booking_number, b.status as booking_status, w.name as workshop_name');
+        $this->db->from('booking_approvals ba');
+        $this->db->join('bookings b', 'ba.booking_id = b.id');
+        $this->db->join('workshops w', 'b.workshop_id = w.id');
+        $this->db->where('b.user_id', $user_id);
+        $this->db->where('ba.status', 'pending');
+        $this->db->where('ba.expires_at >', date('Y-m-d H:i:s'));
+        $this->db->order_by('ba.expires_at', 'ASC');
+
+        return $this->db->get()->result_array();
+    }
+
+    /**
+     * Count pending approvals for user
+     *
+     * @param int $user_id
+     * @return int
+     */
+    public function count_user_pending_approvals($user_id)
+    {
+        $this->db->select('COUNT(*) as count');
+        $this->db->from('booking_approvals ba');
+        $this->db->join('bookings b', 'ba.booking_id = b.id');
+        $this->db->where('b.user_id', $user_id);
+        $this->db->where('ba.status', 'pending');
+        return (int) $this->db->get()->row()->count;
+    }
+
+    // ================================================================
+    // BOOKING APPROVALS MANAGEMENT
+    // ================================================================
+
+    /**
+     * Get booking approvals
+     *
+     * @param int $booking_id
+     * @param string|null $status Filter by status
+     * @return array
+     */
+    public function get_booking_approvals($booking_id, $status = NULL)
+    {
+        $this->db->select('ba.*, u.name as requested_by_name');
+        $this->db->from('booking_approvals ba');
+        $this->db->join('users u', 'ba.requested_by = u.id', 'left');
+        $this->db->where('ba.booking_id', $booking_id);
+
+        if ($status !== NULL) {
+            $this->db->where('ba.status', $status);
+        }
+
+        $this->db->order_by('ba.created_at', 'DESC');
+
+        return $this->db->get()->result_array();
+    }
+
+    /**
+     * Create approval request
+     *
+     * @param array $data
+     * @return int|false Approval ID or FALSE on failure
+     */
+    public function create_approval($data)
+    {
+        $result = $this->db->insert('booking_approvals', $data);
+        return $result ? $this->db->insert_id() : FALSE;
+    }
+
+    /**
+     * Update approval record
+     *
+     * @param int $approval_id
+     * @param array $data
+     * @return bool
+     */
+    public function update_approval($approval_id, $data)
+    {
+        $this->db->where('id', $approval_id);
+        return $this->db->update('booking_approvals', $data);
+    }
+
+    /**
+     * Update booking approval_status
+     *
+     * @param int $booking_id
+     * @param string $status
+     * @return bool
+     */
+    public function update_approval_status($booking_id, $status)
+    {
+        $this->db->where('id', $booking_id);
+        return $this->db->update('bookings', ['approval_status' => $status]);
+    }
+
+    // ================================================================
+    // ACTIVITY LOGGING (Audit Trail)
+    // ================================================================
+
+    /**
+     * Log booking activity
+     *
+     * @param int $booking_id
+     * @param string $action
+     * @param string $description
+     * @param int|null $user_id
+     * @return int|false Activity log ID or FALSE on failure
+     */
+    public function log_activity($booking_id, $action, $description = '', $user_id = NULL)
+    {
+        $data = [
+            'booking_id' => $booking_id,
+            'action' => $action,
+            'description' => $description,
+            'user_id' => $user_id,
+            'ip_address' => $this->input->ip_address(),
+            'created_at' => date('Y-m-d H:i:s')
+        ];
+
+        $result = $this->db->insert('booking_activity_logs', $data);
+        return $result ? $this->db->insert_id() : FALSE;
+    }
+
+    /**
+     * Get booking activity logs
+     *
+     * @param int $booking_id
+     * @return array
+     */
+    public function get_booking_activity_logs($booking_id)
+    {
+        $this->db->select('bal.*, u.name as user_name');
+        $this->db->from('booking_activity_logs bal');
+        $this->db->join('users u', 'bal.user_id = u.id', 'left');
+        $this->db->where('bal.booking_id', $booking_id);
+        $this->db->order_by('bal.created_at', 'DESC');
+
+        return $this->db->get()->result_array();
+    }
+
+    // ================================================================
+    // SLOT RELEASE (for cancellation)
+    // ================================================================
+
+    /**
+     * Release booking slot (increment capacity)
+     *
+     * @param array $booking
+     * @return bool
+     */
+    public function release_booking_slot($booking)
+    {
+        $this->db->set('booked_count', 'GREATEST(booked_count - 1, 0)', FALSE);
+        $this->db->set('remaining_capacity', 'remaining_capacity + 1', FALSE);
+        $this->db->where('workshop_id', $booking['workshop_id']);
+        $this->db->where('slot_date', $booking['scheduled_date']);
+        $this->db->where('slot_time', $booking['scheduled_time']);
+        $this->db->update('booking_slots');
+
+        return $this->db->affected_rows() > 0;
+    }
+}
+
+/* End of file Booking_model.php */
+/* Location: ./application/models/Booking_model.php */
