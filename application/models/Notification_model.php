@@ -202,6 +202,53 @@ class Notification_model extends CI_Model {
         return $template;
     }
 
+    /**
+     * Send notification (unified method for all notification types)
+     * @param array $data Notification data
+     * @return bool
+     */
+    public function send_notification($data)
+    {
+        // If template_key is provided, use template system
+        if (!empty($data['template_key'])) {
+            $template = $this->get_template_by_event($data['template_key']);
+            
+            if (!$template) {
+                log_message('error', 'Template not found: ' . $data['template_key']);
+                return FALSE;
+            }
+            
+            // Prepare variables from data
+            $variables = isset($data['data']) ? $data['data'] : [];
+            
+            $subject = $this->replace_variables($template['subject_template'], $variables);
+            $body = $this->replace_variables($template['body_template'], $variables);
+            
+            return $this->send_email(
+                $data['recipient_email'],
+                $data['recipient_name'] ?? 'User',
+                $data['template_key'],
+                $subject,
+                $body,
+                $data['metadata'] ?? []
+            );
+        }
+        
+        // Direct email without template
+        $subject = $data['subject'] ?? 'Notification';
+        $body = $data['body'] ?? '';
+        $event_key = $data['event_key'] ?? 'direct_email';
+        
+        return $this->send_email(
+            $data['recipient_email'],
+            $data['recipient_name'] ?? 'User',
+            $event_key,
+            $subject,
+            $body,
+            $data['metadata'] ?? []
+        );
+    }
+
     // ================================================================
     // EMAIL NOTIFICATION (FR-NOT-02)
     // ================================================================

@@ -441,6 +441,45 @@ class Vehicle_model extends CI_Model {
             'other' => 'Lainnya'
         ];
     }
+
+    // --------------------------------------------------------------------
+    // Service Reminder Methods
+    // --------------------------------------------------------------------
+
+    /**
+     * Get vehicles due for service reminder
+     * Based on kilometer threshold or months since last service
+     * 
+     * @param int $km_threshold Kilometer threshold (e.g., 5000)
+     * @param int $month_threshold Months threshold (e.g., 6)
+     * @return array Vehicles due for service
+     */
+    public function get_vehicles_due_for_service($km_threshold = 5000, $month_threshold = 6)
+    {
+        $current_date = date('Y-m-d');
+        $threshold_date = date('Y-m-d', strtotime("-$month_threshold months"));
+        
+        // Get vehicles where:
+        // 1. current_km >= last_service_km + km_threshold OR
+        // 2. last_service_date < threshold_date
+        // 3. Vehicle is not deleted
+        // 4. User has valid email
+        
+        $this->db->select('v.*, u.email, u.full_name')
+            ->from('vehicles v')
+            ->join('users u', 'u.id = v.user_id', 'left')
+            ->where('v.is_deleted', 0)
+            ->where('u.is_deleted', 0)
+            ->where('u.email IS NOT NULL')
+            ->where('u.email !=', '')
+            ->group_start()
+                // Check kilometer threshold
+                ->where('v.current_km >= (v.last_service_km + ' . (int)$km_threshold . ')')
+                ->or_where('v.last_service_date <', $threshold_date)
+            ->group_end();
+        
+        return $this->db->get()->result_array();
+    }
 }
 
 /* End of file Vehicle_model.php */
