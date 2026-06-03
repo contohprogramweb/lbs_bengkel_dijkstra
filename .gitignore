@@ -1,34 +1,39 @@
 ```
-# CodeIgniter specific
-application/logs/
-application/cache/
-application/config/config.php
-application/config/database.php
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
 
 # Dependencies
 vendor/
+node_modules/
 
-# Logs
+# Logs and temp files
 *.log
+*.tmp
+*.swp
 
 # Environment
 .env
 .env.local
 .env.*
 
+# Editors
+.vscode/
+.idea/
+
+# Database
+*.sql
+*.db
+*.sqlite
+
+# Backup and swap files
+*~
+*.bak
+*.backup
+
 # OS generated files
 .DS_Store
 Thumbs.db
-
-# Editor/IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*.tmp
-
-# Build artifacts
-build/
-dist/
-target/
 ```
