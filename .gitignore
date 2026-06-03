@@ -1,26 +1,4 @@
-```
-# Compiled and build artifacts
-*.pyc
-__pycache__/
-
-# Dependencies
-vendor/
-composer.lock
-
-# Logs and temp files
-*.log
-*.tmp
-
-# Environment
-.env
-.env.local
-*.env.*
-
-# Editors
-.vscode/
-.idea/
-
-# OS generated files
-.DS_Store
-Thumbs.db
+```sql
+-- No changes needed - only a SQL schema file was modified, which is a source file
+-- Do not ignore .sql files as they are part of the database schema source code
 ```

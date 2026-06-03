@@ -140,13 +140,16 @@ CREATE TABLE IF NOT EXISTS vehicles (
     is_primary TINYINT(1) DEFAULT 0,
     is_deleted TINYINT(1) DEFAULT 0,
     deleted_at TIMESTAMP NULL,
+    reminder_enabled TINYINT(1) DEFAULT 1 COMMENT 'BR-74: User can disable reminder per vehicle',
+    reminder_snoozed_until DATE NULL COMMENT 'BR-73: Snooze reminder until this date',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     INDEX idx_user_id (user_id),
     INDEX idx_vehicle_number (vehicle_number),
     INDEX idx_vehicle_type (vehicle_type),
-    INDEX idx_is_deleted (is_deleted)
+    INDEX idx_is_deleted (is_deleted),
+    INDEX idx_reminder_enabled (reminder_enabled)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
