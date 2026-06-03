@@ -1,0 +1,14 @@
+{
+    "name": "bengkel/app",
+    "description": "Aplikasi Bengkel Terdekat",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Developer"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^7.1",
+        "codeigniter/framework": "^3.1"
+    }
+}
