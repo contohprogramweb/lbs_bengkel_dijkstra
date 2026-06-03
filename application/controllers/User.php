@@ -179,6 +179,332 @@ class User extends Customer_Controller {
         $data['page_title'] = 'Hapus Akun';
         $this->render('user/delete_account', $data);
     }
+
+    // --------------------------------------------------------------------
+    // Vehicle Management (Modul 6 - FR-VEH-01~03, UC-USR-07)
+    // --------------------------------------------------------------------
+
+    /**
+     * My Vehicles page - list all vehicles with UI cards
+     */
+    public function vehicles()
+    {
+        $data['page_title'] = 'Kendaraan Saya';
+        $data['user'] = $this->current_user;
+        
+        $this->load->model('vehicle_model');
+        
+        // Get all vehicles for user
+        $data['vehicles'] = $this->vehicle_model->get_by_user($this->user_id);
+        
+        // Check if user can add more vehicles (BR-58)
+        $data['can_add'] = $this->vehicle_model->can_add_vehicle($this->user_id);
+        
+        $this->render('user/vehicles', $data);
+    }
+
+    /**
+     * Add new vehicle
+     */
+    public function vehicle_add()
+    {
+        $data['page_title'] = 'Tambah Kendaraan';
+        
+        $this->load->model('vehicle_model');
+        
+        // Check if user can add more vehicles (BR-58)
+        $can_add = $this->vehicle_model->can_add_vehicle($this->user_id);
+        if (!$can_add['can_add']) {
+            $this->session->set_flashdata('error', 'Anda telah mencapai batas maksimal ' . $can_add['max'] . ' kendaraan.');
+            redirect('user/vehicles');
+        }
+        
+        if ($this->input->post()) {
+            // Validate form
+            $this->form_validation->set_rules('vehicle_number', 'Nomor Polisi', 'required|trim|max_length[20]');
+            $this->form_validation->set_rules('brand', 'Merk', 'required|trim|max_length[50]');
+            $this->form_validation->set_rules('model', 'Model', 'trim|max_length[50]');
+            $this->form_validation->set_rules('year', 'Tahun', 'required|integer');
+            $this->form_validation->set_rules('fuel_type', 'Jenis Bahan Bakar', 'required|in_list[petrol,diesel,electric,hybrid]');
+            $this->form_validation->set_rules('current_km', 'Kilometer Terakhir', 'required|integer|min_length[0]');
+            $this->form_validation->set_rules('vin', 'VIN', 'trim|max_length[17]|regex_match[/^[A-HJ-NPR-Z0-9]{17}$/i]');
+            
+            if ($this->form_validation->run() === FALSE) {
+                $this->session->set_flashdata('error', validation_errors());
+            } else {
+                $vehicle_number = $this->input->post('vehicle_number', TRUE);
+                $year = (int) $this->input->post('year', TRUE);
+                
+                // Check duplicate plate number (BR-59)
+                if ($this->vehicle_model->vehicle_number_exists($vehicle_number, $this->user_id)) {
+                    $this->session->set_flashdata('error', 'Kendaraan dengan nomor polisi ini sudah terdaftar.');
+                } else {
+                    // Validate year (BR-59, BR-60)
+                    $year_validation = $this->vehicle_model->validate_year($year);
+                    if (!$year_validation['valid']) {
+                        $this->session->set_flashdata('error', $year_validation['message']);
+                    } else {
+                        $insert_data = [
+                            'user_id' => $this->user_id,
+                            'vehicle_number' => $this->vehicle_model->normalize_plate_number($vehicle_number),
+                            'vehicle_type' => $this->input->post('vehicle_type', TRUE) ?: 'car',
+                            'brand' => $this->input->post('brand', TRUE),
+                            'model' => $this->input->post('model', TRUE),
+                            'year' => $year,
+                            'fuel_type' => $this->input->post('fuel_type', TRUE),
+                            'current_km' => (int) $this->input->post('current_km', TRUE),
+                            'vin' => !empty($this->input->post('vin', TRUE)) ? strtoupper($this->input->post('vin', TRUE)) : NULL,
+                            'transmission' => $this->input->post('transmission', TRUE) ?: 'manual',
+                            'color' => $this->input->post('color', TRUE),
+                            'notes' => $this->input->post('notes', TRUE)
+                        ];
+                        
+                        if ($this->vehicle_model->insert($insert_data)) {
+                            $this->session->set_flashdata('success', 'Kendaraan berhasil ditambahkan.');
+                            redirect('user/vehicles');
+                        } else {
+                            $this->session->set_flashdata('error', 'Gagal menambahkan kendaraan.');
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Prepare dropdown data
+        $data['brands'] = $this->vehicle_model->get_brands();
+        $data['fuel_types'] = $this->vehicle_model->get_fuel_types();
+        $data['transmissions'] = $this->vehicle_model->get_transmissions();
+        $data['vehicle_types'] = $this->vehicle_model->get_vehicle_types();
+        $data['years'] = range(date('Y') + 1, 1980);
+        
+        $this->render('user/vehicle_form', $data);
+    }
+
+    /**
+     * Edit vehicle
+     * 
+     * @param int $id Vehicle ID
+     */
+    public function vehicle_edit($id)
+    {
+        $data['page_title'] = 'Edit Kendaraan';
+        
+        $this->load->model('vehicle_model');
+        
+        $vehicle = $this->vehicle_model->find_by_id($id);
+        
+        if (!$vehicle) {
+            $this->session->set_flashdata('error', 'Kendaraan tidak ditemukan.');
+            redirect('user/vehicles');
+        }
+        
+        // Verify ownership
+        if ($vehicle->user_id != $this->user_id) {
+            show_error('Anda tidak memiliki akses ke kendaraan ini.', 403);
+        }
+        
+        if ($this->input->post()) {
+            // Validate form
+            $this->form_validation->set_rules('vehicle_number', 'Nomor Polisi', 'required|trim|max_length[20]');
+            $this->form_validation->set_rules('brand', 'Merk', 'required|trim|max_length[50]');
+            $this->form_validation->set_rules('model', 'Model', 'trim|max_length[50]');
+            $this->form_validation->set_rules('year', 'Tahun', 'required|integer');
+            $this->form_validation->set_rules('fuel_type', 'Jenis Bahan Bakar', 'required|in_list[petrol,diesel,electric,hybrid]');
+            $this->form_validation->set_rules('current_km', 'Kilometer Terakhir', 'required|integer|min_length[0]');
+            $this->form_validation->set_rules('vin', 'VIN', 'trim|max_length[17]|regex_match[/^[A-HJ-NPR-Z0-9]{17}$/i]');
+            
+            if ($this->form_validation->run() === FALSE) {
+                $this->session->set_flashdata('error', validation_errors());
+            } else {
+                $vehicle_number = $this->input->post('vehicle_number', TRUE);
+                $year = (int) $this->input->post('year', TRUE);
+                
+                // Check duplicate plate number (BR-59) - exclude current vehicle
+                if ($this->vehicle_model->vehicle_number_exists($vehicle_number, $this->user_id, $id)) {
+                    $this->session->set_flashdata('error', 'Kendaraan dengan nomor polisi ini sudah terdaftar.');
+                } else {
+                    // Validate year (BR-59, BR-60)
+                    $year_validation = $this->vehicle_model->validate_year($year);
+                    if (!$year_validation['valid']) {
+                        $this->session->set_flashdata('error', $year_validation['message']);
+                    } else {
+                        $update_data = [
+                            'vehicle_number' => $this->vehicle_model->normalize_plate_number($vehicle_number),
+                            'vehicle_type' => $this->input->post('vehicle_type', TRUE) ?: 'car',
+                            'brand' => $this->input->post('brand', TRUE),
+                            'model' => $this->input->post('model', TRUE),
+                            'year' => $year,
+                            'fuel_type' => $this->input->post('fuel_type', TRUE),
+                            'current_km' => (int) $this->input->post('current_km', TRUE),
+                            'vin' => !empty($this->input->post('vin', TRUE)) ? strtoupper($this->input->post('vin', TRUE)) : NULL,
+                            'transmission' => $this->input->post('transmission', TRUE) ?: 'manual',
+                            'color' => $this->input->post('color', TRUE),
+                            'notes' => $this->input->post('notes', TRUE)
+                        ];
+                        
+                        if ($this->vehicle_model->update($id, $update_data)) {
+                            $this->session->set_flashdata('success', 'Kendaraan berhasil diperbarui.');
+                            redirect('user/vehicles');
+                        } else {
+                            $this->session->set_flashdata('error', 'Gagal memperbarui kendaraan.');
+                        }
+                    }
+                }
+            }
+        }
+        
+        $data['vehicle'] = $vehicle;
+        $data['brands'] = $this->vehicle_model->get_brands();
+        $data['fuel_types'] = $this->vehicle_model->get_fuel_types();
+        $data['transmissions'] = $this->vehicle_model->get_transmissions();
+        $data['vehicle_types'] = $this->vehicle_model->get_vehicle_types();
+        $data['years'] = range(date('Y') + 1, 1980);
+        
+        $this->render('user/vehicle_form', $data);
+    }
+
+    /**
+     * Delete vehicle (soft delete - BR-61)
+     * 
+     * @param int $id Vehicle ID
+     */
+    public function vehicle_delete($id)
+    {
+        $this->load->model('vehicle_model');
+        
+        $vehicle = $this->vehicle_model->find_by_id($id);
+        
+        if (!$vehicle || $vehicle->user_id != $this->user_id) {
+            $this->json_error('Kendaraan tidak ditemukan atau tidak ada akses.', 404);
+            return;
+        }
+        
+        // Check for active bookings (BR-61)
+        $active_check = $this->vehicle_model->has_active_bookings($id);
+        
+        if ($active_check['has_active']) {
+            $this->json_error(
+                'Kendaraan memiliki ' . $active_check['count'] . ' pesanan aktif. Selesaikan pesanan terlebih dahulu sebelum menghapus kendaraan.',
+                400,
+                ['bookings' => $active_check['bookings']]
+            );
+            return;
+        }
+        
+        if ($this->vehicle_model->soft_delete($id)) {
+            $this->json_response(['deleted' => TRUE], 200, 'Kendaraan berhasil dihapus.');
+        } else {
+            $this->json_error('Gagal menghapus kendaraan.', 500);
+        }
+    }
+
+    /**
+     * Vehicle detail with service history tab
+     * 
+     * @param int $id Vehicle ID
+     */
+    public function vehicle_detail($id)
+    {
+        $data['page_title'] = 'Detail Kendaraan';
+        
+        $this->load->model('vehicle_model');
+        
+        $vehicle = $this->vehicle_model->find_by_id($id);
+        
+        if (!$vehicle || $vehicle->user_id != $this->user_id) {
+            $this->session->set_flashdata('error', 'Kendaraan tidak ditemukan.');
+            redirect('user/vehicles');
+        }
+        
+        $data['vehicle'] = $vehicle;
+        
+        // Get service history
+        $data['service_history'] = $this->vehicle_model->get_service_history($id);
+        
+        // Get service recommendation
+        $data['recommendation'] = $this->vehicle_model->get_service_recommendation($id);
+        
+        $this->render('user/vehicle_detail', $data);
+    }
+
+    /**
+     * AJAX: Check vehicle number availability (real-time validation)
+     */
+    public function check_vehicle_number()
+    {
+        $this->load->model('vehicle_model');
+        
+        $vehicle_number = $this->input->get('vehicle_number', TRUE);
+        $exclude_id = $this->input->get('exclude_id', TRUE);
+        
+        if (empty($vehicle_number)) {
+            $this->json_error('Nomor polisi tidak boleh kosong', 400);
+            return;
+        }
+        
+        $exists = $this->vehicle_model->vehicle_number_exists(
+            $vehicle_number, 
+            $this->user_id, 
+            !empty($exclude_id) ? (int) $exclude_id : NULL
+        );
+        
+        $this->json_response([
+            'available' => !$exists,
+            'normalized' => $this->vehicle_model->normalize_plate_number($vehicle_number)
+        ], 200, $exists ? 'Nomor polisi sudah terdaftar' : 'Nomor polisi tersedia');
+    }
+
+    /**
+     * AJAX: Validate year
+     */
+    public function validate_year()
+    {
+        $this->load->model('vehicle_model');
+        
+        $year = $this->input->get('year', TRUE);
+        
+        if (empty($year)) {
+            $this->json_error('Tahun tidak boleh kosong', 400);
+            return;
+        }
+        
+        $validation = $this->vehicle_model->validate_year($year);
+        
+        $this->json_response([
+            'valid' => $validation['valid']
+        ], 200, $validation['message']);
+    }
+
+    /**
+     * AJAX: Update odometer (with BR-60 validation)
+     */
+    public function update_odometer()
+    {
+        $this->load->model('vehicle_model');
+        
+        $vehicle_id = $this->input->post('vehicle_id', TRUE);
+        $new_km = $this->input->post('current_km', TRUE);
+        
+        if (empty($vehicle_id) || empty($new_km)) {
+            $this->json_error('Data tidak lengkap', 400);
+            return;
+        }
+        
+        $vehicle = $this->vehicle_model->find_by_id($vehicle_id);
+        
+        if (!$vehicle || $vehicle->user_id != $this->user_id) {
+            $this->json_error('Kendaraan tidak ditemukan', 404);
+            return;
+        }
+        
+        $result = $this->vehicle_model->update_odometer($vehicle_id, $new_km);
+        
+        if ($result['success']) {
+            $this->json_response(['current_km' => $new_km], 200, $result['message']);
+        } else {
+            $this->json_error($result['message'], 400);
+        }
+    }
 }
 
 /* End of file User.php */
