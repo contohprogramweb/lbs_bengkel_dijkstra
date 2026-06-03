@@ -185,6 +185,9 @@
                             <button type="button" class="btn btn-primary btn-block mb-2" onclick="startProcessing(<?= $booking['id'] ?>)">
                                 <i class="fas fa-tools"></i> Mulai Pengerjaan
                             </button>
+                            <button type="button" class="btn btn-info btn-block mb-2" data-toggle="modal" data-target="#assignMechanicModal">
+                                <i class="fas fa-user-cog"></i> Tugaskan Mekanik
+                            </button>
                             <?php endif; ?>
 
                             <?php if ($can_add_finding): ?>
@@ -248,6 +251,108 @@
 
 <!-- Reject Modal -->
 <div class="modal fade" id="rejectModal" tabindex="-1">
+
+<!-- Assign Mechanic Modal -->
+<div class="modal fade" id="assignMechanicModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title"><i class="fas fa-user-cog"></i> Tugaskan Mekanik</h5>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <form id="assignMechanicForm" method="POST" action="<?= site_url('mechanic/assign_to_booking') ?>">
+                <div class="modal-body">
+                    <?= csrf_field(); ?>
+                    <input type="hidden" name="booking_id" value="<?= $booking['id']; ?>">
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Pilih 1-3 mekanik yang tersedia. Sistem akan mengecek jadwal bentrok otomatis.
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Pilih Mekanik</label>
+                        <div id="mechanicsList" class="list-group">
+                            <div class="text-center py-4">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <small class="text-muted" id="selectedCount">0 dari 3 mekanik dipilih</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Catatan untuk Mekanik</label>
+                        <textarea name="notes" class="form-control" rows="2" placeholder="Instruksi khusus (opsional)"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary" id="btnAssignMechanic" disabled>
+                        <i class="fas fa-save"></i> Simpan Penugasan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Load mechanics when modal opens
+$('#assignMechanicModal').on('show.bs.modal', function() {
+    $.ajax({
+        url: '<?= site_url('mechanic/get_available_for_booking/' . $booking['id']); ?>',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            var html = '';
+            if (response.mechanics && response.mechanics.length > 0) {
+                response.mechanics.forEach(function(mech) {
+                    var disabledClass = mech.has_conflict ? 'disabled opacity-50' : '';
+                    var conflictInfo = mech.has_conflict ? 
+                        '<br><small class="text-danger"><i class="fas fa-exclamation-triangle"></i> Bentrok dengan ' + 
+                        mech.conflicts[0]?.booking_number + '</small>' : '';
+                    
+                    var specs = JSON.parse(mech.specialization || '[]');
+                    var specBadges = specs.map(s => '<span class="badge badge-sm badge-info mr-1">' + s + '</span>').join('');
+                    
+                    html += '<label class="list-group-item list-group-item-action ' + disabledClass + '">' +
+                        '<input type="checkbox" name="mechanic_ids[]" value="' + mech.id + '" ' +
+                        (mech.has_conflict ? 'disabled' : '') +
+                        ' class="mr-2 mechanic-checkbox" onchange="updateSelectedCount()">' +
+                        '<strong>' + mech.name + '</strong>' + conflictInfo +
+                        '<br><small class="text-muted">' + mech.email + '</small><br>' +
+                        specBadges +
+                        '</label>';
+                });
+            } else {
+                html = '<div class="alert alert-warning mb-0">Tidak ada mekanik tersedia</div>';
+            }
+            $('#mechanicsList').html(html);
+            updateSelectedCount();
+        },
+        error: function() {
+            $('#mechanicsList').html('<div class="alert alert-danger mb-0">Gagal memuat data mekanik</div>');
+        }
+    });
+});
+
+function updateSelectedCount() {
+    var count = $('input[name="mechanic_ids[]"]:checked').length;
+    $('#selectedCount').text(count + ' dari 3 mekanik dipilih');
+    $('#btnAssignMechanic').prop('disabled', count === 0);
+}
+
+// Validate max 3 mechanics
+$(document).on('change', '.mechanic-checkbox', function() {
+    var checked = $('input[name="mechanic_ids[]"]:checked');
+    if (checked.length > 3) {
+        $(this).prop('checked', false);
+        alert('Maksimal 3 mekanik per pesanan');
+    }
+    updateSelectedCount();
+});
+</script>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
