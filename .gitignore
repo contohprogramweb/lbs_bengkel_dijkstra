@@ -6,12 +6,10 @@ __pycache__/
 # Dependencies
 vendor/
 node_modules/
-composer.lock
 
 # Logs and temp files
 *.log
 *.tmp
-*.swp
 
 # Environment
 .env
@@ -22,23 +20,11 @@ composer.lock
 .vscode/
 .idea/
 
+# Database migrations backup
+*.sql.bak
+*.sql~
+
 # OS generated files
 .DS_Store
 Thumbs.db
-
-# CodeIgniter specific
-application/cache/
-application/logs/
-application/sessions/
-system/
-!system/index.html
-
-# Database
-database/seeds/
-database/factories/
-
-# Build and distribution
-dist/
-build/
-target/
 ```
