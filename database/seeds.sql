@@ -104,5 +104,19 @@ INSERT INTO notification_templates (event_key, event_name, subject_template, bod
 '["user_name", "workshop_name"]');
 
 -- ============================================
+-- 4. SAMPLE WORKSHOP SERVICES (Prompt #3)
+-- Default services for workshops
+-- ============================================
+INSERT INTO workshop_services (workshop_id, service_name, service_category, description, price_min, price_max, unit, duration_minutes, is_available) VALUES
+(1, 'Ganti Oli Mesin', 'servis', 'Penggantian oli mesin termasuk filter oli', 150000, 250000, 'fixed', 30, 1),
+(1, 'Servis Berkala', 'servis', 'Servis berkala lengkap termasuk pengecekan sistem', 300000, 500000, 'fixed', 120, 1),
+(1, 'Ganti Kampas Rem Depan', 'sparepart', 'Penggantian kampas rem depan termasuk pemasangan', 200000, 350000, 'fixed', 45, 1),
+(1, 'Spooring & Balancing', 'tuning', 'Penyetelan spooring dan balancing roda', 150000, 200000, 'fixed', 60, 1),
+(1, 'Cat Body Per Panel', 'cat', 'Pengecatan body per panel dengan cat berkualitas', 800000, 1500000, 'fixed', 480, 1),
+(1, 'Ganti Ban', 'ban', 'Penggantian ban termasuk balancing', 50000, 100000, 'per_hour', 30, 1),
+(1, 'Ganti Aki', 'aki', 'Penggantian aki baru termasuk instalasi', 100000, 200000, 'fixed', 20, 1),
+(1, 'Tune Up Mesin', 'tuning', 'Tune up mesin untuk performa optimal', 250000, 400000, 'fixed', 90, 1);
+
+-- ============================================
 -- END OF SEED DATA
 -- ============================================
