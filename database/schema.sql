@@ -35,13 +35,16 @@ CREATE TABLE IF NOT EXISTS users (
     role ENUM('admin', 'workshop_owner', 'mechanic', 'customer') NOT NULL DEFAULT 'customer',
     avatar VARCHAR(255),
     is_active TINYINT(1) DEFAULT 1,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     email_verified_at TIMESTAMP NULL,
     last_login_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_email (email),
     INDEX idx_role (role),
-    INDEX idx_is_active (is_active)
+    INDEX idx_is_active (is_active),
+    INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -66,6 +69,8 @@ CREATE TABLE IF NOT EXISTS workshops (
     rating_avg DECIMAL(3,2) DEFAULT 0,
     total_reviews INT UNSIGNED DEFAULT 0,
     status ENUM('pending', 'active', 'inactive', 'suspended') DEFAULT 'pending',
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     verified_at TIMESTAMP NULL,
     approved_by INT UNSIGNED,
     approved_at TIMESTAMP NULL,
@@ -78,6 +83,7 @@ CREATE TABLE IF NOT EXISTS workshops (
     FOREIGN KEY (approved_by) REFERENCES users(id) ON DELETE SET NULL,
     INDEX idx_user_id (user_id),
     INDEX idx_status (status),
+    INDEX idx_is_deleted (is_deleted),
     INDEX idx_city (city),
     INDEX idx_province (province),
     INDEX idx_coordinates (latitude, longitude),
@@ -106,12 +112,15 @@ CREATE TABLE IF NOT EXISTS vehicles (
     notes TEXT,
     photo VARCHAR(255),
     is_primary TINYINT(1) DEFAULT 0,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     INDEX idx_user_id (user_id),
     INDEX idx_vehicle_number (vehicle_number),
-    INDEX idx_vehicle_type (vehicle_type)
+    INDEX idx_vehicle_type (vehicle_type),
+    INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -127,11 +136,14 @@ CREATE TABLE IF NOT EXISTS workshop_schedules (
     is_open TINYINT(1) DEFAULT 1,
     slot_duration_minutes INT DEFAULT 60,
     max_bookings_per_slot INT DEFAULT 5,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (workshop_id) REFERENCES workshops(id) ON DELETE CASCADE,
     INDEX idx_workshop_id (workshop_id),
-    INDEX idx_day (day_of_week)
+    INDEX idx_day (day_of_week),
+    INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -146,11 +158,14 @@ CREATE TABLE IF NOT EXISTS workshop_blocked_slots (
     end_time TIME NOT NULL,
     reason VARCHAR(255),
     blocked_by INT UNSIGNED,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (workshop_id) REFERENCES workshops(id) ON DELETE CASCADE,
     FOREIGN KEY (blocked_by) REFERENCES users(id) ON DELETE SET NULL,
     INDEX idx_workshop_date (workshop_id, blocked_date),
-    INDEX idx_blocked_date (blocked_date)
+    INDEX idx_blocked_date (blocked_date),
+    INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -167,13 +182,16 @@ CREATE TABLE IF NOT EXISTS mechanics (
     rating_avg DECIMAL(3,2) DEFAULT 0,
     total_reviews INT UNSIGNED DEFAULT 0,
     is_available TINYINT(1) DEFAULT 1,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (workshop_id) REFERENCES workshops(id) ON DELETE SET NULL,
     INDEX idx_user_id (user_id),
     INDEX idx_workshop_id (workshop_id),
-    INDEX idx_available (is_available)
+    INDEX idx_available (is_available),
+    INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -206,6 +224,8 @@ CREATE TABLE IF NOT EXISTS bookings (
     mechanic_notes TEXT,
     customer_rating TINYINT,
     customer_review TEXT,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
@@ -218,6 +238,7 @@ CREATE TABLE IF NOT EXISTS bookings (
     INDEX idx_vehicle_id (vehicle_id),
     INDEX idx_status (status),
     INDEX idx_scheduled_date (scheduled_date),
+    INDEX idx_is_deleted (is_deleted),
     -- Composite index as per Reviewer #4
     INDEX idx_workshop_status_created (workshop_id, status, created_at),
     INDEX idx_booking_number (booking_number)
@@ -234,11 +255,14 @@ CREATE TABLE IF NOT EXISTS booking_mechanics (
     assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     assigned_by INT UNSIGNED,
     notes TEXT,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE,
     FOREIGN KEY (mechanic_id) REFERENCES mechanics(id) ON DELETE CASCADE,
     FOREIGN KEY (assigned_by) REFERENCES users(id) ON DELETE SET NULL,
     INDEX idx_booking_id (booking_id),
     INDEX idx_mechanic_id (mechanic_id),
+    INDEX idx_is_deleted (is_deleted),
     UNIQUE KEY unique_booking_mechanic (booking_id, mechanic_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -259,6 +283,8 @@ CREATE TABLE IF NOT EXISTS reviews (
     responded_at TIMESTAMP NULL,
     responded_by INT UNSIGNED,
     helpful_count INT UNSIGNED DEFAULT 0,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE,
@@ -270,7 +296,8 @@ CREATE TABLE IF NOT EXISTS reviews (
     INDEX idx_user_id (user_id),
     INDEX idx_workshop_id (workshop_id),
     INDEX idx_rating (rating),
-    INDEX idx_visible (is_visible)
+    INDEX idx_visible (is_visible),
+    INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -284,9 +311,12 @@ CREATE TABLE IF NOT EXISTS review_photos (
     photo_original_name VARCHAR(255),
     photo_size INT UNSIGNED,
     photo_mime_type VARCHAR(50),
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (review_id) REFERENCES reviews(id) ON DELETE CASCADE,
-    INDEX idx_review_id (review_id)
+    INDEX idx_review_id (review_id),
+    INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -317,6 +347,8 @@ CREATE TABLE IF NOT EXISTS emergency_requests (
     actual_arrival_time INT COMMENT 'minutes',
     service_cost DECIMAL(10,2),
     notes TEXT,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
@@ -328,7 +360,8 @@ CREATE TABLE IF NOT EXISTS emergency_requests (
     INDEX idx_status (status),
     INDEX idx_emergency_type (emergency_type),
     INDEX idx_location (latitude, longitude),
-    INDEX idx_created (created_at)
+    INDEX idx_created (created_at),
+    INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -342,11 +375,14 @@ CREATE TABLE IF NOT EXISTS booking_approvals (
     action ENUM('approve', 'reject') NOT NULL,
     reason TEXT,
     comments TEXT,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE,
     FOREIGN KEY (approver_id) REFERENCES users(id) ON DELETE CASCADE,
     INDEX idx_booking_id (booking_id),
-    INDEX idx_approver_id (approver_id)
+    INDEX idx_approver_id (approver_id),
+    INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -362,10 +398,13 @@ CREATE TABLE IF NOT EXISTS notification_templates (
     variables JSON COMMENT 'Available template variables',
     is_active TINYINT(1) DEFAULT 1,
     language VARCHAR(10) DEFAULT 'id',
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_event_key (event_key),
-    INDEX idx_active (is_active)
+    INDEX idx_active (is_active),
+    INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -385,11 +424,14 @@ CREATE TABLE IF NOT EXISTS notification_logs (
     opened_at TIMESTAMP NULL,
     clicked_at TIMESTAMP NULL,
     metadata JSON,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX idx_recipient (recipient_email),
     INDEX idx_event_key (event_key),
     INDEX idx_status (status),
-    INDEX idx_created (created_at)
+    INDEX idx_created (created_at),
+    INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
