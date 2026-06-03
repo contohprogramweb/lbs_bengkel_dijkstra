@@ -1,9 +1,6 @@
-```
 # Compiled and build artifacts
 *.pyc
 __pycache__/
-*.o
-*.obj
 
 # Dependencies
 vendor/
@@ -23,6 +20,14 @@ composer.lock
 .vscode/
 .idea/
 
-# Database
-*.sql
-```
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*~
+*.bak
+*.backup
+
+# Original rules preserved
+*.log

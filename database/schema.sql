@@ -91,6 +91,32 @@ CREATE TABLE IF NOT EXISTS workshops (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
+-- TABLE: workshop_services
+-- Services offered by each workshop (Prompt #3)
+-- ============================================
+CREATE TABLE IF NOT EXISTS workshop_services (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    workshop_id INT UNSIGNED NOT NULL,
+    service_name VARCHAR(150) NOT NULL,
+    service_category ENUM('sparepart', 'servis', 'cat', 'ban', 'aki', 'tuning', 'lainnya') DEFAULT 'servis',
+    description TEXT,
+    price_min DECIMAL(12,2),
+    price_max DECIMAL(12,2),
+    unit ENUM('fixed', 'range', 'per_hour') DEFAULT 'fixed',
+    duration_minutes INT DEFAULT 60,
+    is_available TINYINT(1) DEFAULT 1,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (workshop_id) REFERENCES workshops(id) ON DELETE CASCADE,
+    INDEX idx_workshop_id (workshop_id),
+    INDEX idx_category (service_category),
+    INDEX idx_is_available (is_available),
+    INDEX idx_is_deleted (is_deleted)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
 -- TABLE: vehicles
 -- Customer vehicle information
 -- ============================================
