@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Halaman Tidak Ditemukan</title>
+    <title>403 - Akses Ditolak</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -60,12 +60,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
     <div class="error-container">
         <div class="error-icon">
-            <i class="fas fa-search"></i>
+            <i class="fas fa-lock"></i>
         </div>
-        <div class="error-code">404</div>
-        <h1 class="error-message">Halaman Tidak Ditemukan</h1>
+        <div class="error-code">403</div>
+        <h1 class="error-message">Akses Ditolak</h1>
         <p class="error-description">
-            <?php echo isset($message) ? e($message) : 'Maaf, halaman yang Anda cari tidak dapat ditemukan.'; ?>
+            <?php echo isset($message) ? e($message) : 'Anda tidak memiliki izin untuk mengakses halaman ini.'; ?>
         </p>
         <a href="<?php echo site_url(); ?>" class="btn-home">
             <i class="fas fa-home"></i> Kembali ke Beranda
