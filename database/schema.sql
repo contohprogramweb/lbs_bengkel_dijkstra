@@ -160,8 +160,8 @@ CREATE TABLE IF NOT EXISTS workshop_schedules (
     open_time TIME NOT NULL,
     close_time TIME NOT NULL,
     is_open TINYINT(1) DEFAULT 1,
-    slot_duration_minutes INT DEFAULT 60,
-    max_bookings_per_slot INT DEFAULT 5,
+    slot_interval INT DEFAULT 60 COMMENT 'BR-82: Interval 30-240 menit (kelipatan 30)',
+    capacity_per_slot INT DEFAULT 1 COMMENT 'BR-83: Kapasitas 1-20 kendaraan per slot',
     is_deleted TINYINT(1) DEFAULT 0,
     deleted_at TIMESTAMP NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -173,16 +173,15 @@ CREATE TABLE IF NOT EXISTS workshop_schedules (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
--- TABLE: workshop_blocked_slots
--- Blocked time slots for workshops
+-- TABLE: workshop_blocked_dates
+-- Blocked dates (full day) for workshops
 -- ============================================
-CREATE TABLE IF NOT EXISTS workshop_blocked_slots (
+CREATE TABLE IF NOT EXISTS workshop_blocked_dates (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     workshop_id INT UNSIGNED NOT NULL,
     blocked_date DATE NOT NULL,
-    start_time TIME NOT NULL,
-    end_time TIME NOT NULL,
     reason VARCHAR(255),
+    is_full_day TINYINT(1) DEFAULT 1,
     blocked_by INT UNSIGNED,
     is_deleted TINYINT(1) DEFAULT 0,
     deleted_at TIMESTAMP NULL,
@@ -191,6 +190,27 @@ CREATE TABLE IF NOT EXISTS workshop_blocked_slots (
     FOREIGN KEY (blocked_by) REFERENCES users(id) ON DELETE SET NULL,
     INDEX idx_workshop_date (workshop_id, blocked_date),
     INDEX idx_blocked_date (blocked_date),
+    INDEX idx_is_deleted (is_deleted)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE: workshop_blocked_slots
+-- Blocked time slots for workshops
+-- ============================================
+CREATE TABLE IF NOT EXISTS workshop_blocked_slots (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    workshop_id INT UNSIGNED NOT NULL,
+    slot_date DATE NOT NULL,
+    slot_time TIME NOT NULL,
+    reason VARCHAR(255),
+    blocked_by INT UNSIGNED,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (workshop_id) REFERENCES workshops(id) ON DELETE CASCADE,
+    FOREIGN KEY (blocked_by) REFERENCES users(id) ON DELETE SET NULL,
+    INDEX idx_workshop_date (workshop_id, slot_date),
+    INDEX idx_slot_date (slot_date),
     INDEX idx_is_deleted (is_deleted)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -237,7 +257,7 @@ CREATE TABLE IF NOT EXISTS bookings (
     estimated_duration INT UNSIGNED COMMENT 'in minutes',
     estimated_price DECIMAL(10,2),
     actual_price DECIMAL(10,2),
-    status ENUM('pending', 'accepted', 'rejected', 'in_progress', 'completed', 'cancelled', 'no_show') DEFAULT 'pending',
+    status ENUM('pending', 'accepted', 'processed', 'waiting_approval', 'rejected', 'in_progress', 'completed', 'cancelled', 'no_show') DEFAULT 'pending' COMMENT 'SRS v4.0 state diagram: Pending→Accepted→Processed→waiting_approval→Completed/Cancelled',
     approval_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
     approved_by INT UNSIGNED,
     approved_at TIMESTAMP NULL,
@@ -458,6 +478,31 @@ CREATE TABLE IF NOT EXISTS notification_logs (
     INDEX idx_status (status),
     INDEX idx_created (created_at),
     INDEX idx_is_deleted (is_deleted)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLE: review_reports
+-- Reports for inappropriate reviews (BR-68)
+-- ============================================
+CREATE TABLE IF NOT EXISTS review_reports (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    review_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    reason TEXT,
+    status ENUM('pending', 'resolved', 'dismissed') DEFAULT 'pending',
+    resolved_by INT UNSIGNED,
+    resolved_at TIMESTAMP NULL,
+    is_deleted TINYINT(1) DEFAULT 0,
+    deleted_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (review_id) REFERENCES reviews(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (resolved_by) REFERENCES users(id) ON DELETE SET NULL,
+    INDEX idx_review_id (review_id),
+    INDEX idx_user_id (user_id),
+    INDEX idx_status (status),
+    INDEX idx_is_deleted (is_deleted),
+    UNIQUE KEY unique_review_user_report (review_id, user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
