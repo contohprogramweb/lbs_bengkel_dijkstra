@@ -166,14 +166,36 @@ class System_setting_model extends CI_Model {
     }
 
     /**
-     * Get all settings with full details
+     * Get all settings with full details including category
      * 
      * @return array Settings with metadata
      */
     public function get_all_with_details()
     {
-        $query = $this->db->order_by('setting_key', 'ASC')->get($this->table);
+        $query = $this->db->order_by('category', 'ASC')->order_by('setting_key', 'ASC')->get($this->table);
         return $query->result();
+    }
+
+    /**
+     * Get settings grouped by category
+     * 
+     * @return array Settings grouped by category
+     */
+    public function get_grouped_by_category()
+    {
+        $query = $this->db->order_by('setting_key', 'ASC')->get($this->table);
+        $result = $query->result();
+        
+        $grouped = [];
+        foreach ($result as $setting) {
+            $category = $setting->category ?? 'general';
+            if (!isset($grouped[$category])) {
+                $grouped[$category] = [];
+            }
+            $grouped[$category][] = $setting;
+        }
+        
+        return $grouped;
     }
 
     // --------------------------------------------------------------------
