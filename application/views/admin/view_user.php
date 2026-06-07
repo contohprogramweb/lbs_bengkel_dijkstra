@@ -54,9 +54,9 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <img src="<?php echo !empty($user_detail->profile_photo) ? base_url($user_detail->profile_photo) : 'https://ui-avatars.com/api/?name='.urlencode($user_detail->name).'&size=150'; ?>" 
+                        <img src="<?php echo !empty($user_detail->avatar) ? base_url($user_detail->avatar) : 'https://ui-avatars.com/api/?name='.urlencode($user_detail->full_name).'&size=150'; ?>" 
                              alt="Profile" class="profile-img mb-3">
-                        <h4><?php echo htmlspecialchars($user_detail->name); ?></h4>
+                        <h4><?php echo htmlspecialchars($user_detail->full_name); ?></h4>
                         <span class="badge bg-info"><?php echo ucfirst($user_detail->role); ?></span>
                         <span class="badge <?php echo $user_detail->is_active ? 'bg-success' : 'bg-danger'; ?> mt-2">
                             <?php echo $user_detail->is_active ? 'Aktif' : 'Nonaktif'; ?>
