@@ -21,19 +21,24 @@
         </div>
     </nav>
     
-    <div class="container-fluid mt-4">
-        <div class="row mb-4">
-            <div class="col-12">
-                <h2><i class="fas fa-clock"></i> <?php echo $page_title; ?></h2>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="<?php echo site_url('admin/dashboard'); ?>">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="<?php echo site_url('admin/workshops'); ?>">Bengkel</a></li>
-                        <li class="breadcrumb-item active">Pending Verification</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+    <div class="container-fluid">
+        <div class="row">
+            <?php $this->load->view('admin/_sidebar'); ?>
+            
+            <!-- Main Content -->
+            <div class="col-md-10 p-4">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2><i class="fas fa-clock"></i> <?php echo $page_title; ?></h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="<?php echo site_url('admin/dashboard'); ?>">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="<?php echo site_url('admin/workshops'); ?>">Bengkel</a></li>
+                                <li class="breadcrumb-item active">Pending Verification</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
 
         <?php if($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible fade show">
@@ -125,6 +130,8 @@
             <a href="<?php echo site_url('admin/workshops'); ?>" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Kembali ke Daftar Bengkel
             </a>
+        </div>
+            </div>
         </div>
     </div>
 

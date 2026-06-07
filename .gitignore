@@ -22,10 +22,7 @@ composer.lock
 .vscode/
 .idea/
 
-# Database
-database/seeds/
-database/factories/
-
-# Original rules preserved
-*.log
+# OS generated files
+.DS_Store
+Thumbs.db
 ```
