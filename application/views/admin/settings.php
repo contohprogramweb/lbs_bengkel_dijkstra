@@ -31,18 +31,7 @@
     
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-2 sidebar p-0">
-                <div class="py-3">
-                    <a href="<?php echo site_url('admin/dashboard'); ?>"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                    <a href="<?php echo site_url('admin/users'); ?>"><i class="fas fa-users"></i> Manajemen User</a>
-                    <a href="<?php echo site_url('admin/workshops'); ?>"><i class="fas fa-wrench"></i> Manajemen Bengkel</a>
-                    <a href="<?php echo site_url('admin/pending_verification'); ?>"><i class="fas fa-clock"></i> Verifikasi Bengkel</a>
-                    <a href="<?php echo site_url('admin/review_moderation'); ?>"><i class="fas fa-star"></i> Moderasi Review</a>
-                    <a href="<?php echo site_url('admin/activity_logs'); ?>"><i class="fas fa-history"></i> Log Aktivitas</a>
-                    <a href="<?php echo site_url('admin/settings'); ?>" class="active"><i class="fas fa-cog"></i> Pengaturan</a>
-                </div>
-            </div>
+            <?php $this->load->view('admin/_sidebar'); ?>
             
             <!-- Main Content -->
             <div class="col-md-10 p-4">

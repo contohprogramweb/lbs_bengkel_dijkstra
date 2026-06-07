@@ -24,12 +24,17 @@
         </div>
     </nav>
     
-    <div class="container-fluid mt-4">
-        <div class="row mb-4">
-            <div class="col-12">
-                <h2><i class="fas fa-tachometer-alt"></i> <?php echo $page_title; ?></h2>
-            </div>
-        </div>
+    <div class="container-fluid">
+        <div class="row">
+            <?php $this->load->view('admin/_sidebar'); ?>
+            
+            <!-- Main Content -->
+            <div class="col-md-10 p-4">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2><i class="fas fa-tachometer-alt"></i> <?php echo $page_title; ?></h2>
+                    </div>
+                </div>
         
         <!-- Statistics Cards -->
         <div class="row g-3 mb-4">
@@ -252,5 +257,14 @@
             }
         });
     </script>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
