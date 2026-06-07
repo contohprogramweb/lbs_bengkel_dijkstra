@@ -32,7 +32,24 @@ $route['workshop/edit_profile'] = 'workshop/edit_profile';
 $route['admin'] = 'admin/dashboard';
 $route['admin/dashboard'] = 'admin/dashboard';
 $route['admin/users'] = 'admin/users';
+$route['admin/users_data'] = 'admin/users_data';
+$route['admin/view_user/(:num)'] = 'admin/view_user/$1';
+$route['admin/reset_password/(:num)'] = 'admin/reset_password/$1';
+$route['admin/activate_user/(:num)'] = 'admin/activate_user/$1';
+$route['admin/deactivate_user/(:num)'] = 'admin/deactivate_user/$1';
+$route['admin/delete_user/(:num)'] = 'admin/delete_user/$1';
+$route['admin/workshops'] = 'admin/workshops';
+$route['admin/workshops_data'] = 'admin/workshops_data';
+$route['admin/view_workshop/(:num)'] = 'admin/view_workshop/$1';
+$route['admin/verify_workshop/(:num)'] = 'admin/verify_workshop/$1';
+$route['admin/set_featured/(:num)'] = 'admin/set_featured/$1';
+$route['admin/pending_verification'] = 'admin/pending_verification';
+$route['admin/review_moderation'] = 'admin/review_moderation';
+$route['admin/pending_reviews_data'] = 'admin/pending_reviews_data';
+$route['admin/approve_review/(:num)'] = 'admin/approve_review/$1';
+$route['admin/reject_review/(:num)'] = 'admin/reject_review/$1';
 $route['admin/settings'] = 'admin/settings';
+$route['admin/activity_logs'] = 'admin/activity_logs';
 
 // ================================================================
 // API ROUTES (SRS v4.0 Section 5.6)
