@@ -369,8 +369,30 @@ class Admin extends Admin_Controller {
             $settings_data = $this->input->post('settings');
             $types = $this->input->post('types');
             
+            // Validate and sanitize input
             foreach ($settings_data as $key => $value) {
+                // Skip CSRF token field
+                if ($key === $this->security->get_csrf_token_name()) {
+                    continue;
+                }
+                
                 $type = isset($types[$key]) ? $types[$key] : 'string';
+                
+                // Validate based on type
+                if ($type === 'boolean') {
+                    $value = $value ? '1' : '0';
+                } elseif ($type === 'integer') {
+                    $value = filter_var($value, FILTER_VALIDATE_INT) !== false ? (int)$value : 0;
+                } elseif ($type === 'float' || $type === 'decimal') {
+                    $value = filter_var($value, FILTER_VALIDATE_FLOAT) !== false ? (float)$value : 0.0;
+                } elseif ($type === 'json') {
+                    // Validate JSON
+                    if (json_decode($value) === null && $value !== 'null') {
+                        $this->session->set_flashdata('error', "Format JSON tidak valid untuk pengaturan: {$key}");
+                        redirect('admin/settings');
+                    }
+                }
+                
                 $this->system_setting_model->update_setting($key, $value);
             }
             

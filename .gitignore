@@ -1,1 +1,31 @@
-(application/models/User_model.php, application/models/Workshop_model.php, application/views/admin/view_user.php)
+```
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+
+# Dependencies
+vendor/
+node_modules/
+composer.lock
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+
+# Database
+database/seeds/
+database/factories/
+
+# Original rules preserved
+*.log
+```
