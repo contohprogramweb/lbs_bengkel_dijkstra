@@ -1,44 +1,51 @@
+```php
 # Compiled and build artifacts
 *.pyc
 __pycache__/
 *.o
 *.obj
+*.exe
+*.dll
+*.so
+*.a
+*.out
 
 # Dependencies
-.venv/
-venv/
 node_modules/
+venv/
+.venv/
+.env
+.env.local
+.env.*
 
 # Logs and temp files
 *.log
 *.tmp
 *.swp
-
-# Environment
-.env
-.env.local
-.env.*
+*.swo
 
 # Editors
 .vscode/
 .idea/
 
-# System files
+# Build directories
+dist/
+build/
+target/
+.coverage
+coverage/
+htmlcov/
+
+# OS generated files
 .DS_Store
 Thumbs.db
 
-# Coverage reports
-coverage/
-htmlcov/
-.coverage
-
-# Distribution / packaging
-dist/
-build/
-*.egg-info/
-.Python
-.pytest_cache/
+# Cache directories
 .mypy_cache/
+.pytest_cache/
+.gradle/
+julia-*/
+zig*/
 
 # Compressed files
 *.zip
@@ -63,6 +70,4 @@ build/
 *.tar.bz2
 *.tar.xz
 *.tar.zst
-
-# Original rules preserved
-*.log
+```
