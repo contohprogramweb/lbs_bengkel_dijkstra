@@ -28,7 +28,7 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th width="5%">No</th>
                             <th>Nama Jalan</th>
                             <th>Dari Simpul</th>
                             <th>Ke Simpul</th>
@@ -42,9 +42,12 @@
                         <?php if (empty($edges)): ?>
                             <tr><td colspan="8" class="text-center">Belum ada data edge.</td></tr>
                         <?php else: ?>
-                            <?php foreach ($edges as $edge): ?>
+                            <?php 
+                            $no = 1;
+                            foreach ($edges as $edge): 
+                            ?>
                                 <tr>
-                                    <td><?php echo $edge->id; ?></td>
+                                    <td><?php echo $no++; ?></td>
                                     <td><?php echo htmlspecialchars($edge->road_name ?: '-'); ?></td>
                                     <td><?php echo htmlspecialchars($edge->from_node_name ?: 'Node '.$edge->from_node_id); ?></td>
                                     <td><?php echo htmlspecialchars($edge->to_node_name ?: 'Node '.$edge->to_node_id); ?></td>

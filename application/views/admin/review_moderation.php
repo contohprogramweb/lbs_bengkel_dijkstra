@@ -66,7 +66,7 @@
                     <table id="reviewsTable" class="table table-striped table-hover" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th width="5%">No</th>
                                 <th>Pemberi Review</th>
                                 <th>Bengkel</th>
                                 <th>Rating</th>
@@ -148,7 +148,12 @@
                     url: '<?php echo site_url("admin/pending_reviews_data"); ?>'
                 },
                 columns: [
-                    { data: 'id' },
+                    { 
+                        data: null,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
                     { 
                         data: 'reviewer_name',
                         render: function(data, type, row) {
@@ -205,7 +210,7 @@
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json'
                 },
-                order: [[0, 'desc']]
+                order: [[1, 'asc']]
             });
         });
 
