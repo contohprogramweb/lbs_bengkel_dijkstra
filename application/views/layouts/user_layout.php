@@ -33,10 +33,12 @@
             max-width: 100vw;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
         body { 
             background-color: #f8f9fa; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
         }
         .sidebar {
             min-height: 100vh;
@@ -60,15 +62,15 @@
             padding: 20px; 
             margin-left: 250px;
             transition: margin-left 0.3s ease;
-            width: calc(100% - 250px);
-            max-width: calc(100vw - 250px);
+            min-width: calc(100% - 250px);
+            flex: 1;
             min-height: 100vh;
             box-sizing: border-box;
+            overflow-x: hidden;
         }
         .main-content.expanded {
             margin-left: 0;
-            width: 100%;
-            max-width: 100vw;
+            min-width: 100%;
         }
         .card-stat { border-radius: 15px; border: none; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .card-stat:hover { transform: translateY(-5px); }
@@ -99,8 +101,7 @@
             }
             .main-content {
                 margin-left: 0;
-                width: 100%;
-                max-width: 100vw;
+                min-width: 100%;
                 padding: 15px;
             }
             .sidebar-toggle {
@@ -134,10 +135,10 @@
         <i class="fas fa-bars"></i>
     </button>
     
-    <div class="container-fluid px-0" style="margin: 0; padding: 0; width: 100%; max-width: 100vw;">
-        <div class="row mx-0">
+    <div class="container-fluid px-0" style="margin: 0; padding: 0; width: 100%; max-width: 100%; overflow-x: hidden;">
+        <div class="row mx-0" style="margin: 0; width: 100%; max-width: 100%;">
             <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar p-0" id="sidebar">
+            <div class="col-md-3 col-lg-2 sidebar p-0" id="sidebar" style="flex-shrink: 0; min-width: 250px;">
                 <div class="sidebar-brand">
                     <i class="fas fa-wrench"></i> Bengkel Terdekat
                 </div>
@@ -165,7 +166,7 @@
             </div>
             
             <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 main-content" id="mainContent" style="box-sizing: border-box;">
+            <div class="col-md-9 col-lg-10 main-content" id="mainContent" style="box-sizing: border-box; overflow-x: hidden; min-width: 0;">
                 <!-- Header -->
                 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2" style="width: 100%; max-width: 100%;">
                     <div class="d-flex align-items-center">
@@ -279,11 +280,15 @@
             margin-left: 0;
             margin-right: 0;
             width: 100%;
+            max-width: 100%;
+            display: flex;
+            flex-wrap: wrap;
         }
         .col-md-6, .col-lg-3, .col-md-9, .col-lg-10, .col-md-3, .col-lg-2, .col-md-4, .col-md-8 {
             padding-left: 15px;
             padding-right: 15px;
             box-sizing: border-box;
+            min-width: 0;
         }
         /* Ensure content doesn't overflow */
         .main-content * {
