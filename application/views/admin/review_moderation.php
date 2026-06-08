@@ -7,6 +7,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <style>
+        .stat-card { border-radius: 10px; transition: transform 0.2s; }
+        .stat-card:hover { transform: translateY(-5px); }
+        
+        .setting-card { min-height: 250px; }
+        .sidebar { min-height: calc(100vh - 56px); background-color: #343a40; }
+        .sidebar a { color: #fff; text-decoration: none; padding: 10px 15px; display: block; }
+        .sidebar a:hover, .sidebar a.active { background-color: #495057; }
+        .sidebar i { width: 25px; }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark">
@@ -19,18 +30,23 @@
         </div>
     </nav>
     
-    <div class="container-fluid mt-4">
-        <div class="row mb-4">
-            <div class="col-12">
-                <h2><i class="fas fa-star"></i> <?php echo $page_title; ?></h2>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="<?php echo site_url('admin/dashboard'); ?>">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Moderasi Review</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+    <div class="container-fluid">
+        <div class="row">
+            <?php $this->load->view('admin/_sidebar'); ?>
+            
+            <!-- Main Content -->
+            <div class="col-md-10 p-4">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2><i class="fas fa-star"></i> <?php echo $page_title; ?></h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="<?php echo site_url('admin/dashboard'); ?>">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Moderasi Review</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
 
         <?php if($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible fade show">
@@ -80,6 +96,8 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
             </div>
         </div>
     </div>
@@ -226,5 +244,9 @@
             $('#rejectModal').modal('show');
         }
     </script>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
