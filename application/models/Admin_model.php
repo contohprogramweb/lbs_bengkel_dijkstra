@@ -206,18 +206,30 @@ class Admin_model extends CI_Model {
             $this->db->where('u.role', $role_filter);
         }
         
+        // Count total before filtering
+        $total_records = $this->db->count_all_results();
+        
+        // Reset for actual query with search
+        $this->db->reset_query();
+        $this->db->select('u.*, w.name as workshop_name');
+        $this->db->from('users u');
+        $this->db->where('u.is_deleted', 0);
+        $this->db->join('workshops w', 'w.user_id = u.id AND w.is_deleted = 0', 'left');
+        
+        // Re-apply role filter
+        if ($role_filter !== NULL && $role_filter !== '') {
+            $this->db->where('u.role', $role_filter);
+        }
+        
         // Search
         if (!empty($request['search']['value'])) {
-            $search = $this->db->escape_like_string($request['search']['value']);
+            $search = $request['search']['value'];
             $this->db->group_start();
             $this->db->like('u.full_name', $search);
             $this->db->or_like('u.email', $search);
             $this->db->or_like('u.role', $search);
             $this->db->group_end();
         }
-        
-        // Count total before filtering
-        $total_records = $this->db->count_all_results();
         
         // Column-specific search
         foreach ($request['columns'] as $key => $column) {
@@ -254,13 +266,14 @@ class Admin_model extends CI_Model {
         
         // Count filtered records
         $this->db->reset_query();
+        $this->db->select('u.*');
         $this->db->from('users u');
         $this->db->where('u.is_deleted', 0);
         if ($role_filter !== NULL && $role_filter !== '') {
             $this->db->where('u.role', $role_filter);
         }
         if (!empty($request['search']['value'])) {
-            $search = $this->db->escape_like_string($request['search']['value']);
+            $search = $request['search']['value'];
             $this->db->group_start();
             $this->db->like('u.full_name', $search);
             $this->db->or_like('u.email', $search);
