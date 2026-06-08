@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-<?php $this->load->view('layouts/user_layout', ['page_title' => $page_title]); ?>
 
 <div class="container mt-4">
     <div class="row">
@@ -185,5 +184,3 @@
 <style>
 .badge-lg { padding: 0.5em 1em; font-size: 0.9rem; }
 </style>
-
-<?php $this->load->view('layouts/footer'); ?>
