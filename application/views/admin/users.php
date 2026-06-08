@@ -136,7 +136,7 @@
                 columns: [
                     { data: 'id' },
                     { 
-                        data: 'name',
+                        data: 'full_name',
                         render: function(data, type, row) {
                             return '<a href="<?php echo site_url("admin/view_user/"); ?>' + row.id + '">' + data + '</a>';
                         }
