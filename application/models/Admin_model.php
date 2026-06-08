@@ -196,7 +196,7 @@ class Admin_model extends CI_Model {
         ];
         
         // Base query
-        $this->db->select('u.*, w.workshop_name');
+        $this->db->select('u.*, w.name as workshop_name');
         $this->db->from('users u');
         $this->db->where('u.is_deleted', 0);
         $this->db->join('workshops w', 'w.user_id = u.id AND w.is_deleted = 0', 'left');
