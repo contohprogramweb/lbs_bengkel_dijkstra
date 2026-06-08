@@ -64,6 +64,8 @@ $route['admin/road_graph/delete_edge/(:num)'] = 'admin/road_graph/delete_edge/$1
 
 // Report routes (Admin)
 $route['admin/report/global'] = 'report/global';
+$route['admin/report/workshop_detail/(:num)'] = 'report/workshop_detail/$1';
+$route['admin/report/export_global_csv'] = 'report/export_global_csv';
 
 // ================================================================
 // API ROUTES (SRS v4.0 Section 5.6)
