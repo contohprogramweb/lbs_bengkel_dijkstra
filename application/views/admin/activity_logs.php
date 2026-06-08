@@ -126,7 +126,7 @@
                             </thead>
                             <tbody>
                                 <?php 
-                                $no = $filters['page'] * 50 + 1;
+                                $no = 1 + ($filters['page'] * 50);
                                 foreach($logs as $log): 
                                 ?>
                                 <tr>
