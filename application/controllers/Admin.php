@@ -429,11 +429,12 @@ class Admin extends Admin_Controller {
             'workshop_id' => $this->input->get('workshop_id'),
             'action_type' => $this->input->get('action_type'),
             'date_from' => $this->input->get('date_from'),
-            'date_to' => $this->input->get('date_to')
+            'date_to' => $this->input->get('date_to'),
+            'page' => max(0, (int)$this->input->get('page'))
         ];
         
         $limit = 50;
-        $offset = max(0, (int)$this->input->get('page')) * $limit;
+        $offset = $filters['page'] * $limit;
         
         $data['logs'] = $this->admin_model->get_activity_logs($filters, $limit, $offset);
         $data['total_logs'] = $this->admin_model->count_activity_logs($filters);
