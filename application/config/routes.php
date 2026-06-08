@@ -22,6 +22,11 @@ $route['user/dashboard'] = 'user/dashboard';
 $route['user/profile'] = 'user/profile';
 $route['user/edit_profile'] = 'user/edit_profile';
 $route['user/change_password'] = 'user/change_password';
+$route['user/bookings'] = 'booking/my_bookings';
+$route['user/bookings/detail/(:num)'] = 'booking/detail/$1';
+$route['user/bookings/cancel/(:num)'] = 'booking/cancel/$1';
+$route['user/bookings/reschedule/(:num)'] = 'booking/reschedule/$1';
+$route['user/bookings/create'] = 'booking/index';
 
 // Workshop Owner routes
 $route['workshop/dashboard'] = 'workshop/dashboard';
