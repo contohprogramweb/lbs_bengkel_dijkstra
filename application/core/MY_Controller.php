@@ -211,11 +211,25 @@ class MY_Controller extends CI_Controller {
 
         $data = array_merge($common_data, $data);
 
+        // Render the view content first
+        $content = $this->load->view($view, $data, TRUE);
+        
+        // Determine which layout to use based on user role
+        $layout = 'layouts/user_layout';
+        if ($this->user_role === 'customer') {
+            $layout = 'layouts/user_layout';
+        } elseif ($this->user_role === 'workshop_owner' || $this->user_role === 'mechanic') {
+            $layout = 'layouts/workshop_layout';
+        }
+        
+        // Merge content into layout data
+        $layout_data = array_merge($data, ['content_for_layout' => $content]);
+
         if ($return) {
-            return $this->load->view($view, $data, TRUE);
+            return $this->load->view($layout, $layout_data, TRUE);
         }
 
-        $this->load->view($view, $data);
+        $this->load->view($layout, $layout_data);
     }
 
     /**
