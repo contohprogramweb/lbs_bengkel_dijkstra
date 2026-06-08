@@ -245,6 +245,22 @@ class Workshop_model extends CI_Model {
 
         return $this->db->count_all_results();
     }
+
+    /**
+     * Get workshops by user ID
+     * @param int $user_id User ID
+     * @return array Array of workshops
+     */
+    public function get_by_user_id($user_id)
+    {
+        $this->db->select('*');
+        $this->db->from(self::TABLE_WORKSHOPS);
+        $this->db->where('user_id', $user_id);
+        $this->db->where('is_deleted', 0);
+        $this->db->order_by('created_at', 'DESC');
+
+        return $this->db->get()->result_array();
+    }
 }
 
 /* End of file Workshop_model.php */
