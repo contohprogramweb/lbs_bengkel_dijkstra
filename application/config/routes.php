@@ -32,7 +32,40 @@ $route['workshop/edit_profile'] = 'workshop/edit_profile';
 $route['admin'] = 'admin/dashboard';
 $route['admin/dashboard'] = 'admin/dashboard';
 $route['admin/users'] = 'admin/users';
+$route['admin/users_data'] = 'admin/users_data';
+$route['admin/view_user/(:num)'] = 'admin/view_user/$1';
+$route['admin/reset_password/(:num)'] = 'admin/reset_password/$1';
+$route['admin/activate_user/(:num)'] = 'admin/activate_user/$1';
+$route['admin/deactivate_user/(:num)'] = 'admin/deactivate_user/$1';
+$route['admin/delete_user/(:num)'] = 'admin/delete_user/$1';
+$route['admin/workshops'] = 'admin/workshops';
+$route['admin/workshops_data'] = 'admin/workshops_data';
+$route['admin/view_workshop/(:num)'] = 'admin/view_workshop/$1';
+$route['admin/verify_workshop/(:num)'] = 'admin/verify_workshop/$1';
+$route['admin/set_featured/(:num)'] = 'admin/set_featured/$1';
+$route['admin/pending_verification'] = 'admin/pending_verification';
+$route['admin/review_moderation'] = 'admin/review_moderation';
+$route['admin/pending_reviews_data'] = 'admin/pending_reviews_data';
+$route['admin/approve_review/(:num)'] = 'admin/approve_review/$1';
+$route['admin/reject_review/(:num)'] = 'admin/reject_review/$1';
+$route['admin/activity_logs'] = 'admin/activity_logs';
 $route['admin/settings'] = 'admin/settings';
+
+// Road Graph routes (Admin)
+$route['admin/road_graph'] = 'admin/road_graph/index';
+$route['admin/road_graph/nodes'] = 'admin/road_graph/nodes';
+$route['admin/road_graph/create_node'] = 'admin/road_graph/create_node';
+$route['admin/road_graph/edit_node/(:num)'] = 'admin/road_graph/edit_node/$1';
+$route['admin/road_graph/delete_node/(:num)'] = 'admin/road_graph/delete_node/$1';
+$route['admin/road_graph/edges'] = 'admin/road_graph/edges';
+$route['admin/road_graph/create_edge'] = 'admin/road_graph/create_edge';
+$route['admin/road_graph/edit_edge/(:num)'] = 'admin/road_graph/edit_edge/$1';
+$route['admin/road_graph/delete_edge/(:num)'] = 'admin/road_graph/delete_edge/$1';
+
+// Report routes (Admin)
+$route['admin/report/global'] = 'report/global';
+$route['admin/report/workshop_detail/(:num)'] = 'report/workshop_detail/$1';
+$route['admin/report/export_global_csv'] = 'report/export_global_csv';
 
 // ================================================================
 // API ROUTES (SRS v4.0 Section 5.6)
