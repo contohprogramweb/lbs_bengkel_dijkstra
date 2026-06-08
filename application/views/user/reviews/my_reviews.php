@@ -7,8 +7,8 @@
     <title><?= $page_title ?> - <?= $app_name ?></title>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/fontawesome/css/all.min.css') ?>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         .star-rating {
             font-size: 2rem;
@@ -51,29 +51,30 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="<?= base_url() ?>"><?= $app_name ?></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <a class="navbar-brand" href="<?php echo site_url('user/dashboard'); ?>"><?php echo e($app_name); ?></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('user/dashboard') ?>">Dashboard</a>
+                        <a class="nav-link <?php echo $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>" href="<?php echo site_url('user/dashboard'); ?>">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('user/bookings') ?>">Pesanan Saya</a>
+                        <a class="nav-link <?php echo $this->uri->segment(2) == 'my_reviews' ? 'active' : ''; ?>" href="<?php echo site_url('review/my_reviews'); ?>">Review Saya</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="<?= base_url('review/my_reviews') ?>">Review</a>
+                        <a class="nav-link" href="<?php echo site_url('user/bookings'); ?>">Booking Saya</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                            <i class="fas fa-user-circle"></i> <?= $current_user->full_name ?>
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle"></i> <?php echo e($current_user->full_name ?? 'User'); ?>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="<?= base_url('user/profile') ?>">Profil</a>
-                            <a class="dropdown-item" href="<?= base_url('auth/logout') ?>">Logout</a>
-                        </div>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="<?php echo site_url('user/profile'); ?>"><i class="fas fa-user"></i> Profil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="<?php echo site_url('auth/logout'); ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -85,15 +86,15 @@
         <!-- Flash Messages -->
         <?php if ($this->session->flashdata('success')): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check-circle"></i> <?= $this->session->flashdata('success') ?>
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <i class="fas fa-check-circle"></i> <?php echo e($this->session->flashdata('success')); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
         
         <?php if ($this->session->flashdata('error')): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fas fa-exclamation-circle"></i> <?= $this->session->flashdata('error') ?>
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <i class="fas fa-exclamation-circle"></i> <?php echo e($this->session->flashdata('error')); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
 
@@ -126,7 +127,7 @@
                                                     <strong>Kendaraan:</strong> <?= esc($booking['vehicle_number'] ?? '-') ?><br>
                                                     <strong>Tanggal:</strong> <?= date('d/m/Y', strtotime($booking['scheduled_date'])) ?>
                                                 </p>
-                                                <a href="<?= base_url('review/create/' . $booking['booking_id']) ?>" 
+                                                <a href="<?php echo site_url('review/create/' . $booking['booking_id']); ?>" 
                                                    class="btn btn-primary btn-sm btn-block">
                                                     <i class="fas fa-star"></i> Tulis Review
                                                 </a>
@@ -183,11 +184,9 @@
                                             <?php if (!empty($review['photos'])): ?>
                                                 <div class="mt-2">
                                                     <?php foreach ($review['photos'] as $photo): ?>
-                                                        <img src="<?= base_url($photo['photo_path']) ?>" 
+                                                        <img src="<?php echo site_url($photo['photo_path']); ?>" 
                                                              alt="Review Photo" 
-                                                             class="review-photo"
-                                                             data-toggle="modal" 
-                                                             data-target="#photoModal<?= $review['id'] ?>">
+                                                             class="review-photo">
                                                     <?php endforeach; ?>
                                                 </div>
                                             <?php endif; ?>
@@ -202,7 +201,7 @@
                                         </div>
                                         <div class="col-md-4 text-right">
                                             <?php if ($review['status'] !== 'hidden'): ?>
-                                                <a href="<?= base_url('review/edit/' . $review['id']) ?>" 
+                                                <a href="<?php echo site_url('review/edit/' . $review['id']); ?>" 
                                                    class="btn btn-sm btn-outline-primary">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </a>
@@ -230,13 +229,13 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="<?= base_url('assets/js/jquery.min.js') ?>"></script>
-    <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function deleteReview(reviewId) {
             if (confirm('Apakah Anda yakin ingin menghapus review ini?')) {
                 $.ajax({
-                    url: '<?= base_url('review/delete/') ?>' + reviewId,
+                    url: '<?php echo site_url('review/delete/'); ?>' + reviewId,
                     type: 'POST',
                     dataType: 'json',
                     success: function(response) {
