@@ -130,7 +130,7 @@
                                         <?php 
                                         $this->db->select('name');
                                         $user = $this->db->get_where('users', ['id' => $booking['user_id']])->row();
-                                        echo esc($user->name ?? '-');
+                                        echo esc($user->full_name ?? '-');
                                         ?>
                                     </td>
                                     <td>

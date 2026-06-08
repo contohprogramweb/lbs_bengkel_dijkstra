@@ -226,6 +226,7 @@ class Admin extends Admin_Controller {
     public function view_workshop($id)
     {
         $data['page_title'] = 'Detail Bengkel';
+        $data['user'] = $this->current_user;
         
         $this->load->model('workshop_model');
         $data['workshop'] = $this->workshop_model->find_by_id($id);
@@ -274,6 +275,7 @@ class Admin extends Admin_Controller {
     public function pending_verification()
     {
         $data['page_title'] = 'Verifikasi Bengkel';
+        $data['user'] = $this->current_user;
         $data['workshops'] = $this->admin_model->get_pending_verification_workshops();
         
         $this->render('admin/pending_verification', $data);
@@ -281,7 +283,6 @@ class Admin extends Admin_Controller {
 
     // --------------------------------------------------------------------
     // Review Moderation
-    // --------------------------------------------------------------------
 
     /**
      * Review moderation panel
@@ -289,6 +290,7 @@ class Admin extends Admin_Controller {
     public function review_moderation()
     {
         $data['page_title'] = 'Moderasi Review';
+        $data['user'] = $this->current_user;
         $data['pending_count'] = $this->admin_model->count_pending_reviews();
         
         $this->render('admin/review_moderation', $data);

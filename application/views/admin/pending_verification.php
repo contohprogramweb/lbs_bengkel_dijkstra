@@ -8,6 +8,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         .workshop-img { max-width: 150px; max-height: 100px; object-fit: cover; border-radius: 8px; }
+		
+		 
+        .sidebar { min-height: calc(100vh - 56px); background-color: #343a40; }
+        .sidebar a { color: #fff; text-decoration: none; padding: 10px 15px; display: block; }
+        .sidebar a:hover, .sidebar a.active { background-color: #495057; }
+        .sidebar i { width: 25px; }
+		
+		
     </style>
 </head>
 <body>
@@ -15,7 +23,7 @@
         <div class="container-fluid">
             <span class="navbar-brand"><i class="fas fa-shield-alt"></i> Admin Panel</span>
             <div class="d-flex align-items-center">
-                <span class="text-light me-3"><?php echo $user->name; ?></span>
+                <span class="text-light me-3"><?php echo $user->full_name; ?></span>
                 <a href="<?php echo site_url('auth/logout'); ?>" class="btn btn-outline-light btn-sm">Logout</a>
             </div>
         </div>
@@ -85,7 +93,7 @@
                                     </td>
                                     <td>
                                         <?php echo htmlspecialchars($workshop->owner_name); ?><br>
-                                        <small class="text-muted"><?php echo htmlspecialchars($workshop->email); ?></small>
+                                        <small class="text-muted"><?php echo htmlspecialchars($workshop->owner_email); ?></small>
                                     </td>
                                     <td>
                                         <?php echo htmlspecialchars(substr($workshop->address, 0, 40)); ?>
@@ -98,11 +106,8 @@
                                             <span class="badge bg-danger"><i class="fas fa-times"></i> Izin Usaha</span>
                                         <?php endif; ?>
                                         
-                                        <?php 
-                                        $docs = json_decode($workshop->other_documents ?? '[]', true);
-                                        if(is_array($docs) && count($docs) > 0):
-                                        ?>
-                                            <span class="badge bg-info ms-1"><?php echo count($docs); ?> Dokumen Lain</span>
+                                        <?php if(!empty($workshop->certification_doc)): ?>
+                                            <span class="badge bg-info ms-1"><i class="fas fa-certificate"></i> Sertifikasi</span>
                                         <?php endif; ?>
                                     </td>
                                     <td><?php echo date('d M Y', strtotime($workshop->created_at)); ?></td>

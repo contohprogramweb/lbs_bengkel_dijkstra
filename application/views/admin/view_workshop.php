@@ -17,7 +17,7 @@
         <div class="container-fluid">
             <span class="navbar-brand"><i class="fas fa-shield-alt"></i> Admin Panel</span>
             <div class="d-flex align-items-center">
-                <span class="text-light me-3"><?php echo $user->name; ?></span>
+                <span class="text-light me-3"><?php echo $user->full_name; ?></span>
                 <a href="<?php echo site_url('auth/logout'); ?>" class="btn btn-outline-light btn-sm">Logout</a>
             </div>
         </div>
@@ -54,8 +54,8 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <?php if(!empty($workshop->profile_photo)): ?>
-                        <img src="<?php echo base_url($workshop->profile_photo); ?>" class="card-img-top workshop-img mx-auto mt-3" alt="<?php echo htmlspecialchars($workshop->name); ?>">
+                    <?php if(!empty($workshop->logo)): ?>
+                        <img src="<?php echo base_url($workshop->logo); ?>" class="card-img-top workshop-img mx-auto mt-3" alt="<?php echo htmlspecialchars($workshop->name); ?>">
                     <?php else: ?>
                         <div class="card-body text-center py-5">
                             <i class="fas fa-wrench fa-5x text-muted"></i>
@@ -63,18 +63,16 @@
                     <?php endif; ?>
                     <div class="card-body text-center">
                         <h4><?php echo htmlspecialchars($workshop->name); ?></h4>
-                        <span class="badge bg-info"><?php echo ucfirst($workshop->specialization ?? 'Umum'); ?></span>
+                        <span class="badge bg-info"><?php echo ucfirst($workshop->status ?? 'pending'); ?></span>
                         
                         <hr>
                         
                         <div class="mb-3">
                             <strong>Status:</strong><br>
-                            <?php if($workshop->is_verified): ?>
+                            <?php if(!empty($workshop->verified_at)): ?>
                                 <span class="badge bg-success">Terverifikasi</span>
-                            <?php elseif($workshop->verification_status == 'pending'): ?>
-                                <span class="badge bg-warning">Pending Verifikasi</span>
                             <?php else: ?>
-                                <span class="badge bg-secondary">Belum Diajukan</span>
+                                <span class="badge bg-warning text-dark">Belum Terverifikasi</span>
                             <?php endif; ?>
                             
                             <?php if($workshop->is_featured): ?>
@@ -86,7 +84,7 @@
                             <a href="<?php echo site_url('admin/workshops'); ?>" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left"></i> Kembali
                             </a>
-                            <?php if(!$workshop->is_verified && $workshop->verification_status == 'pending'): ?>
+                            <?php if(empty($workshop->verified_at)): ?>
                                 <a href="<?php echo site_url('admin/verify_workshop/'.$workshop->id); ?>" 
                                    class="btn btn-success" onclick="return confirm('Verifikasi bengkel ini?')">
                                     <i class="fas fa-check"></i> Verifikasi Bengkel
@@ -114,7 +112,7 @@
                             </tr>
                             <tr>
                                 <td class="info-label">Spesialisasi</td>
-                                <td><?php echo htmlspecialchars($workshop->specialization ?? 'Umum'); ?></td>
+                                <td><?php echo ucfirst(htmlspecialchars($workshop->status ?? 'pending')); ?></td>
                             </tr>
                             <tr>
                                 <td class="info-label">Alamat</td>
@@ -139,8 +137,11 @@
                             <tr>
                                 <td class="info-label">Jam Operasional</td>
                                 <td>
-                                    <?php if($workshop->opening_hours): ?>
-                                        <?php echo nl2br(htmlspecialchars($workshop->opening_hours)); ?>
+                                    <?php if($workshop->operating_hours): ?>
+                                        <?php 
+                                        $oh = is_string($workshop->operating_hours) ? json_decode($workshop->operating_hours, true) : $workshop->operating_hours;
+                                        echo is_array($oh) ? nl2br(htmlspecialchars(json_encode($oh, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) : nl2br(htmlspecialchars($workshop->operating_hours));
+                                        ?>
                                     <?php else: ?>
                                         -
                                     <?php endif; ?>
@@ -149,9 +150,9 @@
                             <tr>
                                 <td class="info-label">Rating</td>
                                 <td>
-                                    <?php if($workshop->average_rating): ?>
+                                    <?php if($workshop->rating_avg): ?>
                                         <span class="text-warning">
-                                            <i class="fas fa-star"></i> <?php echo number_format($workshop->average_rating, 1); ?>
+                                            <i class="fas fa-star"></i> <?php echo number_format($workshop->rating_avg, 1); ?>
                                         </span>
                                         (<?php echo $workshop->total_reviews; ?> review)
                                     <?php else: ?>
@@ -167,7 +168,7 @@
                     </div>
                 </div>
 
-                <?php if(!empty($workshop->business_license) || !empty($workshop->other_documents)): ?>
+                <?php if(!empty($workshop->business_license) || !empty($workshop->certification_doc)): ?>
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0"><i class="fas fa-file-alt"></i> Dokumen Verifikasi</h5>
@@ -183,21 +184,12 @@
                                 </div>
                             <?php endif; ?>
                             
-                            <?php if($workshop->other_documents): ?>
+                            <?php if($workshop->certification_doc): ?>
                                 <div>
-                                    <strong>Dokumen Lainnya:</strong><br>
-                                    <?php 
-                                    $docs = json_decode($workshop->other_documents, true);
-                                    if(is_array($docs)):
-                                        foreach($docs as $doc):
-                                    ?>
-                                        <a href="<?php echo base_url($doc); ?>" target="_blank">
-                                            <img src="<?php echo base_url($doc); ?>" alt="Document">
-                                        </a>
-                                    <?php 
-                                        endforeach;
-                                    endif;
-                                    ?>
+                                    <strong>Dokumen Sertifikasi:</strong><br>
+                                    <a href="<?php echo base_url($workshop->certification_doc); ?>" target="_blank">
+                                        <img src="<?php echo base_url($workshop->certification_doc); ?>" alt="Certification Document">
+                                    </a>
                                 </div>
                             <?php endif; ?>
                         </div>

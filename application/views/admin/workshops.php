@@ -8,13 +8,22 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet">
+	<style>
+	
+		 
+        .sidebar { min-height: calc(100vh - 56px); background-color: #343a40; }
+        .sidebar a { color: #fff; text-decoration: none; padding: 10px 15px; display: block; }
+        .sidebar a:hover, .sidebar a.active { background-color: #495057; }
+        .sidebar i { width: 25px; }
+		
+	</style>
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <span class="navbar-brand"><i class="fas fa-shield-alt"></i> Admin Panel</span>
             <div class="d-flex align-items-center">
-                <span class="text-light me-3"><?php echo $user->name; ?></span>
+                <span class="text-light me-3"><?php echo $user->full_name; ?></span>
                 <a href="<?php echo site_url('auth/logout'); ?>" class="btn btn-outline-light btn-sm">Logout</a>
             </div>
         </div>
@@ -136,25 +145,23 @@
                     { 
                         data: 'name',
                         render: function(data, type, row) {
-                            return '<a href="<?php echo site_url("admin/view_workshop/"); ?>' + row.id + '">' + data + '</a>';
+                            return '<a href="<?php echo site_url("admin/view_workshop/"); ?>' + row.id + '">' + (data || '-') + '</a>';
                         }
                     },
                     { data: 'owner_name' },
                     { 
-                        data: 'address',
+                        data: 'city',
                         render: function(data) {
-                            return data ? data.substring(0, 30) + (data.length > 30 ? '...' : '') : '-';
+                            return data ? data : '-';
                         }
                     },
                     { 
-                        data: 'verification_status',
-                        render: function(data, type, row) {
-                            if (row.is_verified) {
+                        data: 'verified_at',
+                        render: function(data) {
+                            if (data) {
                                 return '<span class="badge bg-success">Terverifikasi</span>';
-                            } else if (data === 'pending') {
-                                return '<span class="badge bg-warning">Pending</span>';
                             } else {
-                                return '<span class="badge bg-secondary">Belum Diajukan</span>';
+                                return '<span class="badge bg-warning text-dark">Belum Terverifikasi</span>';
                             }
                         }
                     },
@@ -172,7 +179,7 @@
                         render: function(data, type, row) {
                             var actions = '<a href="<?php echo site_url("admin/view_workshop/"); ?>' + row.id + '" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a> ';
                             
-                            if (!row.is_verified && row.verification_status === 'pending') {
+                            if (!row.verified_at) {
                                 actions += '<a href="<?php echo site_url("admin/verify_workshop/"); ?>' + row.id + '" class="btn btn-sm btn-success" onclick="return confirm(\'Verifikasi bengkel ini?\')"><i class="fas fa-check"></i></a> ';
                             }
                             
@@ -205,11 +212,5 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
 </body>
 </html>

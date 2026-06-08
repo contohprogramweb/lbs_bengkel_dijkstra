@@ -53,18 +53,11 @@ class User_model extends CI_Model {
      */
     public function find_by_id($id)
     {
-        $user = $this->db
+        return $this->db
             ->where('id', $id)
             ->where('is_deleted', 0)
             ->get($this->table)
             ->row();
-        
-        // Add 'name' alias for backward compatibility with views
-        if ($user) {
-            $user->name = $user->full_name;
-        }
-        
-        return $user;
     }
 
     /**
