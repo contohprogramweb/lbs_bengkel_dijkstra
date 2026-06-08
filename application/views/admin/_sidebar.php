@@ -39,17 +39,7 @@
             </div>
         </div>
         
-        <!-- Notification Menu -->
-        <div class="sidebar-dropdown">
-            <a href="#" class="dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#notificationMenu">
-                <i class="fas fa-bell"></i> Notifikasi <i class="fas fa-chevron-down float-end mt-1"></i>
-            </a>
-            <div class="collapse show" id="notificationMenu">
-                <a href="<?php echo site_url('admin/notification/templates'); ?>" class="sidebar-sub <?php echo ($this->uri->segment(3) == 'templates' || $this->uri->segment(2) == 'notification') ? 'active' : ''; ?>">
-                    <i class="fas fa-file-alt"></i> Template
-                </a>
-            </div>
-        </div>
+       
         
         <!-- Report Menu -->
         <div class="sidebar-dropdown">

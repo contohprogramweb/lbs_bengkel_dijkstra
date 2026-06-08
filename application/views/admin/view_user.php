@@ -16,7 +16,7 @@
         <div class="container-fluid">
             <span class="navbar-brand"><i class="fas fa-shield-alt"></i> Admin Panel</span>
             <div class="d-flex align-items-center">
-                <span class="text-light me-3"><?php echo $user->name; ?></span>
+                <span class="text-light me-3"><?php echo $user->full_name; ?></span>
                 <a href="<?php echo site_url('auth/logout'); ?>" class="btn btn-outline-light btn-sm">Logout</a>
             </div>
         </div>
@@ -103,7 +103,7 @@
                             </tr>
                             <tr>
                                 <td class="info-label">Nama Lengkap</td>
-                                <td><?php echo htmlspecialchars($user_detail->name); ?></td>
+                                <td><?php echo htmlspecialchars($user_detail->full_name); ?></td>
                             </tr>
                             <tr>
                                 <td class="info-label">Email</td>
@@ -161,12 +161,10 @@
                                         <td><?php echo htmlspecialchars($workshop->name); ?></td>
                                         <td><?php echo htmlspecialchars($workshop->address); ?></td>
                                         <td>
-                                            <?php if($workshop->is_verified): ?>
+                                            <?php if(!empty($workshop->verified_at)): ?>
                                                 <span class="badge bg-success">Terverifikasi</span>
-                                            <?php elseif($workshop->verification_status == 'pending'): ?>
-                                                <span class="badge bg-warning">Pending</span>
                                             <?php else: ?>
-                                                <span class="badge bg-secondary">Belum Diajukan</span>
+                                                <span class="badge bg-warning text-dark">Belum Terverifikasi</span>
                                             <?php endif; ?>
                                         </td>
                                         <td>

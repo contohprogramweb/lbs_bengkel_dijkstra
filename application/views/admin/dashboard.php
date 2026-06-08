@@ -11,6 +11,12 @@
         .stat-card { border-radius: 10px; transition: transform 0.2s; }
         .stat-card:hover { transform: translateY(-5px); }
         .chart-container { position: relative; height: 300px; }
+		
+		.setting-card { min-height: 250px; }
+        .sidebar { min-height: calc(100vh - 56px); background-color: #343a40; }
+        .sidebar a { color: #fff; text-decoration: none; padding: 10px 15px; display: block; }
+        .sidebar a:hover, .sidebar a.active { background-color: #495057; }
+        .sidebar i { width: 25px; }
     </style>
 </head>
 <body>
@@ -18,7 +24,7 @@
         <div class="container-fluid">
             <span class="navbar-brand"><i class="fas fa-shield-alt"></i> Admin Panel</span>
             <div class="d-flex align-items-center">
-                <span class="text-light me-3"><?php echo $user->name; ?></span>
+                <span class="text-light me-3"><?php echo $user->full_name; ?></span>
                 <a href="<?php echo site_url('auth/logout'); ?>" class="btn btn-outline-light btn-sm">Logout</a>
             </div>
         </div>

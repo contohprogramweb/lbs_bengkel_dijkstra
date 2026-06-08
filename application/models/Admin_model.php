@@ -65,8 +65,8 @@ class Admin_model extends CI_Model {
         
         // Workshop counts
         $stats['total_workshops'] = $this->db->where('is_deleted', 0)->count_all_results($this->workshops_table);
-        $stats['verified_workshops'] = $this->db->where('is_deleted', 0)->where('is_active', 1)->where('verified_at IS NOT NULL', NULL, FALSE)->count_all_results($this->workshops_table);
-        $stats['pending_verification_workshops'] = $this->db->where('is_deleted', 0)->where('is_active', 1)->where('verified_at IS NULL')->count_all_results($this->workshops_table);
+        $stats['verified_workshops'] = $this->db->where('is_deleted', 0)->where('verified_at IS NOT NULL', NULL, FALSE)->count_all_results($this->workshops_table);
+        $stats['pending_verification_workshops'] = $this->db->where('is_deleted', 0)->where('verified_at IS NULL', NULL, FALSE)->count_all_results($this->workshops_table);
         $stats['featured_workshops'] = $this->db->where('is_deleted', 0)->where('is_featured', 1)->count_all_results($this->workshops_table);
         
         // Today's bookings
@@ -231,6 +231,7 @@ class Admin_model extends CI_Model {
             $this->db->group_end();
         }
         
+		 
         // Column-specific search
         foreach ($request['columns'] as $key => $column) {
             if ($column['searchable'] == 'true' && !empty($column['search']['value'])) {
@@ -242,6 +243,7 @@ class Admin_model extends CI_Model {
                 }
             }
         }
+		 
         
         // Ordering
         if (!empty($request['order'])) {
@@ -337,7 +339,7 @@ class Admin_model extends CI_Model {
         // Columns
         $columns = [
             0 => 'w.id',
-            1 => 'w.workshop_name',
+            1 => 'w.name',
             2 => 'w.city',
             3 => 'w.is_active',
             4 => 'w.is_featured',
@@ -345,8 +347,18 @@ class Admin_model extends CI_Model {
             6 => 'w.created_at'
         ];
         
-        // Base query
-        $this->db->select('w.*, u.name as owner_name, u.email as owner_email');
+        // Count total records (no search filter)
+        $this->db->from('workshops w');
+        $this->db->where('w.is_deleted', 0);
+        if ($verification_status === 'pending') {
+            $this->db->where('w.verified_at IS NULL', NULL, FALSE);
+        } elseif ($verification_status === 'verified') {
+            $this->db->where('w.verified_at IS NOT NULL', NULL, FALSE);
+        }
+        $total_records = $this->db->count_all_results();
+
+        // Base query with search
+        $this->db->select('w.*, u.full_name as owner_name, u.email as owner_email');
         $this->db->from('workshops w');
         $this->db->join('users u', 'u.id = w.user_id', 'left');
         $this->db->where('w.is_deleted', 0);
@@ -362,14 +374,33 @@ class Admin_model extends CI_Model {
         if (!empty($request['search']['value'])) {
             $search = $this->db->escape_like_string($request['search']['value']);
             $this->db->group_start();
-            $this->db->like('w.workshop_name', $search);
+            $this->db->like('w.name', $search);
             $this->db->or_like('w.city', $search);
-            $this->db->or_like('u.name', $search);
+            $this->db->or_like('u.full_name', $search);
             $this->db->group_end();
         }
-        
-        // Count total before filtering
-        $total_records = $this->db->count_all_results();
+
+        // Count filtered records (after search)
+        $filtered_records = $this->db->count_all_results();
+
+        // Re-apply base query for actual data fetch
+        $this->db->select('w.*, u.full_name as owner_name, u.email as owner_email');
+        $this->db->from('workshops w');
+        $this->db->join('users u', 'u.id = w.user_id', 'left');
+        $this->db->where('w.is_deleted', 0);
+        if ($verification_status === 'pending') {
+            $this->db->where('w.verified_at IS NULL', NULL, FALSE);
+        } elseif ($verification_status === 'verified') {
+            $this->db->where('w.verified_at IS NOT NULL', NULL, FALSE);
+        }
+        if (!empty($request['search']['value'])) {
+            $search = $this->db->escape_like_string($request['search']['value']);
+            $this->db->group_start();
+            $this->db->like('w.name', $search);
+            $this->db->or_like('w.city', $search);
+            $this->db->or_like('u.full_name', $search);
+            $this->db->group_end();
+        }
         
         // Ordering
         if (!empty($request['order'])) {
@@ -391,9 +422,6 @@ class Admin_model extends CI_Model {
         // Execute query
         $query = $this->db->get();
         $result = $query->result_array();
-        
-        // Count filtered records (simplified)
-        $filtered_records = count($result);
         
         return [
             'draw' => isset($request['draw']) ? intval($request['draw']) : 1,
@@ -473,11 +501,10 @@ class Admin_model extends CI_Model {
     public function get_pending_verification_workshops()
     {
         return $this->db
-            ->select('w.*, u.name as owner_name, u.email as owner_email')
+            ->select('w.*, u.full_name as owner_name, u.email as owner_email')
             ->from('workshops w')
             ->join('users u', 'u.id = w.user_id')
             ->where('w.is_deleted', 0)
-            ->where('w.is_active', 1)
             ->where('w.verified_at IS NULL', NULL, FALSE)
             ->order_by('w.created_at', 'DESC')
             ->get()
@@ -498,7 +525,7 @@ class Admin_model extends CI_Model {
     public function get_pending_reviews($limit = 50, $offset = 0)
     {
         return $this->db
-            ->select('r.*, u.name as reviewer_name, w.workshop_name, COUNT(rl.id) as report_count')
+            ->select('r.*, u.full_name as reviewer_name, u.email as reviewer_email, w.name as workshop_name, COUNT(rl.id) as report_count')
             ->from('reviews r')
             ->join('users u', 'u.id = r.user_id')
             ->join('workshops w', 'w.id = r.workshop_id')
@@ -506,7 +533,7 @@ class Admin_model extends CI_Model {
             ->where('r.is_deleted', 0)
             ->where('r.moderation_status', 'pending')
             ->group_by('r.id')
-            ->order_by('r.report_count', 'DESC')
+            ->order_by('COUNT(rl.id)', 'DESC')
             ->order_by('r.created_at', 'DESC')
             ->limit($limit, $offset)
             ->get()
@@ -653,7 +680,7 @@ class Admin_model extends CI_Model {
      */
     public function get_activity_logs($filters = [], $limit = 100, $offset = 0)
     {
-        $this->db->select('al.*, u.name as actor_name, tu.name as target_user_name, w.workshop_name as target_workshop_name');
+        $this->db->select('al.*, u.full_name as actor_name, tu.full_name as target_user_name, w.name as target_workshop_name');
         $this->db->from('activity_logs al');
         $this->db->join('users u', 'u.id = al.user_id', 'left');
         $this->db->join('users tu', 'tu.id = al.target_user_id', 'left');
@@ -664,7 +691,7 @@ class Admin_model extends CI_Model {
             $this->db->where('al.user_id', $filters['user_id']);
         }
         if (!empty($filters['workshop_id'])) {
-            $this->db->where('al.workshop_id', $filters['workshop_id']);
+            $this->db->where('al.target_workshop_id', $filters['workshop_id']);
         }
         if (!empty($filters['action_type'])) {
             $this->db->where('al.action_type', $filters['action_type']);
@@ -696,7 +723,7 @@ class Admin_model extends CI_Model {
             $this->db->where('al.user_id', $filters['user_id']);
         }
         if (!empty($filters['workshop_id'])) {
-            $this->db->where('al.workshop_id', $filters['workshop_id']);
+            $this->db->where('al.target_workshop_id', $filters['workshop_id']);
         }
         if (!empty($filters['action_type'])) {
             $this->db->where('al.action_type', $filters['action_type']);

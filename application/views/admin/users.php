@@ -11,6 +11,12 @@
     <style>
         .stat-card { border-radius: 10px; transition: transform 0.2s; }
         .stat-card:hover { transform: translateY(-5px); }
+		
+		.setting-card { min-height: 250px; }
+        .sidebar { min-height: calc(100vh - 56px); background-color: #343a40; }
+        .sidebar a { color: #fff; text-decoration: none; padding: 10px 15px; display: block; }
+        .sidebar a:hover, .sidebar a.active { background-color: #495057; }
+        .sidebar i { width: 25px; }
     </style>
 </head>
 <body>
@@ -18,7 +24,7 @@
         <div class="container-fluid">
             <span class="navbar-brand"><i class="fas fa-shield-alt"></i> Admin Panel</span>
             <div class="d-flex align-items-center">
-                <span class="text-light me-3"><?php echo $user->name; ?></span>
+                <span class="text-light me-3"><?php echo $user->full_name; ?></span>
                 <a href="<?php echo site_url('auth/logout'); ?>" class="btn btn-outline-light btn-sm">Logout</a>
             </div>
         </div>
@@ -174,7 +180,7 @@
                                 actions += '<a href="<?php echo site_url("admin/activate_user/"); ?>' + row.id + '" class="btn btn-sm btn-success" onclick="return confirm(\'Aktifkan pengguna ini?\')"><i class="fas fa-check"></i></a> ';
                             }
                             
-                            actions += '<button class="btn btn-sm btn-primary" onclick="openResetModal(' + row.id + ')"><i class="fas fa-key"></i></a> ';
+                            actions += '<button class="btn btn-sm btn-primary" onclick="openResetModal(' + row.id + ')"><i class="fas fa-key"></i></button> ';
                             
                             if (row.id != <?php echo $this->session->userdata('user_id'); ?>) {
                                 actions += '<a href="<?php echo site_url("admin/delete_user/"); ?>' + row.id + '" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus pengguna ini? Tindakan ini tidak dapat dibatalkan.\')"><i class="fas fa-trash"></i></a>';
@@ -206,11 +212,5 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
 </body>
 </html>

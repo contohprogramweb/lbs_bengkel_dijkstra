@@ -1,1 +1,42 @@
-Nothing should be ignored based on the provided file changes. The modification of 'application/models/Admin_model.php' is a source code file and does not require any new ignore rules. There are no build artifacts, dependencies, or temporary files in the changes that would warrant adding ignore patterns.
+```
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
+dist/
+build/
+target/
+
+# Dependencies
+.venv/
+venv/
+node_modules/
+.mypy_cache/
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Database
+*.sql
+```

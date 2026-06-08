@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <span class="navbar-brand"><i class="fas fa-shield-alt"></i> Admin Panel</span>
             <div class="d-flex align-items-center">
-                <span class="text-light me-3"><?php echo $user->name; ?></span>
+                <span class="text-light me-3"><?php echo $user->full_name; ?></span>
                 <a href="<?php echo site_url('auth/logout'); ?>" class="btn btn-outline-light btn-sm">Logout</a>
             </div>
         </div>

@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <span class="navbar-brand"><i class="fas fa-shield-alt"></i> Admin Panel</span>
             <div class="d-flex align-items-center">
-                <span class="text-light me-3"><?php echo $user->name; ?></span>
+                <span class="text-light me-3"><?php echo $user->full_name; ?></span>
                 <a href="<?php echo site_url('auth/logout'); ?>" class="btn btn-outline-light btn-sm">Logout</a>
             </div>
         </div>
@@ -57,9 +57,9 @@
                         <select class="form-select" name="action_type">
                             <option value="">Semua</option>
                             <?php foreach($action_types as $type): ?>
-                                <option value="<?php echo $type; ?>" 
-                                        <?php echo ($filters['action_type'] ?? '') === $type ? 'selected' : ''; ?>>
-                                    <?php echo $type; ?>
+                                <option value="<?php echo $type['action_type']; ?>" 
+                                        <?php echo ($filters['action_type'] ?? '') === $type['action_type'] ? 'selected' : ''; ?>>
+                                    <?php echo $type['action_type']; ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
