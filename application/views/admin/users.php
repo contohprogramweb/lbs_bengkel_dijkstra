@@ -79,7 +79,7 @@
                     <table id="usersTable" class="table table-striped table-hover" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th width="5%">No</th>
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Role</th>
@@ -140,7 +140,12 @@
                     }
                 },
                 columns: [
-                    { data: 'id' },
+                    { 
+                        data: null,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
                     { 
                         data: 'full_name',
                         render: function(data, type, row) {
@@ -194,7 +199,7 @@
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json'
                 },
-                order: [[0, 'desc']]
+                order: [[1, 'asc']]
             });
 
             $('#roleFilter').on('change', function() {

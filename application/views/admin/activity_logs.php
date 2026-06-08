@@ -101,6 +101,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th width="5%">No</th>
                                     <th>Waktu</th>
                                     <th>Pengguna</th>
                                     <th>Aksi</th>
@@ -109,8 +110,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($logs as $log): ?>
+                                <?php 
+                                $no = $filters['page'] * 50 + 1;
+                                foreach($logs as $log): 
+                                ?>
                                 <tr>
+                                    <td><?php echo $no++; ?></td>
                                     <td>
                                         <small><?php echo date('d M Y, H:i', strtotime($log->created_at)); ?></small>
                                     </td>

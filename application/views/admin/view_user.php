@@ -129,7 +129,7 @@
                     <div class="card-body">
                         <table class="table table-borderless">
                             <tr>
-                                <td class="info-label" style="width: 200px;">ID</td>
+                                <td class="info-label" style="width: 200px;">Nomor</td>
                                 <td><?php echo $user_detail->id; ?></td>
                             </tr>
                             <tr>
