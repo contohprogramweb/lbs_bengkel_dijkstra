@@ -26,6 +26,14 @@ class User extends Customer_Controller {
     // --------------------------------------------------------------------
 
     /**
+     * User dashboard - Default index method
+     */
+    public function index()
+    {
+        $this->dashboard();
+    }
+
+    /**
      * User dashboard
      */
     public function dashboard()
@@ -34,8 +42,8 @@ class User extends Customer_Controller {
         $data['user'] = $this->current_user;
 
         // Load user statistics
-        $this->load->model('booking_model', TRUE);
-        $this->load->model('vehicle_model', TRUE);
+        $this->load->model('booking_model');
+        $this->load->model('vehicle_model');
 
         // Get booking stats
         $data['stats'] = [
