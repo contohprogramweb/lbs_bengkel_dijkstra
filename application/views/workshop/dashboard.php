@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * Workshop Dashboard View
  * 
@@ -7,6 +7,7 @@
  * @var array $stats Statistics
  * @var int $services_count Number of services
  */
+$this->load->view('layouts/workshop_layout', ['content_for_layout' => '']); 
 ?>
 
 <div class="container-fluid">
