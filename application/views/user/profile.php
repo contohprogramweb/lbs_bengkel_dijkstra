@@ -8,7 +8,7 @@
 
 <div class="container-fluid py-3">
     <div class="row justify-content-center">
-        <div class="col-12 col-lg-10 col-xl-8">
+        <div class="col-12">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-white py-3">
                     <h5 class="mb-0 text-primary"><i class="fas fa-user-circle me-2"></i>Informasi Profil</h5>
@@ -16,12 +16,12 @@
                 <div class="card-body p-4">
                     <div class="row g-4">
                         <!-- Avatar Section -->
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-3 text-center">
                             <div class="position-relative d-inline-block">
                                 <?php if ($user->avatar): ?>
-                                    <img src="<?php echo base_url($user->avatar); ?>" alt="Avatar" class="rounded-circle shadow-sm" style="width: 150px; height: 150px; object-fit: cover;">
+                                    <img src="<?php echo base_url($user->avatar); ?>" alt="Avatar" class="rounded-circle shadow-sm" style="width: 160px; height: 160px; object-fit: cover;">
                                 <?php else: ?>
-                                    <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center text-white shadow-sm" style="width: 150px; height: 150px; font-size: 3.5rem;">
+                                    <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center text-white shadow-sm" style="width: 160px; height: 160px; font-size: 4rem;">
                                         <?php echo strtoupper(substr($user->full_name, 0, 1)); ?>
                                     </div>
                                 <?php endif; ?>
@@ -34,11 +34,11 @@
                         </div>
                         
                         <!-- Profile Information -->
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <table class="table table-borderless table-hover mb-0">
                                 <tbody>
                                     <tr>
-                                        <th scope="row" class="text-muted fw-normal" style="width: 140px;">Nama Lengkap</th>
+                                        <th scope="row" class="text-muted fw-normal" style="width: 160px;">Nama Lengkap</th>
                                         <td class="fw-semibold"><?php echo e($user->full_name); ?></td>
                                     </tr>
                                     <tr>
