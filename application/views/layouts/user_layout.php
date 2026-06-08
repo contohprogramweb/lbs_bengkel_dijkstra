@@ -24,15 +24,27 @@
         :root {
             --sidebar-bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
+        * {
+            box-sizing: border-box;
+        }
+        html, body { 
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
         body { 
             background-color: #f8f9fa; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
         }
         .sidebar {
             min-height: 100vh;
             background: var(--sidebar-bg-gradient);
             color: white;
             position: fixed;
+            top: 0;
+            left: 0;
             width: 250px;
             transition: transform 0.3s ease;
             z-index: 1000;
@@ -48,9 +60,13 @@
             padding: 20px; 
             margin-left: 250px;
             transition: margin-left 0.3s ease;
+            width: calc(100% - 250px);
+            max-width: calc(100vw - 250px);
         }
         .main-content.expanded {
             margin-left: 0;
+            width: 100%;
+            max-width: 100vw;
         }
         .card-stat { border-radius: 15px; border: none; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .card-stat:hover { transform: translateY(-5px); }
@@ -66,6 +82,8 @@
             }
             .main-content {
                 margin-left: 0;
+                width: 100%;
+                max-width: 100vw;
             }
             .sidebar-toggle {
                 display: block !important;
@@ -90,8 +108,8 @@
         <i class="fas fa-bars"></i>
     </button>
     
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid px-0">
+        <div class="row mx-0">
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 sidebar p-0" id="sidebar">
                 <div class="sidebar-brand">
@@ -224,6 +242,31 @@
             </div>
         </div>
     </div>
+    
+    <style>
+        /* Additional responsive fixes for cards */
+        .card-stat {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .col-md-6, .col-lg-3, .col-md-9, .col-lg-10, .col-md-3, .col-lg-2 {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        /* Ensure content doesn't overflow */
+        .main-content * {
+            max-width: 100%;
+        }
+        /* Fix table responsiveness */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
     
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
