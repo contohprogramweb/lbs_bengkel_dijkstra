@@ -1,28 +1,6 @@
 ```
-# Compiled and build artifacts
-*.pyc
-__pycache__/
-
-# Dependencies
-vendor/
-node_modules/
-composer.lock
-
-# Logs and temp files
-*.log
-*.tmp
-*.swp
-
-# Environment
-.env
-.env.local
-*.env.*
-
-# Editors
-.vscode/
-.idea/
-
-# OS generated files
-.DS_Store
-Thumbs.db
+# Database migrations and schema files
+database/migrations/*.sql
+database/schema.sql
+database/seeds.sql
 ```

@@ -188,7 +188,7 @@ class Admin_model extends CI_Model {
         // Columns
         $columns = [
             0 => 'u.id',
-            1 => 'u.name',
+            1 => 'u.full_name',
             2 => 'u.email',
             3 => 'u.role',
             4 => 'u.is_active',
@@ -210,7 +210,7 @@ class Admin_model extends CI_Model {
         if (!empty($request['search']['value'])) {
             $search = $this->db->escape_like_string($request['search']['value']);
             $this->db->group_start();
-            $this->db->like('u.name', $search);
+            $this->db->like('u.full_name', $search);
             $this->db->or_like('u.email', $search);
             $this->db->or_like('u.role', $search);
             $this->db->group_end();
@@ -262,7 +262,7 @@ class Admin_model extends CI_Model {
         if (!empty($request['search']['value'])) {
             $search = $this->db->escape_like_string($request['search']['value']);
             $this->db->group_start();
-            $this->db->like('u.name', $search);
+            $this->db->like('u.full_name', $search);
             $this->db->or_like('u.email', $search);
             $this->db->or_like('u.role', $search);
             $this->db->group_end();
