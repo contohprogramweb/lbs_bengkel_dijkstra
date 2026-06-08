@@ -721,10 +721,6 @@ class Booking_model extends CI_Model {
 
         return $this->db->get()->result_array();
     }
-}
-
-/* End of file Booking_model.php */
-/* Location: ./application/models/Booking_model.php */
 
     // ================================================================
     // WORKSHOP BOOKING MANAGEMENT (for Order Controller)
