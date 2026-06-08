@@ -10,6 +10,8 @@ composer.lock
 # Logs and temp files
 *.log
 *.tmp
+*.swp
+*.swo
 
 # Environment
 .env
@@ -20,7 +22,7 @@ composer.lock
 .vscode/
 .idea/
 
-# OS generated files
+# System files
 .DS_Store
 Thumbs.db
 ```
