@@ -239,7 +239,7 @@ class Booking_model extends CI_Model {
      */
     public function get_user_bookings($user_id, $filters = [])
     {
-        $this->db->select('b.*, w.name as workshop_name, v.vehicle_number, v.vehicle_type, v.brand');
+        $this->db->select('b.*, w.name as workshop_name, v.vehicle_number, v.vehicle_type, v.brand, v.model as vehicle_model, v.year as vehicle_year');
         $this->db->from($this->table_bookings . ' b');
         $this->db->join($this->table_workshops . ' w', 'b.workshop_id = w.id', 'left');
         $this->db->join($this->table_vehicles . ' v', 'b.vehicle_id = v.id', 'left');
@@ -250,12 +250,32 @@ class Booking_model extends CI_Model {
             $this->db->where('b.status', $filters['status']);
         }
 
-        if (!empty($filters['start_date'])) {
-            $this->db->where('b.scheduled_date >=', $filters['start_date']);
+        if (!empty($filters['approval_status'])) {
+            $this->db->where('b.approval_status', $filters['approval_status']);
         }
 
-        if (!empty($filters['end_date'])) {
+        if (!empty($filters['search'])) {
+            $this->db->group_start();
+            $this->db->like('b.booking_number', $filters['search']);
+            $this->db->or_like('w.name', $filters['search']);
+            $this->db->group_end();
+        }
+
+        if (!empty($filters['year']) && !empty($filters['month'])) {
+            $start_date = $filters['year'] . '-' . str_pad($filters['month'], 2, '0', STR_PAD_LEFT) . '-01';
+            $end_date = date('Y-m-t', strtotime($start_date));
+            $this->db->where('b.scheduled_date >=', $start_date);
+            $this->db->where('b.scheduled_date <=', $end_date);
+        } elseif (!empty($filters['start_date'])) {
+            $this->db->where('b.scheduled_date >=', $filters['start_date']);
+        } elseif (!empty($filters['end_date'])) {
             $this->db->where('b.scheduled_date <=', $filters['end_date']);
+        }
+
+        // Support limit parameter
+        $limit = $filters['limit'] ?? NULL;
+        if ($limit) {
+            $this->db->limit($limit);
         }
 
         $this->db->order_by('b.scheduled_date', 'DESC');
@@ -859,12 +879,11 @@ class Booking_model extends CI_Model {
         $this->db->where('status', 'completed');
         $stats['completed'] = $this->db->get()->row()->completed ?? 0;
 
-        // Upcoming bookings
-        $this->db->select('COUNT(*) as upcoming');
+        // In Progress bookings
+        $this->db->select('COUNT(*) as in_progress');
         $this->db->where('user_id', $user_id);
-        $this->db->where_in('status', ['pending', 'accepted', 'processed']);
-        $this->db->where('scheduled_date >=', date('Y-m-d'));
-        $stats['upcoming'] = $this->db->get()->row()->upcoming ?? 0;
+        $this->db->where('status', 'in_progress');
+        $stats['in_progress'] = $this->db->get()->row()->in_progress ?? 0;
 
         return $stats;
     }
