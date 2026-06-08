@@ -33,16 +33,20 @@ class User extends Customer_Controller {
         $data['page_title'] = 'Dashboard';
         $data['user'] = $this->current_user;
 
-        // Load user statistics (can be expanded later)
+        // Load user statistics
         $this->load->model('booking_model', TRUE);
         $this->load->model('vehicle_model', TRUE);
 
+        // Get booking stats
         $data['stats'] = [
-            'total_bookings' => 0,
-            'pending_bookings' => 0,
-            'completed_bookings' => 0,
-            'total_vehicles' => 0
+            'total_bookings' => $this->booking_model->count_by_user($this->user_id),
+            'pending_bookings' => $this->booking_model->count_by_user($this->user_id, 'pending'),
+            'completed_bookings' => $this->booking_model->count_by_user($this->user_id, 'completed'),
+            'total_vehicles' => $this->vehicle_model->count_by_user($this->user_id)
         ];
+
+        // Get recent bookings
+        $data['recent_bookings'] = $this->booking_model->get_recent_by_user($this->user_id, 5);
 
         $this->render('user/dashboard', $data);
     }

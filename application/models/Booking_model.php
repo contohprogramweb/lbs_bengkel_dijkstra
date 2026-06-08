@@ -870,6 +870,47 @@ class Booking_model extends CI_Model {
     }
 
     /**
+     * Count bookings by user
+     *
+     * @param int $user_id
+     * @param string|null $status Optional status filter
+     * @return int
+     */
+    public function count_by_user($user_id, $status = NULL)
+    {
+        $this->db->select('COUNT(*) as total');
+        $this->db->from($this->table_bookings);
+        $this->db->where('user_id', $user_id);
+        $this->db->where('is_deleted', 0);
+        
+        if ($status !== NULL) {
+            $this->db->where('status', $status);
+        }
+        
+        return (int) $this->db->get()->row()->total;
+    }
+
+    /**
+     * Get recent bookings by user
+     *
+     * @param int $user_id
+     * @param int $limit
+     * @return array
+     */
+    public function get_recent_by_user($user_id, $limit = 5)
+    {
+        $this->db->select('b.*, w.name as workshop_name');
+        $this->db->from($this->table_bookings . ' b');
+        $this->db->join('workshops w', 'b.workshop_id = w.id', 'left');
+        $this->db->where('b.user_id', $user_id);
+        $this->db->where('b.is_deleted', 0);
+        $this->db->order_by('b.created_at', 'DESC');
+        $this->db->limit($limit);
+        
+        return $this->db->get()->result();
+    }
+
+    /**
      * Get pending approvals for user
      *
      * @param int $user_id
