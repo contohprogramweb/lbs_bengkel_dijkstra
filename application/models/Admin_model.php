@@ -674,11 +674,9 @@ class Admin_model extends CI_Model {
      */
     public function get_activity_logs($filters = [], $limit = 100, $offset = 0)
     {
-        $this->db->select('al.*, u.full_name as actor_name, tu.full_name as target_user_name, w.name as target_workshop_name');
+        $this->db->select('al.*, u.full_name as user_name, u.email as user_email');
         $this->db->from('activity_logs al');
         $this->db->join('users u', 'u.id = al.user_id', 'left');
-        $this->db->join('users tu', 'tu.id = al.target_user_id', 'left');
-        $this->db->join('workshops w', 'w.id = al.target_workshop_id', 'left');
         
         // Apply filters
         if (!empty($filters['user_id'])) {
@@ -700,7 +698,24 @@ class Admin_model extends CI_Model {
         $this->db->order_by('al.created_at', 'DESC');
         $this->db->limit($limit, $offset);
         
-        return $this->db->get()->result();
+        $query = $this->db->get();
+        $results = $query->result();
+        
+        // Add target_type and target_id for compatibility with view
+        foreach ($results as $row) {
+            if (!empty($row->target_user_id)) {
+                $row->target_type = 'user';
+                $row->target_id = $row->target_user_id;
+            } elseif (!empty($row->target_workshop_id)) {
+                $row->target_type = 'workshop';
+                $row->target_id = $row->target_workshop_id;
+            } else {
+                $row->target_type = null;
+                $row->target_id = null;
+            }
+        }
+        
+        return $results;
     }
 
     /**
