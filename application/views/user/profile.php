@@ -1,16 +1,16 @@
 <?php $this->load->view('layouts/user_layout', ['content_for_layout' => '']); ?>
 
-<div class="card shadow-sm">
+<div class="card shadow-sm" style="width: 100%; max-width: 100%;">
     <div class="card-header bg-white">
         <h5 class="mb-0"><i class="fas fa-user"></i> Informasi Profil</h5>
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-4 text-center mb-4">
+        <div class="row" style="margin: 0; width: 100%;">
+            <div class="col-md-4 text-center mb-4" style="box-sizing: border-box;">
                 <?php if ($user->avatar): ?>
-                    <img src="<?php echo base_url($user->avatar); ?>" alt="Avatar" class="rounded-circle" width="150" height="150">
+                    <img src="<?php echo base_url($user->avatar); ?>" alt="Avatar" class="rounded-circle" width="150" height="150" style="max-width: 100%; height: auto;">
                 <?php else: ?>
-                    <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center text-white" style="width: 150px; height: 150px; font-size: 3rem;">
+                    <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center text-white" style="width: 150px; height: 150px; font-size: 3rem; max-width: 100%;">
                         <?php echo strtoupper(substr($user->full_name, 0, 1)); ?>
                     </div>
                 <?php endif; ?>
@@ -18,35 +18,37 @@
                     <a href="<?php echo site_url('user/edit_profile'); ?>" class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i> Edit Foto</a>
                 </div>
             </div>
-            <div class="col-md-8">
-                <table class="table table-borderless">
-                    <tr>
-                        <th width="150">Nama Lengkap</th>
-                        <td><?php echo htmlspecialchars($user->full_name); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td><?php echo htmlspecialchars($user->email); ?> 
-                            <?php if ($user->email_verified_at): ?>
-                                <span class="badge bg-success"><i class="fas fa-check"></i> Terverifikasi</span>
-                            <?php else: ?>
-                                <span class="badge bg-warning"><i class="fas fa-clock"></i> Belum Terverifikasi</span>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Telepon</th>
-                        <td><?php echo htmlspecialchars($user->phone ?? '-'); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Role</th>
-                        <td><span class="badge bg-info"><?php echo ucfirst($user->role); ?></span></td>
-                    </tr>
-                    <tr>
-                        <th>Terakhir Login</th>
-                        <td><?php echo $user->last_login_at ? date('d/m/Y H:i', strtotime($user->last_login_at)) : '-'; ?></td>
-                    </tr>
-                </table>
+            <div class="col-md-8" style="box-sizing: border-box; overflow: hidden;">
+                <div class="table-responsive" style="width: 100%;">
+                    <table class="table table-borderless" style="width: 100%; margin: 0;">
+                        <tr>
+                            <th width="150">Nama Lengkap</th>
+                            <td><?php echo htmlspecialchars($user->full_name); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td><?php echo htmlspecialchars($user->email); ?> 
+                                <?php if ($user->email_verified_at): ?>
+                                    <span class="badge bg-success"><i class="fas fa-check"></i> Terverifikasi</span>
+                                <?php else: ?>
+                                    <span class="badge bg-warning"><i class="fas fa-clock"></i> Belum Terverifikasi</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Telepon</th>
+                            <td><?php echo htmlspecialchars($user->phone ?? '-'); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Role</th>
+                            <td><span class="badge bg-info"><?php echo ucfirst($user->role); ?></span></td>
+                        </tr>
+                        <tr>
+                            <th>Terakhir Login</th>
+                            <td><?php echo $user->last_login_at ? date('d/m/Y H:i', strtotime($user->last_login_at)) : '-'; ?></td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="mt-4">
                     <a href="<?php echo site_url('user/edit_profile'); ?>" class="btn btn-primary"><i class="fas fa-edit"></i> Edit Profil</a>
                     <a href="<?php echo site_url('user/change_password'); ?>" class="btn btn-outline-secondary"><i class="fas fa-key"></i> Ubah Password</a>

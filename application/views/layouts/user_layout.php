@@ -31,12 +31,12 @@
             overflow-x: hidden;
             width: 100%;
             max-width: 100vw;
+            margin: 0;
+            padding: 0;
         }
         body { 
             background-color: #f8f9fa; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
         }
         .sidebar {
             min-height: 100vh;
@@ -62,6 +62,8 @@
             transition: margin-left 0.3s ease;
             width: calc(100% - 250px);
             max-width: calc(100vw - 250px);
+            min-height: 100vh;
+            box-sizing: border-box;
         }
         .main-content.expanded {
             margin-left: 0;
@@ -71,6 +73,21 @@
         .card-stat { border-radius: 15px; border: none; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .card-stat:hover { transform: translateY(-5px); }
         .card-stat .icon { font-size: 2.5rem; opacity: 0.3; }
+        
+        /* Profile page specific fixes */
+        .main-content .card {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        .main-content .table {
+            width: 100%;
+            max-width: 100%;
+        }
+        .main-content img {
+            max-width: 100%;
+            height: auto;
+        }
         
         /* Mobile Responsive */
         @media (max-width: 768px) {
@@ -84,11 +101,20 @@
                 margin-left: 0;
                 width: 100%;
                 max-width: 100vw;
+                padding: 15px;
             }
             .sidebar-toggle {
                 display: block !important;
             }
             .card-stat { margin-bottom: 15px; }
+            /* Profile responsive adjustments */
+            .col-md-4, .col-md-8 {
+                width: 100%;
+                max-width: 100%;
+            }
+            .table th, .table td {
+                font-size: 0.9rem;
+            }
         }
         
         .sidebar-toggle {
@@ -104,11 +130,11 @@
 </head>
 <body>
     <!-- Mobile Toggle Button -->
-    <button class="sidebar-toggle d-md-none" onclick="toggleSidebar()">
+    <button class="sidebar-toggle d-md-none" onclick="toggleSidebar()" style="position: fixed; top: 15px; left: 15px; z-index: 1001;">
         <i class="fas fa-bars"></i>
     </button>
     
-    <div class="container-fluid px-0">
+    <div class="container-fluid px-0" style="margin: 0; padding: 0; width: 100%; max-width: 100vw;">
         <div class="row mx-0">
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 sidebar p-0" id="sidebar">
@@ -139,9 +165,9 @@
             </div>
             
             <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 main-content" id="mainContent">
+            <div class="col-md-9 col-lg-10 main-content" id="mainContent" style="box-sizing: border-box;">
                 <!-- Header -->
-                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2" style="width: 100%; max-width: 100%;">
                     <div class="d-flex align-items-center">
                         <button class="sidebar-toggle d-md-none me-2" onclick="toggleSidebar()">
                             <i class="fas fa-bars"></i>
@@ -252,19 +278,33 @@
         .row {
             margin-left: 0;
             margin-right: 0;
+            width: 100%;
         }
-        .col-md-6, .col-lg-3, .col-md-9, .col-lg-10, .col-md-3, .col-lg-2 {
+        .col-md-6, .col-lg-3, .col-md-9, .col-lg-10, .col-md-3, .col-lg-2, .col-md-4, .col-md-8 {
             padding-left: 15px;
             padding-right: 15px;
+            box-sizing: border-box;
         }
         /* Ensure content doesn't overflow */
         .main-content * {
             max-width: 100%;
+            box-sizing: border-box;
         }
         /* Fix table responsiveness */
         .table-responsive {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+        }
+        /* Prevent horizontal scroll on profile page */
+        .profile-card-container {
+            width: 100%;
+            overflow: hidden;
+        }
+        /* Ensure proper spacing with sidebar */
+        @media (min-width: 769px) {
+            .main-content {
+                padding-right: 20px;
+            }
         }
     </style>
     
