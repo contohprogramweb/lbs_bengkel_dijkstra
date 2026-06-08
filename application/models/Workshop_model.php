@@ -247,6 +247,68 @@ class Workshop_model extends CI_Model {
     }
 
     /**
+     * Get workshops by user ID (owner)
+     * @param int $user_id User ID
+     * @return object|null Workshop data as object or null if not found
+     */
+    public function get_by_owner($user_id)
+    {
+        $this->db->select('*');
+        $this->db->from(self::TABLE_WORKSHOPS);
+        $this->db->where('user_id', $user_id);
+        $this->db->where('is_deleted', 0);
+        $this->db->order_by('created_at', 'DESC');
+        
+        return $this->db->get()->row();
+    }
+
+    /**
+     * Get all services for a workshop
+     * @param int $workshop_id Workshop ID
+     * @param bool $available_only Only return available services
+     * @return array Array of services
+     */
+    public function get_services($workshop_id, $available_only = TRUE)
+    {
+        $this->db->where('workshop_id', $workshop_id);
+        $this->db->where('is_deleted', 0);
+        
+        if ($available_only) {
+            $this->db->where('is_available', 1);
+        }
+        
+        $this->db->order_by('service_category', 'ASC');
+        $this->db->order_by('service_name', 'ASC');
+        
+        return $this->db->get(self::TABLE_SERVICES)->result();
+    }
+
+    /**
+     * Get service by ID
+     * @param int $id Service ID
+     * @return object|null Service data
+     */
+    public function get_service_by_id($id)
+    {
+        return $this->db->get_where(self::TABLE_SERVICES, [
+            'id' => $id,
+            'is_deleted' => 0
+        ])->row();
+    }
+
+    /**
+     * Insert service
+     * @param array $data Service data
+     * @return int Insert ID
+     */
+    public function insert_service($data)
+    {
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $this->db->insert(self::TABLE_SERVICES, $data);
+        return $this->db->insert_id();
+    }
+
+    /**
      * Get workshops by user ID
      * @param int $user_id User ID
      * @return array Array of workshops
@@ -260,6 +322,32 @@ class Workshop_model extends CI_Model {
         $this->db->order_by('created_at', 'DESC');
 
         return $this->db->get()->result_array();
+    }
+
+    // ================================================================
+    // HELPER METHODS
+    // ================================================================
+
+    /**
+     * Geocode address to get latitude and longitude
+     * @param string $address Full address
+     * @return array|null Array with latitude and longitude, or null if failed
+     */
+    public function geocode_address($address)
+    {
+        // Simple implementation - in production, use Google Maps API or similar
+        // For now, return default coordinates (Jakarta)
+        // You can integrate with actual geocoding service later
+        
+        // Try to get coordinates from cached data or external API
+        $ci =& get_instance();
+        $ci->load->helper('file');
+        
+        // Default to Jakarta coordinates if geocoding fails
+        return [
+            'latitude' => -6.2088,
+            'longitude' => 106.8456
+        ];
     }
 }
 
