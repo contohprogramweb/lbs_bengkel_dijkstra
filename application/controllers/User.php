@@ -99,7 +99,14 @@ class User extends Customer_Controller {
 
                 // Handle avatar upload
                 if (!empty($_FILES['avatar']['name'])) {
-                    $config['upload_path'] = $this->config->item('upload_path_profiles');
+                    $upload_path = $this->config->item('upload_path_profiles');
+                    
+                    // Ensure upload directory exists
+                    if (!is_dir($upload_path)) {
+                        mkdir($upload_path, 0755, TRUE);
+                    }
+                    
+                    $config['upload_path'] = $upload_path;
                     $config['allowed_types'] = $this->config->item('allowed_types_profiles');
                     $config['max_size'] = $this->config->item('max_size_profiles');
                     $config['file_name'] = 'avatar_' . $this->user_id . '_' . time();
