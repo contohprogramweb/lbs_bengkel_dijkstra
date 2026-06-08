@@ -6,7 +6,17 @@
     <title><?php echo $page_title; ?> - <?php echo $app_name; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet">
     <style>
+        .stat-card { border-radius: 10px; transition: transform 0.2s; }
+        .stat-card:hover { transform: translateY(-5px); }
+        
+        .setting-card { min-height: 250px; }
+        .sidebar { min-height: calc(100vh - 56px); background-color: #343a40; }
+        .sidebar a { color: #fff; text-decoration: none; padding: 10px 15px; display: block; }
+        .sidebar a:hover, .sidebar a.active { background-color: #495057; }
+        .sidebar i { width: 25px; }
         .log-detail { font-family: monospace; font-size: 0.9em; background: #f8f9fa; padding: 10px; border-radius: 5px; }
     </style>
 </head>
@@ -21,18 +31,23 @@
         </div>
     </nav>
     
-    <div class="container-fluid mt-4">
-        <div class="row mb-4">
-            <div class="col-12">
-                <h2><i class="fas fa-history"></i> <?php echo $page_title; ?></h2>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="<?php echo site_url('admin/dashboard'); ?>">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Log Aktivitas</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+    <div class="container-fluid">
+        <div class="row">
+            <?php $this->load->view('admin/_sidebar'); ?>
+            
+            <!-- Main Content -->
+            <div class="col-md-10 p-4">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2><i class="fas fa-history"></i> <?php echo $page_title; ?></h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="<?php echo site_url('admin/dashboard'); ?>">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Log Aktivitas</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
 
         <div class="card mb-4">
             <div class="card-header">
@@ -186,7 +201,15 @@
             </div>
         </div>
     </div>
+            </div>
+        </div>
+    </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
 </body>
 </html>
