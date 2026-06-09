@@ -58,7 +58,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-3">
-                            <div class="info-box bg-dark">
+                            <div class="info-box bg-admin-dark">
                                 <span class="info-box-icon"><i class="fas fa-store"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Bengkel Aktif</span>
@@ -241,6 +241,7 @@
 .bg-warning { background-color: #ffc107 !important; color: #1f2d3d; }
 .bg-info { background-color: #17a2b8 !important; color: white; }
 .bg-dark { background-color: #343a40 !important; color: white; }
+.bg-admin-dark { background: linear-gradient(135deg, #212529 0%, #1a1e21 100%); color: white; }
 .progress { background-color: #e9ecef; }
 </style>
 

@@ -151,5 +151,35 @@
 <style>
 .profile-img { width: 150px; height: 150px; object-fit: cover; border-radius: 50%; }
 .info-label { font-weight: 600; color: #a0a0a0; }
+.card-dark-theme {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.card-dark-theme .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    color: #212529;
+}
+.card-dark-theme .card-body {
+    background-color: #fff;
+    color: #212529;
+}
+.form-control-dark, .form-control-dark:focus {
+    background-color: #fff;
+    border-color: #ced4da;
+    color: #212529;
+}
+.form-check-input-dark {
+    background-color: #fff;
+    border-color: #ced4da;
+}
+.form-check-input-dark:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+.text-light, .form-check-label.text-light {
+    color: #212529 !important;
+}
 </style>
 
