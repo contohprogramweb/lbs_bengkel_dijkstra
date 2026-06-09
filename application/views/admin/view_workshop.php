@@ -65,12 +65,12 @@
                 <div class="card-body">
                     <table class="table table-borderless table-dark-theme">
                         <tr>
-                            <td class="info-label" style="width: 200px;">ID</td>
-                            <td><?php echo $workshop->id; ?></td>
+                            <td class="info-label" style="width: 200px;">Nomor</td>
+                            <td><?php echo $workshop->id ?? '-'; ?></td>
                         </tr>
                         <tr>
                             <td class="info-label">Nama Bengkel</td>
-                            <td><?php echo htmlspecialchars($workshop->name); ?></td>
+                            <td><?php echo htmlspecialchars($workshop->name ?? '-'); ?></td>
                         </tr>
                         <tr>
                             <td class="info-label">Spesialisasi</td>
@@ -78,7 +78,7 @@
                         </tr>
                         <tr>
                             <td class="info-label">Alamat</td>
-                            <td><?php echo htmlspecialchars($workshop->address); ?></td>
+                            <td><?php echo htmlspecialchars($workshop->address ?? '-'); ?></td>
                         </tr>
                         <tr>
                             <td class="info-label">Koordinat</td>

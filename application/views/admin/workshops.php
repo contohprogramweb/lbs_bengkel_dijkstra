@@ -32,7 +32,7 @@
             <table id="workshopsTable" class="table table-striped table-hover datatable" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Nomor</th>
                         <th>Nama Bengkel</th>
                         <th>Pemilik</th>
                         <th>Lokasi</th>
@@ -82,7 +82,7 @@ $(document).ready(function() {
             data: function(d) { d.verification_status = $('#verificationFilter').val(); }
         },
         columns: [
-            { data: 'id' },
+            { data: 'id', render: function(data) { return data ? data : '-'; } },
             { data: 'name', render: function(data, type, row) { return '<a href="<?php echo site_url("admin/view_workshop/"); ?>' + row.id + '">' + (data || '-') + '</a>'; } },
             { data: 'owner_name' },
             { data: 'city', render: function(data) { return data ? data : '-'; } },
