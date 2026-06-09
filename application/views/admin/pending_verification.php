@@ -57,13 +57,13 @@
                         </td>
                         <td>
                             <?php if(!empty($workshop->business_license)): ?>
-                                <span class="badge bg-dark-theme-success"><i class="fas fa-check"></i> Izin Usaha</span>
+                                <span class="badge bg-admin-success"><i class="fas fa-check"></i> Izin Usaha</span>
                             <?php else: ?>
-                                <span class="badge bg-dark-theme-danger"><i class="fas fa-times"></i> Izin Usaha</span>
+                                <span class="badge bg-admin-danger"><i class="fas fa-times"></i> Izin Usaha</span>
                             <?php endif; ?>
 
                             <?php if(!empty($workshop->certification_doc)): ?>
-                                <span class="badge bg-dark-theme-info ms-1"><i class="fas fa-certificate"></i> Sertifikasi</span>
+                                <span class="badge bg-admin-info ms-1"><i class="fas fa-certificate"></i> Sertifikasi</span>
                             <?php endif; ?>
                         </td>
                         <td><?php echo date('d M Y', strtotime($workshop->created_at)); ?></td>

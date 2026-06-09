@@ -9,7 +9,7 @@
 <!-- Statistics Cards -->
 <div class="row g-3 mb-4">
     <div class="col-md-3">
-        <div class="card stat-card bg-dark-theme-primary h-100">
+        <div class="card stat-card bg-admin-primary h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -26,7 +26,7 @@
     </div>
     
     <div class="col-md-3">
-        <div class="card stat-card bg-dark-theme-success h-100">
+        <div class="card stat-card bg-admin-success h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -43,7 +43,7 @@
     </div>
     
     <div class="col-md-3">
-        <div class="card stat-card bg-dark-theme-info h-100">
+        <div class="card stat-card bg-admin-info h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -60,7 +60,7 @@
     </div>
     
     <div class="col-md-3">
-        <div class="card stat-card bg-dark-theme-warning h-100">
+        <div class="card stat-card bg-admin-warning h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -78,7 +78,7 @@
 <!-- Second Row Stats -->
 <div class="row g-3 mb-4">
     <div class="col-md-4">
-        <div class="card stat-card bg-dark-theme-danger h-100">
+        <div class="card stat-card bg-admin-danger h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -93,7 +93,7 @@
     </div>
     
     <div class="col-md-4">
-        <div class="card stat-card bg-dark-theme-secondary h-100">
+        <div class="card stat-card bg-admin-secondary h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -108,7 +108,7 @@
     </div>
     
     <div class="col-md-4">
-        <div class="card stat-card bg-dark-theme-dark h-100">
+        <div class="card stat-card bg-admin-dark h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>

@@ -30,10 +30,24 @@
             --header-dark-bg: #121212;
             --content-light-bg: #f8f9fa;
             --border-color: #dee2e6;
+            /* Admin color scheme */
+            --admin-primary: #0d6efd;
+            --admin-success: #198754;
+            --admin-info: #0dcaf0;
+            --admin-warning: #ffc107;
+            --admin-danger: #dc3545;
+            --admin-secondary: #6c757d;
+            --admin-dark: #212529;
+        }
+        * {
+            box-sizing: border-box;
         }
         body {
             background-color: var(--content-light-bg);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
         .sidebar {
             min-height: 100vh;
@@ -44,6 +58,7 @@
             transition: transform 0.3s ease;
             z-index: 1000;
             box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
         }
         .sidebar.collapsed {
             transform: translateX(-100%);
@@ -74,6 +89,9 @@
             transition: margin-left 0.3s ease;
             background-color: var(--content-light-bg);
             min-height: 100vh;
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
         }
         .main-content.expanded {
             margin-left: 0;
@@ -92,12 +110,22 @@
         .card {
             border: 1px solid var(--border-color);
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
         }
         .card-header {
             background-color: #fff;
             border-bottom: 1px solid var(--border-color);
             font-weight: 600;
         }
+
+        /* Stat card colors */
+        .stat-card.bg-admin-primary { background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); color: white; }
+        .stat-card.bg-admin-success { background: linear-gradient(135deg, #198754 0%, #146c43 100%); color: white; }
+        .stat-card.bg-admin-info { background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%); color: white; }
+        .stat-card.bg-admin-warning { background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%); color: #212529; }
+        .stat-card.bg-admin-danger { background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%); color: white; }
+        .stat-card.bg-admin-secondary { background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%); color: white; }
+        .stat-card.bg-admin-dark { background: linear-gradient(135deg, #212529 0%, #1a1e21 100%); color: white; }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
@@ -109,13 +137,25 @@
             }
             .main-content {
                 margin-left: 0;
+                padding: 15px;
             }
             .sidebar-toggle {
                 display: block !important;
             }
             .card-stat { margin-bottom: 15px; }
+            .row > [class*="col-"] {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
         }
 
+        /* Prevent horizontal scroll */
+        .container-fluid {
+            max-width: 100vw;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        
         .sidebar-toggle {
             display: none;
             background-color: var(--header-dark-bg);
@@ -132,11 +172,27 @@
         /* Table styling */
         .table {
             background-color: #fff;
+            width: 100%;
+            max-width: 100%;
         }
         .table thead th {
             background-color: #f8f9fa;
             border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
         }
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Badge colors for admin */
+        .bg-admin-primary { background-color: var(--admin-primary) !important; color: white; }
+        .bg-admin-success { background-color: var(--admin-success) !important; color: white; }
+        .bg-admin-info { background-color: var(--admin-info) !important; color: #212529; }
+        .bg-admin-warning { background-color: var(--admin-warning) !important; color: #212529; }
+        .bg-admin-danger { background-color: var(--admin-danger) !important; color: white; }
+        .bg-admin-secondary { background-color: var(--admin-secondary) !important; color: white; }
+        .bg-admin-dark { background-color: var(--admin-dark) !important; color: white; }
     </style>
 </head>
 <body>
