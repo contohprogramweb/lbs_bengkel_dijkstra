@@ -348,7 +348,13 @@ $(document).on('change', '.mechanic-checkbox', function() {
     var checked = $('input[name="mechanic_ids[]"]:checked');
     if (checked.length > 3) {
         $(this).prop('checked', false);
-        alert('Maksimal 3 mekanik per pesanan');
+        Swal.fire({
+            icon: 'warning',
+            title: 'Peringatan!',
+            text: 'Maksimal 3 mekanik per pesanan',
+            timer: 2000,
+            showConfirmButton: false
+        });
     }
     updateSelectedCount();
 });
@@ -445,31 +451,53 @@ $(document).on('change', '.mechanic-checkbox', function() {
 
 <script>
 function acceptBooking(bookingId) {
-    if (confirm('Terima pesanan ini?')) {
-        $.post('<?= site_url('order/accept/') ?>' + bookingId, {
-            '<?= $this->security->get_csrf_token_name() ?>': '<?= $this->security->get_csrf_hash() ?>'
-        }, function(response) {
-            if (response.success) {
-                window.location.href = response.redirect || window.location.href;
-            } else {
-                alert(response.message || 'Gagal menerima pesanan');
-            }
-        }, 'json');
-    }
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Terima pesanan ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#198754',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, Terima',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.post('<?= site_url('order/accept/') ?>' + bookingId, {
+                '<?= $this->security->get_csrf_token_name() ?>': '<?= $this->security->get_csrf_hash() ?>'
+            }, function(response) {
+                if (response.success) {
+                    window.location.href = response.redirect || window.location.href;
+                } else {
+                    Swal.fire('Error!', response.message || 'Gagal menerima pesanan', 'error');
+                }
+            }, 'json');
+        }
+    });
 }
 
 function startProcessing(bookingId) {
-    if (confirm('Mulai pengerjaan pesanan ini?')) {
-        $.post('<?= site_url('order/start_processing/') ?>' + bookingId, {
-            '<?= $this->security->get_csrf_token_name() ?>': '<?= $this->security->get_csrf_hash() ?>'
-        }, function(response) {
-            if (response.success) {
-                window.location.href = response.redirect || window.location.href;
-            } else {
-                alert(response.message || 'Gagal mengubah status');
-            }
-        }, 'json');
-    }
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Mulai pengerjaan pesanan ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#0d6efd',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, Mulai',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.post('<?= site_url('order/start_processing/') ?>' + bookingId, {
+                '<?= $this->security->get_csrf_token_name() ?>': '<?= $this->security->get_csrf_hash() ?>'
+            }, function(response) {
+                if (response.success) {
+                    window.location.href = response.redirect || window.location.href;
+                } else {
+                    Swal.fire('Error!', response.message || 'Gagal mengubah status', 'error');
+                }
+            }, 'json');
+        }
+    });
 }
 
 function handleTimeout(bookingId, action) {
@@ -477,17 +505,28 @@ function handleTimeout(bookingId, action) {
         ? 'Lanjutkan pekerjaan tanpa tambahan?' 
         : 'Batalkan temuan tambahan?';
     
-    if (confirm(confirmMsg)) {
-        $.post('<?= site_url('order/handle_timeout/') ?>' + bookingId + '/' + action, {
-            '<?= $this->security->get_csrf_token_name() ?>': '<?= $this->security->get_csrf_hash() ?>'
-        }, function(response) {
-            if (response.success) {
-                window.location.reload();
-            } else {
-                alert(response.message || 'Gagal memproses');
-            }
-        }, 'json');
-    }
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: confirmMsg,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: action === 'continue' ? '#0d6efd' : '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.post('<?= site_url('order/handle_timeout/') ?>' + bookingId + '/' + action, {
+                '<?= $this->security->get_csrf_token_name() ?>': '<?= $this->security->get_csrf_hash() ?>'
+            }, function(response) {
+                if (response.success) {
+                    window.location.reload();
+                } else {
+                    Swal.fire('Error!', response.message || 'Gagal memproses', 'error');
+                }
+            }, 'json');
+        }
+    });
 }
 </script>
 

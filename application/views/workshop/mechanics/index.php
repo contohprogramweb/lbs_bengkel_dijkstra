@@ -149,47 +149,73 @@
 
 <script>
 function toggleAvailability(mechanicId, currentStatus) {
-    if (!confirm('Apakah Anda yakin ingin mengubah status ketersediaan mekanik ini?')) {
-        return;
-    }
-
-    $.ajax({
-        url: '<?= site_url('mechanic/toggle_availability/'); ?>' + mechanicId,
-        type: 'POST',
-        dataType: 'json',
-        success: function(response) {
-            if (response.success) {
-                location.reload();
-            } else {
-                alert(response.message || 'Gagal mengubah status');
-            }
-        },
-        error: function(xhr) {
-            var msg = xhr.responseJSON?.message || 'Terjadi kesalahan';
-            alert(msg);
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin mengubah status ketersediaan mekanik ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#0d6efd',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, Ubah',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '<?= site_url('mechanic/toggle_availability/'); ?>' + mechanicId,
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        Swal.fire('Error!', response.message || 'Gagal mengubah status', 'error');
+                    }
+                },
+                error: function(xhr) {
+                    var msg = xhr.responseJSON?.message || 'Terjadi kesalahan';
+                    Swal.fire('Error!', msg, 'error');
+                }
+            });
         }
     });
 }
 
 function deleteMechanic(mechanicId, mechanicName) {
-    if (!confirm('Apakah Anda yakin ingin menghapus mekanik "' + mechanicName + '"?\n\nMekanik yang sudah ditugaskan ke pesanan tidak akan terhapus dari history.')) {
-        return;
-    }
-
-    $.ajax({
-        url: '<?= site_url('mechanic/delete/'); ?>' + mechanicId,
-        type: 'POST',
-        dataType: 'json',
-        success: function(response) {
-            if (response.success) {
-                location.reload();
-            } else {
-                alert(response.message || 'Gagal menghapus mekanik');
-            }
-        },
-        error: function(xhr) {
-            var msg = xhr.responseJSON?.message || 'Terjadi kesalahan';
-            alert(msg);
+    Swal.fire({
+        title: 'Hapus Mekanik',
+        html: 'Apakah Anda yakin ingin menghapus mekanik <strong>' + mechanicName + '</strong>?<br><br><small>Mekanik yang sudah ditugaskan ke pesanan tidak akan terhapus dari history.</small>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '<?= site_url('mechanic/delete/'); ?>' + mechanicId,
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Mekanik berhasil dihapus',
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Error!', response.message || 'Gagal menghapus mekanik', 'error');
+                    }
+                },
+                error: function(xhr) {
+                    var msg = xhr.responseJSON?.message || 'Terjadi kesalahan';
+                    Swal.fire('Error!', msg, 'error');
+                }
+            });
         }
     });
 }
