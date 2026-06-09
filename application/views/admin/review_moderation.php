@@ -8,7 +8,7 @@
 
 <div class="row mb-4">
     <div class="col-md-4">
-        <div class="card stat-card bg-dark-theme-warning h-100">
+        <div class="card stat-card bg-admin-warning h-100">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>

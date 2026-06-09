@@ -86,8 +86,8 @@ $(document).ready(function() {
             { data: 'name', render: function(data, type, row) { return '<a href="<?php echo site_url("admin/view_workshop/"); ?>' + row.id + '">' + (data || '-') + '</a>'; } },
             { data: 'owner_name' },
             { data: 'city', render: function(data) { return data ? data : '-'; } },
-            { data: 'verified_at', render: function(data) { return data ? '<span class="badge bg-dark-theme-success">Terverifikasi</span>' : '<span class="badge bg-dark-theme-warning text-dark">Belum Terverifikasi</span>'; } },
-            { data: 'is_featured', render: function(data) { return data == 1 ? '<span class="badge bg-dark-theme-primary">Yes</span>' : '<span class="badge bg-dark-theme-secondary">No</span>'; } },
+            { data: 'verified_at', render: function(data) { return data ? '<span class="badge bg-admin-success">Terverifikasi</span>' : '<span class="badge bg-admin-warning text-dark">Belum Terverifikasi</span>'; } },
+            { data: 'is_featured', render: function(data) { return data == 1 ? '<span class="badge bg-admin-primary">Yes</span>' : '<span class="badge bg-admin-secondary">No</span>'; } },
             {
                 data: null,
                 orderable: false,

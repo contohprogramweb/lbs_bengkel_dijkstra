@@ -83,8 +83,8 @@ $(document).ready(function() {
             { data: null, render: function(data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; } },
             { data: 'full_name', render: function(data, type, row) { return '<a href="<?php echo site_url("admin/view_user/"); ?>' + row.id + '">' + data + '</a>'; } },
             { data: 'email' },
-            { data: 'role', render: function(data) { return '<span class="badge bg-dark-theme-info">' + data + '</span>'; } },
-            { data: 'is_active', render: function(data) { return data == 1 ? '<span class="badge bg-dark-theme-success">Aktif</span>' : '<span class="badge bg-dark-theme-danger">Nonaktif</span>'; } },
+            { data: 'role', render: function(data) { return '<span class="badge bg-admin-info">' + data + '</span>'; } },
+            { data: 'is_active', render: function(data) { return data == 1 ? '<span class="badge bg-admin-success">Aktif</span>' : '<span class="badge bg-admin-danger">Nonaktif</span>'; } },
             { data: 'created_at', render: function(data) { return new Date(data).toLocaleDateString('id-ID'); } },
             {
                 data: null,
