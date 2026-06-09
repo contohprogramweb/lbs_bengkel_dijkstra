@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-<?php $this->load->view('admin/layouts/header'); ?>
 
 <div class="row mb-4 page-header">
     <div class="col-12">
@@ -117,4 +116,3 @@ $(document).ready(function() {
 });
 </script>
 
-<?php $this->load->view('admin/layouts/footer'); ?>

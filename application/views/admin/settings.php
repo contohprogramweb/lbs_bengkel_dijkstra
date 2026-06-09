@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-<?php $this->load->view('admin/layouts/header'); ?>
 
 <div class="container-fluid">
     <div class="row mb-4">
@@ -123,4 +122,3 @@
 .setting-card { min-height: 250px; }
 </style>
 
-<?php $this->load->view('admin/layouts/footer'); ?>

@@ -1,14 +1,30 @@
+```
 # Compiled and build artifacts
 *.pyc
 __pycache__/
+*.o
+*.obj
+*.class
+*.exe
+*.dll
+*.so
+*.a
+*.out
 
 # Dependencies
-vendor/
-composer.lock
+.venv/
+venv/
+node_modules/
+dist/
+build/
+target/
+.gradle/
 
 # Logs and temp files
 *.log
 *.tmp
+*.swp
+*.swo
 
 # Environment
 .env
@@ -18,33 +34,17 @@ composer.lock
 # Editors
 .vscode/
 .idea/
+*.swp
+*.swo
 
-# OS generated files
+# System files
 .DS_Store
 Thumbs.db
 
-# Backup files
-*~
-*.bak
-*.swp
-
 # Cache directories
-.cache/
-.php_cs.cache
-
-# Distribution and build artifacts
-dist/
-build/
-*.phar
-
-# Testing
-.phpunit.result.cache
-test/tmp/
-tests/tmp/
-
-# Web server
-.htaccess
-.webserver-config.php
-
-# Original rules preserved
-*.log
+.mypy_cache/
+.pytest_cache/
+coverage/
+htmlcov/
+.coverage
+```

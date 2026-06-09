@@ -1,4 +1,3 @@
-<?php $this->load->view('admin/layouts/header'); ?>
 
 <div class="container-fluid">
     <div class="row mb-4">
@@ -68,4 +67,3 @@
     </div>
 </div>
 
-<?php $this->load->view('admin/layouts/footer'); ?>
