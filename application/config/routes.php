@@ -8,7 +8,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 // Default controller
-$route['default_controller'] = 'auth/login';
+$route['default_controller'] = 'home/index';
+
+// Home routes (public)
+$route['home'] = 'home/index';
+$route['home/cara_pakai'] = 'home/cara_pakai';
+$route['home/tentang'] = 'home/tentang';
+$route['home/workshop_detail/(:num)'] = 'home/workshop_detail/$1';
 
 // Auth routes
 $route['login'] = 'auth/login';
