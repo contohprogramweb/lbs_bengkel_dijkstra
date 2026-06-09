@@ -415,47 +415,79 @@ function saveServiceChanges() {
 
 // Toggle service status
 function toggleServiceStatus(serviceId, currentStatus) {
-    confirmAction('Apakah Anda yakin ingin mengubah status layanan ini?', function() {
-        $.ajax({
-            url: '<?= site_url('workshop/toggle_service/') ?>' + serviceId,
-            method: 'POST',
-            dataType: 'json',
-            success: function(response) {
-                if (response.is_available !== undefined) {
-                    showSuccess('Status layanan berhasil diubah');
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin mengubah status layanan ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#0d6efd',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, Ubah',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '<?= site_url('workshop/toggle_service/') ?>' + serviceId,
+                method: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.is_available !== undefined) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Status layanan berhasil diubah',
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload();
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    const errorMsg = xhr.responseJSON?.message || 'Gagal mengubah status layanan';
+                    Swal.fire('Error!', errorMsg, 'error');
                 }
-            },
-            error: function(xhr) {
-                const errorMsg = xhr.responseJSON?.message || 'Gagal mengubah status layanan';
-                showError(errorMsg);
-            }
-        });
+            });
+        }
     });
 }
 
 // Delete service
 function deleteService(serviceId) {
-    confirmAction('Apakah Anda yakin ingin menghapus layanan ini? Data tidak dapat dikembalikan.', function() {
-        $.ajax({
-            url: '<?= site_url('workshop/delete_service/') ?>' + serviceId,
-            method: 'POST',
-            dataType: 'json',
-            success: function(response) {
-                if (response.message) {
-                    showSuccess(response.message);
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
+    Swal.fire({
+        title: 'Hapus Layanan',
+        text: 'Apakah Anda yakin ingin menghapus layanan ini? Data tidak dapat dikembalikan.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '<?= site_url('workshop/delete_service/') ?>' + serviceId,
+                method: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.message) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: response.message,
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            location.reload();
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    const errorMsg = xhr.responseJSON?.message || 'Gagal menghapus layanan';
+                    Swal.fire('Error!', errorMsg, 'error');
                 }
-            },
-            error: function(xhr) {
-                const errorMsg = xhr.responseJSON?.message || 'Gagal menghapus layanan';
-                showError(errorMsg);
-            }
-        });
+            });
+        }
     });
 }
 </script>

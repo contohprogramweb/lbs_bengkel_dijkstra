@@ -184,7 +184,13 @@ $(document).ready(function() {
         
         // Check if at least one specialization is selected
         if ($('input[name="specialization[]"]:checked').length === 0) {
-            alert('Pilih minimal satu spesialisasi');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Peringatan!',
+                text: 'Pilih minimal satu spesialisasi',
+                timer: 2000,
+                showConfirmButton: false
+            });
             return false;
         }
         
@@ -197,12 +203,12 @@ $(document).ready(function() {
                 if (response.success || response.redirect) {
                     window.location.href = response.redirect || '<?= site_url('mechanic'); ?>';
                 } else {
-                    alert(response.message || 'Gagal menyimpan data');
+                    Swal.fire('Error!', response.message || 'Gagal menyimpan data', 'error');
                 }
             },
             error: function(xhr) {
                 var msg = xhr.responseJSON?.message || 'Terjadi kesalahan';
-                alert(msg);
+                Swal.fire('Error!', msg, 'error');
             }
         });
         

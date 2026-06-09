@@ -22,39 +22,82 @@
 
     <style>
         :root {
-            --sidebar-bg-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --sidebar-dark-bg: #1a1a2e;
+            --sidebar-dark-hover: #16213e;
+            --sidebar-dark-active: #0f3460;
+            --sidebar-text: #e0e0e0;
+            --sidebar-text-muted: #a0a0a0;
+            --header-dark-bg: #121212;
+            --content-light-bg: #f8f9fa;
+            --border-color: #dee2e6;
         }
         body {
-            background-color: #f8f9fa;
+            background-color: var(--content-light-bg);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .sidebar {
             min-height: 100vh;
-            background: var(--sidebar-bg-gradient);
-            color: white;
+            background-color: var(--sidebar-dark-bg);
+            color: var(--sidebar-text);
             position: fixed;
             width: 250px;
             transition: transform 0.3s ease;
             z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         }
         .sidebar.collapsed {
             transform: translateX(-100%);
         }
-        .sidebar a { color: rgba(255,255,255,0.8); text-decoration: none; transition: all 0.2s; }
-        .sidebar a:hover, .sidebar a.active { color: white; background: rgba(255,255,255,0.1); }
-        .sidebar-brand { font-size: 1.3rem; font-weight: bold; padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .sidebar a { 
+            color: var(--sidebar-text); 
+            text-decoration: none; 
+            transition: all 0.2s; 
+            border-left: 3px solid transparent;
+        }
+        .sidebar a:hover, .sidebar a.active { 
+            color: #fff; 
+            background-color: var(--sidebar-dark-hover);
+            border-left-color: #e94560;
+        }
+        .sidebar-brand { 
+            font-size: 1.3rem; 
+            font-weight: bold; 
+            padding: 20px; 
+            background-color: var(--header-dark-bg);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+        }
         .nav-link { padding: 12px 20px; }
         .main-content {
             padding: 20px;
             margin-left: 250px;
             transition: margin-left 0.3s ease;
+            background-color: var(--content-light-bg);
+            min-height: 100vh;
         }
         .main-content.expanded {
             margin-left: 0;
         }
-        .card-stat { border-radius: 15px; border: none; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .card-stat:hover { transform: translateY(-5px); }
+        .card-stat { 
+            border-radius: 10px; 
+            border: none; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
+            transition: transform 0.2s;
+            background: #fff;
+        }
+        .card-stat:hover { transform: translateY(-3px); }
         .card-stat .icon { font-size: 2.5rem; opacity: 0.3; }
+        
+        /* Card styling for light content */
+        .card {
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .card-header {
+            background-color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+        }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
@@ -75,12 +118,24 @@
 
         .sidebar-toggle {
             display: none;
-            background: var(--sidebar-bg-gradient);
+            background-color: var(--header-dark-bg);
             color: white;
             border: none;
             padding: 10px 15px;
             border-radius: 5px;
             margin-right: 15px;
+        }
+        .sidebar-toggle:hover {
+            background-color: var(--sidebar-dark-hover);
+        }
+        
+        /* Table styling */
+        .table {
+            background-color: #fff;
+        }
+        .table thead th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid var(--border-color);
         }
     </style>
 </head>
@@ -152,28 +207,68 @@
 
                 <!-- Flash Messages with SweetAlert -->
                 <?php if ($this->session->flashdata('success')): ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fas fa-check-circle"></i> <?php echo e($this->session->flashdata('success')); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil!',
+                                text: '<?php echo addslashes($this->session->flashdata('success')); ?>',
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true
+                            });
+                        });
+                    </script>
                 <?php endif; ?>
                 <?php if ($this->session->flashdata('error')): ?>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="fas fa-exclamation-circle"></i> <?php echo e($this->session->flashdata('error')); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: '<?php echo addslashes($this->session->flashdata('error')); ?>',
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 5000,
+                                timerProgressBar: true
+                            });
+                        });
+                    </script>
                 <?php endif; ?>
                 <?php if ($this->session->flashdata('warning')): ?>
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <i class="fas fa-exclamation-triangle"></i> <?php echo e($this->session->flashdata('warning')); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Peringatan!',
+                                text: '<?php echo addslashes($this->session->flashdata('warning')); ?>',
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                timerProgressBar: true
+                            });
+                        });
+                    </script>
                 <?php endif; ?>
                 <?php if ($this->session->flashdata('info')): ?>
-                    <div class="alert alert-info alert-dismissible fade show" role="alert">
-                        <i class="fas fa-info-circle"></i> <?php echo e($this->session->flashdata('info')); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Info',
+                                text: '<?php echo addslashes($this->session->flashdata('info')); ?>',
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 4000,
+                                timerProgressBar: true
+                            });
+                        });
+                    </script>
                 <?php endif; ?>
 
                 <!-- Main Content Area -->
@@ -252,20 +347,64 @@
             }
         });
 
-        // Confirmation dialog helper
-        function confirmAction(message, callback) {
+        // Confirmation dialog for delete action
+        function confirmDelete(url, title, message) {
             Swal.fire({
-                title: 'Konfirmasi',
+                title: title || 'Konfirmasi Hapus',
+                text: message || 'Apakah Anda yakin ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Create a form and submit
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = url;
+                    
+                    // Add CSRF token
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = csrfTokenName;
+                    csrfInput.value = csrfTokenHash;
+                    form.appendChild(csrfInput);
+                    
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        }
+
+        // Confirmation dialog for general action
+        function confirmAction(url, title, message, confirmText, confirmColor) {
+            Swal.fire({
+                title: title || 'Konfirmasi',
                 text: message || 'Apakah Anda yakin?',
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#f093fb',
+                confirmButtonColor: confirmColor || '#0d6efd',
                 cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Ya, Lanjutkan',
+                confirmButtonText: confirmText || 'Ya, Lanjutkan',
                 cancelButtonText: 'Batal'
             }).then((result) => {
-                if (result.isConfirmed && callback) {
-                    callback();
+                if (result.isConfirmed) {
+                    // Create a form and submit
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = url;
+                    
+                    // Add CSRF token
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = csrfTokenName;
+                    csrfInput.value = csrfTokenHash;
+                    form.appendChild(csrfInput);
+                    
+                    document.body.appendChild(form);
+                    form.submit();
                 }
             });
         }
