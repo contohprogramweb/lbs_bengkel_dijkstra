@@ -43,12 +43,12 @@
                     </div>
                     
                     <div class="d-grid gap-2">
-                        <a href="<?php echo site_url('admin/workshops'); ?>" class="btn btn-secondary-dark">
+                        <a href="<?php echo site_url('admin/workshops'); ?>" class="btn btn-admin-secondary-dark">
                             <i class="fas fa-arrow-left"></i> Kembali
                         </a>
                         <?php if(empty($workshop->verified_at)): ?>
                             <button onclick="confirmAction('<?php echo site_url('admin/verify_workshop/'.$workshop->id); ?>', 'Verifikasi Bengkel', 'Apakah Anda yakin ingin memverifikasi bengkel ini?', 'Ya, Verifikasi', '#28a745')"
-                                   class="btn btn-success-dark">
+                                   class="btn btn-admin-success-dark">
                                 <i class="fas fa-check"></i> Verifikasi Bengkel
                             </button>
                         <?php endif; ?>

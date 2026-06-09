@@ -62,8 +62,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Reset Password</button>
+                    <button type="button" class="btn btn-admin-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-admin-primary">Reset Password</button>
                 </div>
             </form>
         </div>
@@ -90,18 +90,18 @@ $(document).ready(function() {
                 data: null,
                 orderable: false,
                 render: function(data, type, row) {
-                    var actions = '<a href="<?php echo site_url("admin/view_user/"); ?>' + row.id + '" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a> ';
+                    var actions = '<a href="<?php echo site_url("admin/view_user/"); ?>' + row.id + '" class="btn btn-sm btn-admin-info"><i class="fas fa-eye"></i></a> ';
                     
                     if (row.is_active == 1) {
-                        actions += '<a href="#" class="btn btn-sm btn-warning" onclick="confirmAction(\'<?php echo site_url("admin/deactivate_user/"); ?>' + row.id + '\', \'Nonaktifkan Pengguna\', \'Apakah Anda yakin ingin menonaktifkan pengguna ini?\', \'Ya, Nonaktifkan\', \'#ffc107\')"><i class="fas fa-ban"></i></a> ';
+                        actions += '<a href="#" class="btn btn-sm btn-admin-warning" onclick="confirmAction(\'<?php echo site_url("admin/deactivate_user/"); ?>' + row.id + '\', \'Nonaktifkan Pengguna\', \'Apakah Anda yakin ingin menonaktifkan pengguna ini?\', \'Ya, Nonaktifkan\', \'#ffc107\')"><i class="fas fa-ban"></i></a> ';
                     } else {
-                        actions += '<a href="#" class="btn btn-sm btn-success" onclick="confirmAction(\'<?php echo site_url("admin/activate_user/"); ?>' + row.id + '\', \'Aktifkan Pengguna\', \'Apakah Anda yakin ingin mengaktifkan pengguna ini?\', \'Ya, Aktifkan\', \'#198754\')"><i class="fas fa-check"></i></a> ';
+                        actions += '<a href="#" class="btn btn-sm btn-admin-success" onclick="confirmAction(\'<?php echo site_url("admin/activate_user/"); ?>' + row.id + '\', \'Aktifkan Pengguna\', \'Apakah Anda yakin ingin mengaktifkan pengguna ini?\', \'Ya, Aktifkan\', \'#198754\')"><i class="fas fa-check"></i></a> ';
                     }
                     
-                    actions += '<button class="btn btn-sm btn-primary" onclick="openResetModal(' + row.id + ')"><i class="fas fa-key"></i></button> ';
+                    actions += '<button class="btn btn-sm btn-admin-primary" onclick="openResetModal(' + row.id + ')"><i class="fas fa-key"></i></button> ';
                     
                     if (row.id != "<?php echo $this->session->userdata('user_id'); ?>") {
-                        actions += '<a href="#" class="btn btn-sm btn-danger" onclick="confirmDelete(\'<?php echo site_url("admin/delete_user/"); ?>' + row.id + '\', \'Hapus Pengguna\', \'Hapus pengguna ini? Tindakan ini tidak dapat dibatalkan.\')"><i class="fas fa-trash"></i></a>';
+                        actions += '<a href="#" class="btn btn-sm btn-admin-danger" onclick="confirmDelete(\'<?php echo site_url("admin/delete_user/"); ?>' + row.id + '\', \'Hapus Pengguna\', \'Hapus pengguna ini? Tindakan ini tidak dapat dibatalkan.\')"><i class="fas fa-trash"></i></a>';
                     }
                     
                     return actions;

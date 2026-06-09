@@ -107,10 +107,10 @@
         
         <div class="row mt-3">
             <div class="col-12">
-                <button type="submit" class="btn btn-primary-dark btn-lg">
+                <button type="submit" class="btn btn-admin-primary-dark btn-lg">
                     <i class="fas fa-save"></i> Simpan Pengaturan
                 </button>
-                <a href="<?php echo site_url('admin/dashboard'); ?>" class="btn btn-secondary-dark btn-lg">
+                <a href="<?php echo site_url('admin/dashboard'); ?>" class="btn btn-admin-secondary-dark btn-lg">
                     <i class="fas fa-times"></i> Batal
                 </a>
             </div>

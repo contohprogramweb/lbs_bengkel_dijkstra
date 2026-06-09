@@ -28,23 +28,23 @@
                     <hr class="border-secondary">
                     
                     <div class="d-grid gap-2">
-                        <a href="<?php echo site_url('admin/users'); ?>" class="btn btn-secondary-dark">
+                        <a href="<?php echo site_url('admin/users'); ?>" class="btn btn-admin-secondary-dark">
                             <i class="fas fa-arrow-left"></i> Kembali
                         </a>
                         <?php if($user_detail->is_active): ?>
                             <button onclick="confirmAction('<?php echo site_url('admin/deactivate_user/'.$user_detail->id); ?>', 'Nonaktifkan Pengguna', 'Apakah Anda yakin ingin menonaktifkan pengguna ini?', 'Ya, Nonaktifkan', '#ffc107')"
-                                   class="btn btn-warning-dark">
+                                   class="btn btn-admin-warning-dark">
                                 <i class="fas fa-ban"></i> Nonaktifkan
                             </button>
                         <?php else: ?>
                             <button onclick="confirmAction('<?php echo site_url('admin/activate_user/'.$user_detail->id); ?>', 'Aktifkan Pengguna', 'Apakah Anda yakin ingin mengaktifkan pengguna ini?', 'Ya, Aktifkan', '#28a745')"
-                                   class="btn btn-success-dark">
+                                   class="btn btn-admin-success-dark">
                                 <i class="fas fa-check"></i> Aktifkan
                             </button>
                         <?php endif; ?>
                         <?php if($user_detail->id != $this->session->userdata('user_id')): ?>
                             <button onclick="confirmDelete('<?php echo site_url('admin/delete_user/'.$user_detail->id); ?>', 'Hapus Pengguna', 'Apakah Anda yakin ingin menghapus pengguna ini? Tindakan ini tidak dapat dibatalkan.')"
-                                   class="btn btn-danger-dark">
+                                   class="btn btn-admin-danger-dark">
                                 <i class="fas fa-trash"></i> Hapus
                             </button>
                         <?php endif; ?>
@@ -132,7 +132,7 @@
                                     </td>
                                     <td>
                                         <a href="<?php echo site_url('admin/view_workshop/'.$workshop->id); ?>" 
-                                           class="btn btn-sm btn-info-dark">
+                                           class="btn btn-sm btn-admin-info-dark">
                                             <i class="fas fa-eye"></i> Detail
                                         </a>
                                     </td>

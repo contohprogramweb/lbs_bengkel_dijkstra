@@ -54,6 +54,8 @@
             background-color: var(--sidebar-dark-bg);
             color: var(--sidebar-text);
             position: fixed;
+            top: 0;
+            left: 0;
             width: 250px;
             transition: transform 0.3s ease;
             z-index: 1000;
@@ -90,13 +92,13 @@
             background-color: var(--content-light-bg);
             min-height: 100vh;
             width: calc(100% - 250px);
-            max-width: calc(100vw - 250px);
             overflow-x: hidden;
+            position: relative;
+            left: 0;
         }
         .main-content.expanded {
             margin-left: 0;
             width: 100%;
-            max-width: 100vw;
         }
         .card-stat { 
             border-radius: 10px; 
@@ -104,6 +106,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
             transition: transform 0.2s;
             background: #fff;
+            overflow: hidden;
         }
         .card-stat:hover { transform: translateY(-3px); }
         .card-stat .icon { font-size: 2.5rem; opacity: 0.3; }
@@ -113,6 +116,7 @@
             border: 1px solid var(--border-color);
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             margin-bottom: 1.5rem;
+            overflow: hidden;
         }
         .card-header {
             background-color: #fff;
@@ -128,6 +132,20 @@
         .stat-card.bg-admin-danger { background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%); color: white; }
         .stat-card.bg-admin-secondary { background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%); color: white; }
         .stat-card.bg-admin-dark { background: linear-gradient(135deg, #212529 0%, #1a1e21 100%); color: white; }
+
+        /* Button styling for admin */
+        .btn-admin-primary { background-color: var(--admin-primary); border-color: var(--admin-primary); color: white; }
+        .btn-admin-primary:hover { background-color: #0b5ed7; border-color: #0a58ca; color: white; }
+        .btn-admin-success { background-color: var(--admin-success); border-color: var(--admin-success); color: white; }
+        .btn-admin-success:hover { background-color: #157347; border-color: #146c43; color: white; }
+        .btn-admin-info { background-color: var(--admin-info); border-color: var(--admin-info); color: #212529; }
+        .btn-admin-info:hover { background-color: #0aacd6; border-color: #0aa2c0; color: #212529; }
+        .btn-admin-warning { background-color: var(--admin-warning); border-color: var(--admin-warning); color: #212529; }
+        .btn-admin-warning:hover { background-color: #e0a800; border-color: #d39e00; color: #212529; }
+        .btn-admin-danger { background-color: var(--admin-danger); border-color: var(--admin-danger); color: white; }
+        .btn-admin-danger:hover { background-color: #bb2d3b; border-color: #b02a37; color: white; }
+        .btn-admin-secondary { background-color: var(--admin-secondary); border-color: var(--admin-secondary); color: white; }
+        .btn-admin-secondary:hover { background-color: #5c636a; border-color: #565e64; color: white; }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
@@ -155,11 +173,16 @@
         body, html {
             overflow-x: hidden;
             max-width: 100vw;
+            margin: 0;
+            padding: 0;
         }
         .container-fluid {
             max-width: 100%;
-            padding-left: 15px;
-            padding-right: 15px;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
         }
         .row {
             margin-left: 0;
@@ -215,64 +238,63 @@
         <i class="fas fa-bars"></i>
     </button>
 
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar p-0" id="sidebar">
-                <div class="sidebar-brand">
-                    <i class="fas fa-shield-alt"></i> Admin Panel
-                </div>
-                <nav class="nav flex-column mt-3">
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>" href="<?php echo site_url('admin/dashboard'); ?>">
-                        <i class="fas fa-home"></i> Dashboard
-                    </a>
-                    <hr class="my-2" style="border-color: rgba(255,255,255,0.2);">
-                    <div class="px-3 py-2" style="color: var(--sidebar-text-muted); font-size: 0.85rem; text-transform: uppercase;">Management</div>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'users' ? 'active' : ''; ?>" href="<?php echo site_url('admin/users'); ?>">
-                        <i class="fas fa-users"></i> Pengguna
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'workshops' ? 'active' : ''; ?>" href="<?php echo site_url('admin/workshops'); ?>">
-                        <i class="fas fa-store"></i> Bengkel
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'pending_verification' ? 'active' : ''; ?>" href="<?php echo site_url('admin/pending_verification'); ?>">
-                        <i class="fas fa-clock"></i> Verifikasi Bengkel
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'review_moderation' ? 'active' : ''; ?>" href="<?php echo site_url('admin/review_moderation'); ?>">
-                        <i class="fas fa-star"></i> Moderasi Review
-                    </a>
-                    <hr class="my-2" style="border-color: rgba(255,255,255,0.2);">
-                    <div class="px-3 py-2" style="color: var(--sidebar-text-muted); font-size: 0.85rem; text-transform: uppercase;">System</div>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'activity_logs' ? 'active' : ''; ?>" href="<?php echo site_url('admin/activity_logs'); ?>">
-                        <i class="fas fa-history"></i> Activity Logs
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'settings' ? 'active' : ''; ?>" href="<?php echo site_url('admin/settings'); ?>">
-                        <i class="fas fa-cog"></i> Pengaturan
-                    </a>
-                    <hr class="my-2" style="border-color: rgba(255,255,255,0.2);">
-                    <div class="px-3 py-2" style="color: var(--sidebar-text-muted); font-size: 0.85rem; text-transform: uppercase;">Road Graph</div>
-                    <a class="nav-link <?php echo ($this->uri->segment(2) == 'road_graph' && $this->uri->segment(3) == '') ? 'active' : ''; ?>" href="<?php echo site_url('admin/road_graph'); ?>">
-                        <i class="fas fa-road"></i> Dashboard
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(3) == 'nodes' ? 'active' : ''; ?>" href="<?php echo site_url('admin/road_graph/nodes'); ?>">
-                        <i class="fas fa-map-marker-alt"></i> Nodes
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(3) == 'edges' ? 'active' : ''; ?>" href="<?php echo site_url('admin/road_graph/edges'); ?>">
-                        <i class="fas fa-exchange-alt"></i> Edges
-                    </a>
-                    <hr class="my-2" style="border-color: rgba(255,255,255,0.2);">
-                    <div class="px-3 py-2" style="color: var(--sidebar-text-muted); font-size: 0.85rem; text-transform: uppercase;">Reports</div>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'report' ? 'active' : ''; ?>" href="<?php echo site_url('admin/report'); ?>">
-                        <i class="fas fa-chart-bar"></i> Laporan
-                    </a>
-                    <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
-                    <a class="nav-link text-danger" href="<?php echo site_url('auth/logout'); ?>">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                </nav>
-            </div>
+    <!-- Sidebar -->
+    <div class="sidebar p-0" id="sidebar">
+        <div class="sidebar-brand">
+            <i class="fas fa-shield-alt"></i> Admin Panel
+        </div>
+        <nav class="nav flex-column mt-3">
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>" href="<?php echo site_url('admin/dashboard'); ?>">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <hr class="my-2" style="border-color: rgba(255,255,255,0.2);">
+            <div class="px-3 py-2" style="color: var(--sidebar-text-muted); font-size: 0.85rem; text-transform: uppercase;">Management</div>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'users' ? 'active' : ''; ?>" href="<?php echo site_url('admin/users'); ?>">
+                <i class="fas fa-users"></i> Pengguna
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'workshops' ? 'active' : ''; ?>" href="<?php echo site_url('admin/workshops'); ?>">
+                <i class="fas fa-store"></i> Bengkel
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'pending_verification' ? 'active' : ''; ?>" href="<?php echo site_url('admin/pending_verification'); ?>">
+                <i class="fas fa-clock"></i> Verifikasi Bengkel
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'review_moderation' ? 'active' : ''; ?>" href="<?php echo site_url('admin/review_moderation'); ?>">
+                <i class="fas fa-star"></i> Moderasi Review
+            </a>
+            <hr class="my-2" style="border-color: rgba(255,255,255,0.2);">
+            <div class="px-3 py-2" style="color: var(--sidebar-text-muted); font-size: 0.85rem; text-transform: uppercase;">System</div>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'activity_logs' ? 'active' : ''; ?>" href="<?php echo site_url('admin/activity_logs'); ?>">
+                <i class="fas fa-history"></i> Activity Logs
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'settings' ? 'active' : ''; ?>" href="<?php echo site_url('admin/settings'); ?>">
+                <i class="fas fa-cog"></i> Pengaturan
+            </a>
+            <hr class="my-2" style="border-color: rgba(255,255,255,0.2);">
+            <div class="px-3 py-2" style="color: var(--sidebar-text-muted); font-size: 0.85rem; text-transform: uppercase;">Road Graph</div>
+            <a class="nav-link <?php echo ($this->uri->segment(2) == 'road_graph' && $this->uri->segment(3) == '') ? 'active' : ''; ?>" href="<?php echo site_url('admin/road_graph'); ?>">
+                <i class="fas fa-road"></i> Dashboard
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(3) == 'nodes' ? 'active' : ''; ?>" href="<?php echo site_url('admin/road_graph/nodes'); ?>">
+                <i class="fas fa-map-marker-alt"></i> Nodes
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(3) == 'edges' ? 'active' : ''; ?>" href="<?php echo site_url('admin/road_graph/edges'); ?>">
+                <i class="fas fa-exchange-alt"></i> Edges
+            </a>
+            <hr class="my-2" style="border-color: rgba(255,255,255,0.2);">
+            <div class="px-3 py-2" style="color: var(--sidebar-text-muted); font-size: 0.85rem; text-transform: uppercase;">Reports</div>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'report' ? 'active' : ''; ?>" href="<?php echo site_url('admin/report'); ?>">
+                <i class="fas fa-chart-bar"></i> Laporan
+            </a>
+            <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
+            <a class="nav-link text-danger" href="<?php echo site_url('auth/logout'); ?>">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </nav>
+    </div>
 
-            <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 main-content" id="mainContent">
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="container-fluid">
                 <!-- Header -->
                 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
                     <div class="d-flex align-items-center">
@@ -362,8 +384,8 @@
 
                 <!-- Main Content Area -->
                 <?php echo $content_for_layout ?? ''; ?>
-            </div>
-        </div>
+            </div><!-- /.container-fluid -->
+        </div><!-- /#mainContent -->
     </div>
 
     <!-- Bootstrap JS -->
