@@ -1,4 +1,18 @@
+<?php $this->load->view('admin/layouts/header'); ?>
+
 <div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-chart-line"></i> Laporan Global</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="<?php echo site_url('admin/dashboard'); ?>">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Laporan Global</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
     <!-- Summary Cards -->
     <div class="row mb-4">
         <div class="col-12">
@@ -64,26 +78,32 @@
         <div class="col-12">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form method="get" class="form-inline">
-                        <label class="mr-2">Periode:</label>
-                        <input type="date" name="start_date" class="form-control mr-2" value="<?= $start_date ?>">
-                        <span class="mr-2">s/d</span>
-                        <input type="date" name="end_date" class="form-control mr-3" value="<?= $end_date ?>">
-                        
-                        <label class="mr-2">Filter Bengkel:</label>
-                        <select name="workshop_id" class="form-control mr-3">
-                            <option value="">Semua Bengkel</option>
-                            <?php foreach ($workshops as $ws): ?>
-                            <option value="<?= $ws['id'] ?>" <?= $workshop_filter == $ws['id'] ? 'selected' : '' ?>>
-                                <?= esc($ws['name']) ?>
-                            </option>
-                            <?php endforeach; ?>
-                        </select>
-                        
-                        <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-search"></i> Filter</button>
-                        <a href="<?= site_url('admin/report/export_global_csv?start_date=' . $start_date . '&end_date=' . $end_date . '&workshop_id=' . $workshop_filter) ?>" class="btn btn-success">
-                            <i class="fas fa-file-csv"></i> Export CSV
-                        </a>
+                    <form method="get" class="row g-3 align-items-end">
+                        <div class="col-md-3">
+                            <label class="form-label">Tanggal Mulai</label>
+                            <input type="date" name="start_date" class="form-control" value="<?= $start_date ?>">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Tanggal Akhir</label>
+                            <input type="date" name="end_date" class="form-control" value="<?= $end_date ?>">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Filter Bengkel</label>
+                            <select name="workshop_id" class="form-select">
+                                <option value="">Semua Bengkel</option>
+                                <?php foreach ($workshops as $ws): ?>
+                                <option value="<?= $ws['id'] ?>" <?= $workshop_filter == $ws['id'] ? 'selected' : '' ?>>
+                                    <?= esc($ws['name']) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-md-3 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Filter</button>
+                            <a href="<?= site_url('admin/report/export_global_csv?start_date=' . $start_date . '&end_date=' . $end_date . '&workshop_id=' . $workshop_filter) ?>" class="btn btn-success">
+                                <i class="fas fa-file-csv"></i> Export CSV
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -99,7 +119,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover datatable">
                             <thead class="thead-light">
                                 <tr>
                                     <th>No</th>
@@ -224,3 +244,5 @@
 .bg-dark { background-color: #343a40 !important; color: white; }
 .progress { background-color: #e9ecef; }
 </style>
+
+<?php $this->load->view('admin/layouts/footer'); ?>
