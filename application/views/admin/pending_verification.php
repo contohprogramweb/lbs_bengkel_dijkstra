@@ -76,7 +76,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th width="5%">No</th>
+									<th width="5%">No</th>
                                     <th>Nama Bengkel</th>
                                     <th>Pemilik</th>
                                     <th>Lokasi</th>
@@ -86,12 +86,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
+                                <?php
                                 $no = 1;
-                                foreach($workshops as $workshop): 
+                                foreach($workshops as $workshop):
                                 ?>
                                 <tr>
-                                    <td><?php echo $no++; ?></td>
+									<td><?php echo $no++; ?></td>
                                     <td>
                                         <strong><?php echo htmlspecialchars($workshop->name); ?></strong><br>
                                         <small class="text-muted"><?php echo htmlspecialchars($workshop->specialization ?? 'Umum'); ?></small>

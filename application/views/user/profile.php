@@ -1,12 +1,4 @@
-<?php
-/**
- * User Profile View
- * 
- * @var object $user User object
- */
-?>
-
-<div class="container-fluid py-3">
+<div class=" py-3">
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="card shadow-sm border-0">

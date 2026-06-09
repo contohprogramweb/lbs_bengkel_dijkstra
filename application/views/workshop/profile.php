@@ -6,7 +6,7 @@
  * @var object|null $workshop Workshop data
  * @var array $services Workshop services
  */
-$this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
+ 
 ?>
 
 <div class="row">
@@ -58,20 +58,20 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                         <div class="col-md-9">
                             <h4><?= htmlspecialchars($workshop->name) ?></h4>
                             <p class="text-muted"><?= nl2br(htmlspecialchars($workshop->description)) ?></p>
-                            
+
                             <div class="mt-3">
                                 <p class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i>
                                     <strong>Alamat:</strong><br>
                                     <?= nl2br(htmlspecialchars($workshop->address)) ?><br>
                                     <?= htmlspecialchars($workshop->city) ?>, <?= htmlspecialchars($workshop->province) ?> <?= htmlspecialchars($workshop->postal_code) ?>
                                 </p>
-                                
+
                                 <p class="mb-2"><i class="fas fa-phone text-primary me-2"></i>
                                     <strong>Telepon:</strong> <?= htmlspecialchars($workshop->phone ?? '-') ?>
                                 </p>
-                                
+
                                 <p class="mb-2"><i class="fab fa-whatsapp text-success me-2"></i>
-                                    <strong>WhatsApp:</strong> 
+                                    <strong>WhatsApp:</strong>
                                     <a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $workshop->whatsapp) ?>" target="_blank" class="text-decoration-none">
                                         <?= htmlspecialchars($workshop->whatsapp) ?>
                                     </a>
@@ -97,7 +97,7 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                     <div class="row">
                         <div class="col-md-6">
                             <table class="table table-sm table-borderless">
-                                <?php foreach (array_slice($days, 0, 4) as $key => $label): 
+                                <?php foreach (array_slice($days, 0, 4) as $key => $label):
                                     $hours = $operating_hours[$key] ?? null;
                                 ?>
                                     <tr>
@@ -115,7 +115,7 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                         </div>
                         <div class="col-md-6">
                             <table class="table table-sm table-borderless">
-                                <?php foreach (array_slice($days, 4) as $key => $label): 
+                                <?php foreach (array_slice($days, 4) as $key => $label):
                                     $hours = $operating_hours[$key] ?? null;
                                 ?>
                                     <tr>
@@ -331,7 +331,7 @@ function editService(serviceId) {
                 $('#editPriceMax').val(response.price_max || response.price_min);
                 $('#editDuration').val(response.duration_minutes || 60);
                 $('#editIsAvailable').prop('checked', response.is_available == 1);
-                
+
                 $('#editServiceModal').modal('show');
             }
         },

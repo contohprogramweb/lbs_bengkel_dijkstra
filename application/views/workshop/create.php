@@ -5,7 +5,7 @@
  * @var object $user Current user data
  * @var array $categories Service categories
  */
-$this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
+ 
 ?>
 
 <div class="card shadow mb-4">
@@ -28,7 +28,7 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
         <?php endif; ?>
 
         <?= form_open('workshop/create', ['enctype' => 'multipart/form-data']) ?>
-        
+
         <div class="row">
             <!-- Left Column -->
             <div class="col-lg-8">
@@ -38,8 +38,8 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama Bengkel <span class="text-danger">*</span></label>
-                            <input type="text" name="name" id="name" class="form-control" 
-                                   value="<?= set_value('name') ?>" 
+                            <input type="text" name="name" id="name" class="form-control"
+                                   value="<?= set_value('name') ?>"
                                    placeholder="Contoh: Bengkel Maju Jaya" required>
                             <small class="text-muted">Masukkan nama bengkel Anda dengan jelas dan profesional</small>
                         </div>
@@ -90,16 +90,16 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="city" class="form-label">Kota/Kabupaten <span class="text-danger">*</span></label>
-                                <input type="text" name="city" id="city" class="form-control" 
-                                       value="<?= set_value('city') ?>" 
+                                <input type="text" name="city" id="city" class="form-control"
+                                       value="<?= set_value('city') ?>"
                                        placeholder="Contoh: Jakarta Selatan" required>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="postal_code" class="form-label">Kode Pos</label>
-                            <input type="text" name="postal_code" id="postal_code" class="form-control" 
-                                   value="<?= set_value('postal_code') ?>" 
+                            <input type="text" name="postal_code" id="postal_code" class="form-control"
+                                   value="<?= set_value('postal_code') ?>"
                                    placeholder="Contoh: 12345" maxlength="10">
                         </div>
 
@@ -107,14 +107,14 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                             <label class="form-label">Koordinat Lokasi</label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input type="text" name="latitude" id="latitude" class="form-control" 
-                                           value="<?= set_value('latitude', '-6.2088') ?>" 
+                                    <input type="text" name="latitude" id="latitude" class="form-control"
+                                           value="<?= set_value('latitude', '-6.2088') ?>"
                                            placeholder="Latitude" step="any">
                                     <small class="text-muted">Contoh: -6.2088</small>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" name="longitude" id="longitude" class="form-control" 
-                                           value="<?= set_value('longitude', '106.8456') ?>" 
+                                    <input type="text" name="longitude" id="longitude" class="form-control"
+                                           value="<?= set_value('longitude', '106.8456') ?>"
                                            placeholder="Longitude" step="any">
                                     <small class="text-muted">Contoh: 106.8456</small>
                                 </div>
@@ -131,15 +131,15 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="phone" class="form-label">Telepon</label>
-                                <input type="text" name="phone" id="phone" class="form-control" 
-                                       value="<?= set_value('phone') ?>" 
+                                <input type="text" name="phone" id="phone" class="form-control"
+                                       value="<?= set_value('phone') ?>"
                                        placeholder="Contoh: 021-1234567">
                                 <small class="text-muted">Nomor telepon bengkel</small>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="whatsapp" class="form-label">WhatsApp <span class="text-danger">*</span></label>
-                                <input type="text" name="whatsapp" id="whatsapp" class="form-control" 
-                                       value="<?= set_value('whatsapp') ?>" 
+                                <input type="text" name="whatsapp" id="whatsapp" class="form-control"
+                                       value="<?= set_value('whatsapp') ?>"
                                        placeholder="Contoh: 08123456789" required>
                                 <small class="text-muted">Nomor WhatsApp untuk komunikasi dengan pelanggan</small>
                             </div>
@@ -246,8 +246,8 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                         <small class="text-muted mb-2 d-block">Pilih minimal satu layanan:</small>
                         <?php foreach ($categories as $key => $label): ?>
                             <div class="form-check mb-2">
-                                <input type="checkbox" name="services_offered[]" id="service_<?= $key ?>" 
-                                       class="form-check-input" value="<?= $key ?>" 
+                                <input type="checkbox" name="services_offered[]" id="service_<?= $key ?>"
+                                       class="form-check-input" value="<?= $key ?>"
                                        <?= in_array($key, set_value('services_offered', [])) ? 'checked' : '' ?>>
                                 <label for="service_<?= $key ?>" class="form-check-label"><?= $label ?></label>
                             </div>
@@ -269,7 +269,7 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                 <div class="alert alert-info mt-3 mb-0">
                     <h6><i class="fas fa-info-circle"></i> Informasi</h6>
                     <p class="small mb-0">
-                        Setelah membuat profil, bengkel Anda akan menunggu verifikasi dari admin. 
+                        Setelah membuat profil, bengkel Anda akan menunggu verifikasi dari admin.
                         Proses verifikasi biasanya memakan waktu 1-2 hari kerja.
                     </p>
                 </div>
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form validation feedback
     const form = document.querySelector('form');
     const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
-    
+
     inputs.forEach(input => {
         input.addEventListener('blur', function() {
             if (this.value.trim() === '') {
@@ -304,11 +304,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const counter = document.createElement('small');
         counter.className = 'text-muted float-end';
         descriptionTextarea.parentNode.appendChild(counter);
-        
+
         descriptionTextarea.addEventListener('input', function() {
             const length = this.value.length;
             counter.textContent = length + ' / ' + maxLength + ' karakter';
-            
+
             if (length > maxLength) {
                 counter.classList.add('text-danger');
                 this.value = this.value.substring(0, maxLength);

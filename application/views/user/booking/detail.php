@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-
+ 
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-12">
@@ -168,7 +168,7 @@
                             <?php if (!in_array($booking['status'], ['pending', 'accepted', 'approved'])): ?>
                                 <p class="text-muted text-center mb-0">Tidak ada aksi yang tersedia untuk status ini</p>
                             <?php endif; ?>
-                            
+
                             <hr>
                             <a href="<?= site_url('user/bookings') ?>" class="btn btn-secondary btn-block">
                                 <i class="fas fa-list"></i> Lihat Semua Booking
@@ -184,3 +184,5 @@
 <style>
 .badge-lg { padding: 0.5em 1em; font-size: 0.9rem; }
 </style>
+
+ 

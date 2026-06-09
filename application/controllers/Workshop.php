@@ -57,8 +57,8 @@ class Workshop extends Workshop_Controller {
             'total_bookings' => 0,
             'pending_bookings' => 0,
             'completed_bookings' => 0,
-            'total_reviews' => $data['workshop']->total_reviews ?? 0,
-            'avg_rating' => $data['workshop']->rating_avg ?? 0
+             'total_reviews' => isset($data['workshop']) && isset($data['workshop']->total_reviews) ? $data['workshop']->total_reviews : 0,
+            'avg_rating' => isset($data['workshop']) && isset($data['workshop']->rating_avg) ? $data['workshop']->rating_avg : 0
         ];
 
         $this->render('workshop/dashboard', $data);
@@ -126,7 +126,7 @@ class Workshop extends Workshop_Controller {
                     $workshop_data['longitude'] = $this->input->post('longitude', TRUE) ?: 0;
                 }
 
-                $workshop_id = $this->workshop_model->insert($workshop_data);
+                $workshop_id = $this->workshop_model->create($workshop_data);
 
                 if ($workshop_id) {
                     $this->session->set_flashdata('success', 'Profil bengkel berhasil dibuat. Menunggu verifikasi admin.');

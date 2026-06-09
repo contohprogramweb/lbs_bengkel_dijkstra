@@ -21,17 +21,19 @@ class User extends Customer_Controller {
         $this->load->library('form_validation');
     }
 
-    // --------------------------------------------------------------------
-    // Dashboard
-    // --------------------------------------------------------------------
 
-    /**
-     * User dashboard - Default index method
-     */
+	 
     public function index()
     {
         $this->dashboard();
     }
+
+
+
+
+    // --------------------------------------------------------------------
+    // Dashboard
+    // --------------------------------------------------------------------
 
     /**
      * User dashboard
@@ -99,14 +101,18 @@ class User extends Customer_Controller {
 
                 // Handle avatar upload
                 if (!empty($_FILES['avatar']['name'])) {
-                    $upload_path = $this->config->item('upload_path_profiles');
-                    
+					
+					// Use relative path for upload library
+                    $upload_path_relative = 'uploads/profiles/';
+                    $upload_path_absolute = FCPATH . $upload_path_relative;
+
                     // Ensure upload directory exists
-                    if (!is_dir($upload_path)) {
-                        mkdir($upload_path, 0755, TRUE);
+                    if (!is_dir($upload_path_absolute)) {
+                        mkdir($upload_path_absolute, 0755, TRUE);
                     }
-                    
-                    $config['upload_path'] = $upload_path;
+
+                    $config['upload_path'] = $upload_path_absolute;
+				  
                     $config['allowed_types'] = $this->config->item('allowed_types_profiles');
                     $config['max_size'] = $this->config->item('max_size_profiles');
                     $config['file_name'] = 'avatar_' . $this->user_id . '_' . time();
@@ -121,7 +127,7 @@ class User extends Customer_Controller {
                             unlink(FCPATH . $data['user']->avatar);
                         }
 
-                        $update_data['avatar'] = 'uploads/profiles/' . $upload_data['file_name'];
+                         $update_data['avatar'] = $upload_path_relative . $upload_data['file_name'];
                     } else {
                         $this->session->set_flashdata('error', $this->upload->display_errors());
                     }

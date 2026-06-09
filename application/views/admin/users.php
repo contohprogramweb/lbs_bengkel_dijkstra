@@ -9,14 +9,31 @@
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet">
     <style>
-        .stat-card { border-radius: 10px; transition: transform 0.2s; }
-        .stat-card:hover { transform: translateY(-5px); }
-		
+      
 		.setting-card { min-height: 250px; }
-        .sidebar { min-height: calc(100vh - 56px); background-color: #343a40; }
-        .sidebar a { color: #fff; text-decoration: none; padding: 10px 15px; display: block; }
-        .sidebar a:hover, .sidebar a.active { background-color: #495057; }
-        .sidebar i { width: 25px; }
+        .sidebar { 
+            min-height: 100vh; 
+            background: #212529; 
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar a { 
+            color: #adb5bd; 
+            text-decoration: none; 
+            padding: 10px 15px; 
+            display: block; 
+            transition: all 0.3s;
+        }
+        .sidebar a:hover, .sidebar a.active { 
+            background: #343a40; 
+            color: #fff; 
+            border-left: 3px solid #0d6efd;
+        }
+        .sidebar-sub { 
+            padding-left: 30px !important; 
+            font-size: 0.9em;
+        }
+        .sidebar-dropdown .dropdown-toggle::after { display: none; }
+        .main-content { padding: 20px; }
     </style>
 </head>
 <body>
@@ -121,9 +138,11 @@
             </div>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
@@ -140,7 +159,7 @@
                     }
                 },
                 columns: [
-                    { 
+                    {
                         data: null,
                         render: function(data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
@@ -187,7 +206,7 @@
                             
                             actions += '<button class="btn btn-sm btn-primary" onclick="openResetModal(' + row.id + ')"><i class="fas fa-key"></i></button> ';
                             
-                            if (row.id != <?php echo $this->session->userdata('user_id'); ?>) {
+                            if (row.id != "<?php echo $this->session->userdata('user_id'); ?>") {
                                 actions += '<a href="<?php echo site_url("admin/delete_user/"); ?>' + row.id + '" class="btn btn-sm btn-danger" onclick="return confirm(\'Hapus pengguna ini? Tindakan ini tidak dapat dibatalkan.\')"><i class="fas fa-trash"></i></a>';
                             }
                             

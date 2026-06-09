@@ -14,42 +14,42 @@
                             <?php echo $this->session->flashdata('success'); ?>
                         </div>
                     <?php endif; ?>
-                    
+
                     <?php if ($this->session->flashdata('error')): ?>
                         <div class="alert alert-danger">
                             <?php echo $this->session->flashdata('error'); ?>
                         </div>
                     <?php endif; ?>
-                    
+
                     <?php echo validation_errors('<div class="alert alert-warning">', '</div>'); ?>
-                    
+
                     <?php echo form_open('user/change_password'); ?>
                         <div class="form-group">
                             <label for="current_password">Password Saat Ini <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" id="current_password" 
-                                   name="current_password" required 
+                            <input type="password" class="form-control" id="current_password"
+                                   name="current_password" required
                                    placeholder="Masukkan password saat ini">
                         </div>
-                        
+
                         <hr>
-                        
+
                         <div class="form-group">
                             <label for="new_password">Password Baru <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" id="new_password" 
+                            <input type="password" class="form-control" id="new_password"
                                    name="new_password" required minlength="6" maxlength="50"
                                    placeholder="Minimal 6 karakter">
                             <small class="form-text text-muted">Password minimal 6 karakter.</small>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="confirm_password">Konfirmasi Password Baru <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" id="confirm_password" 
+                            <input type="password" class="form-control" id="confirm_password"
                                    name="confirm_password" required minlength="6" maxlength="50"
                                    placeholder="Ulangi password baru">
                         </div>
-                        
+
                         <hr>
-                        
+
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-save"></i> Ubah Password
                         </button>

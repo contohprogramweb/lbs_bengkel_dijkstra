@@ -7,7 +7,7 @@
  * @var array $services Workshop services
  * @var array $categories Service categories
  */
-$this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
+ 
 ?>
 
 <div class="row mb-4">
@@ -42,16 +42,16 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
         <?php endif; ?>
 
         <?= form_open('workshop/add_service') ?>
-        
+
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="service_name" class="form-label">Nama Layanan <span class="text-danger">*</span></label>
-                <input type="text" name="service_name" id="service_name" class="form-control" 
-                       value="<?= set_value('service_name') ?>" 
+                <input type="text" name="service_name" id="service_name" class="form-control"
+                       value="<?= set_value('service_name') ?>"
                        placeholder="Contoh: Ganti Oli, Servis Rem, dll" required maxlength="150">
                 <small class="text-muted">Masukkan nama layanan dengan jelas</small>
             </div>
-            
+
             <div class="col-md-6 mb-3">
                 <label for="service_category" class="form-label">Kategori <span class="text-danger">*</span></label>
                 <select name="service_category" id="service_category" class="form-select select2" required>
@@ -73,24 +73,24 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label for="price_min" class="form-label">Harga Minimum (Rp) <span class="text-danger">*</span></label>
-                <input type="number" name="price_min" id="price_min" class="form-control" 
-                       value="<?= set_value('price_min') ?>" 
+                <input type="number" name="price_min" id="price_min" class="form-control"
+                       value="<?= set_value('price_min') ?>"
                        placeholder="Contoh: 50000" required min="0">
                 <small class="text-muted">Harga terendah untuk layanan ini</small>
             </div>
-            
+
             <div class="col-md-4 mb-3">
                 <label for="price_max" class="form-label">Harga Maximum (Rp)</label>
-                <input type="number" name="price_max" id="price_max" class="form-control" 
-                       value="<?= set_value('price_max') ?>" 
+                <input type="number" name="price_max" id="price_max" class="form-control"
+                       value="<?= set_value('price_max') ?>"
                        placeholder="Contoh: 100000" min="0">
                 <small class="text-muted">Opsional. Kosongkan jika harga tetap</small>
             </div>
-            
+
             <div class="col-md-4 mb-3">
                 <label for="duration_minutes" class="form-label">Durasi (menit)</label>
-                <input type="number" name="duration_minutes" id="duration_minutes" class="form-control" 
-                       value="<?= set_value('duration_minutes', '60') ?>" 
+                <input type="number" name="duration_minutes" id="duration_minutes" class="form-control"
+                       value="<?= set_value('duration_minutes', '60') ?>"
                        placeholder="Contoh: 60" min="0">
                 <small class="text-muted">Estimasi waktu pengerjaan</small>
             </div>
@@ -106,10 +106,10 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                     <option value="per_service" <?= set_value('unit') == 'per_service' ? 'selected' : '' ?>>Per Servis</option>
                 </select>
             </div>
-            
+
             <div class="col-md-6 mb-3 d-flex align-items-end">
                 <div class="form-check">
-                    <input type="checkbox" name="is_available" id="is_available" class="form-check-input" 
+                    <input type="checkbox" name="is_available" id="is_available" class="form-check-input"
                            value="1" <?= set_value('is_available', '1') == '1' ? 'checked' : '' ?>>
                     <label for="is_available" class="form-check-label fw-bold">
                         Layanan Tersedia
@@ -139,7 +139,7 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-tools"></i> Daftar Layanan (<?= count($services) ?>)</h6>
-        
+
         <!-- Filter -->
         <div class="d-flex gap-2">
             <select id="filterCategory" class="form-select form-select-sm" style="width: 150px;">
@@ -216,8 +216,8 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                                         <button class="btn btn-outline-primary" onclick="editService(<?= $service->id ?>)" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="btn btn-outline-<?= $service->is_available ? 'warning' : 'success' ?>" 
-                                                onclick="toggleServiceStatus(<?= $service->id ?>, <?= $service->is_available ?>)" 
+                                        <button class="btn btn-outline-<?= $service->is_available ? 'warning' : 'success' ?>"
+                                                onclick="toggleServiceStatus(<?= $service->id ?>, <?= $service->is_available ?>)"
                                                 title="<?= $service->is_available ? 'Nonaktifkan' : 'Aktifkan' ?>">
                                             <i class="fas fa-<?= $service->is_available ? 'pause' : 'play' ?>"></i>
                                         </button>
@@ -252,13 +252,13 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
             <div class="modal-body">
                 <form id="editServiceForm">
                     <input type="hidden" id="editServiceId">
-                    
+
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="editServiceName" class="form-label">Nama Layanan <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="editServiceName" required maxlength="150">
                         </div>
-                        
+
                         <div class="col-md-6 mb-3">
                             <label for="editServiceCategory" class="form-label">Kategori <span class="text-danger">*</span></label>
                             <select class="form-select" id="editServiceCategory" required>
@@ -279,12 +279,12 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                             <label for="editPriceMin" class="form-label">Harga Minimum (Rp) <span class="text-danger">*</span></label>
                             <input type="number" class="form-control" id="editPriceMin" required min="0">
                         </div>
-                        
+
                         <div class="col-md-4 mb-3">
                             <label for="editPriceMax" class="form-label">Harga Maximum (Rp)</label>
                             <input type="number" class="form-control" id="editPriceMax" min="0">
                         </div>
-                        
+
                         <div class="col-md-4 mb-3">
                             <label for="editDuration" class="form-label">Durasi (menit)</label>
                             <input type="number" class="form-control" id="editDuration" value="60" min="0">
@@ -301,7 +301,7 @@ $this->load->view('layouts/workshop_layout', ['content_for_layout' => '']);
                                 <option value="per_service">Per Servis</option>
                             </select>
                         </div>
-                        
+
                         <div class="col-md-6 mb-3 d-flex align-items-end">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="editIsAvailable">
@@ -327,18 +327,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const filterCategory = document.getElementById('filterCategory');
     const filterStatus = document.getElementById('filterStatus');
     const tableRows = document.querySelectorAll('#servicesTable tbody tr');
-    
+
     function filterTable() {
         const categoryValue = filterCategory.value;
         const statusValue = filterStatus.value;
-        
+
         tableRows.forEach(row => {
             const rowCategory = row.dataset.category;
             const rowStatus = row.dataset.status;
-            
+
             const matchCategory = !categoryValue || rowCategory === categoryValue;
             const matchStatus = !statusValue || rowStatus === statusValue;
-            
+
             if (matchCategory && matchStatus) {
                 row.style.display = '';
             } else {
@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     filterCategory.addEventListener('change', filterTable);
     filterStatus.addEventListener('change', filterTable);
 });
@@ -368,7 +368,7 @@ function editService(serviceId) {
                 $('#editDuration').val(response.duration_minutes || 60);
                 $('#editUnit').val(response.unit || 'fixed');
                 $('#editIsAvailable').prop('checked', response.is_available == 1);
-                
+
                 $('#editServiceModal').modal('show');
             }
         },

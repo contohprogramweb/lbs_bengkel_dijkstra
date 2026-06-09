@@ -5,14 +5,14 @@
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <h2><?= $page_title ?></h2>
-            
+
             <div class="card mt-4">
                 <div class="card-body">
                     <div class="alert alert-info">
-                        <i class="fas fa-calendar-alt"></i> 
+                        <i class="fas fa-calendar-alt"></i>
                         Pilih tanggal dan waktu baru untuk booking Anda.
                     </div>
-                    
+
                     <div class="mb-4">
                         <h5>Detail Booking Saat Ini</h5>
                         <table class="table table-bordered">
@@ -34,7 +34,7 @@
                             </tr>
                         </table>
                     </div>
-                    
+
                     <form method="post" action="<?= site_url('user/bookings/reschedule/' . $booking['id']) ?>">
                         <div class="form-group">
                             <label for="new_date">Pilih Tanggal Baru</label>
@@ -47,7 +47,7 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="new_time">Pilih Waktu Baru</label>
                             <select name="new_time" id="new_time" class="form-control" required>
@@ -69,9 +69,9 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        
+
                         <hr>
-                        
+
                         <a href="<?= site_url('user/bookings/detail/' . $booking['id']) ?>" class="btn btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-primary float-right">Ubah Jadwal</button>
                     </form>
