@@ -7,7 +7,6 @@
  * @var array $stats Statistics
  * @var int $services_count Number of services
  */
- ob_start();
 ?>
 
 <div class="container-fluid">
@@ -178,9 +177,3 @@
         </div>
     </div>
 </div>
-
-
-<?php
-$content = ob_get_clean();
-$this->load->view('layouts/workshop_layout', compact('content_for_layout'));
-?>
