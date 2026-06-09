@@ -13,10 +13,29 @@
         .stat-card:hover { transform: translateY(-5px); }
         
         .setting-card { min-height: 250px; }
-        .sidebar { min-height: calc(100vh - 56px); background-color: #343a40; }
-        .sidebar a { color: #fff; text-decoration: none; padding: 10px 15px; display: block; }
-        .sidebar a:hover, .sidebar a.active { background-color: #495057; }
-        .sidebar i { width: 25px; }
+        .sidebar { 
+            min-height: 100vh; 
+            background: #212529; 
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar a { 
+            color: #adb5bd; 
+            text-decoration: none; 
+            padding: 10px 15px; 
+            display: block; 
+            transition: all 0.3s;
+        }
+        .sidebar a:hover, .sidebar a.active { 
+            background: #343a40; 
+            color: #fff; 
+            border-left: 3px solid #0d6efd;
+        }
+        .sidebar-sub { 
+            padding-left: 30px !important; 
+            font-size: 0.9em;
+        }
+        .sidebar-dropdown .dropdown-toggle::after { display: none; }
+		
     </style>
 </head>
 <body>

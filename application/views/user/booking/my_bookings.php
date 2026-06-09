@@ -1,12 +1,14 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+ 
 
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-12">
-            <h2><?= $page_title ?></h2>
+        <div class=" ">
             
             <!-- Stats Cards -->
+			 
             <div class="row mb-4">
+				 
                 <div class="col-md-3">
                     <div class="card bg-primary text-white">
                         <div class="card-body">
@@ -39,12 +41,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
+				 
+			</div>
+			 
+			
             <!-- Filter -->
             <div class="card mb-4">
                 <div class="card-body">
                     <form method="get" class="form-inline">
+					<div class="row">
+						<div class="col-lg-4">
                         <label class="mr-2">Filter Status:</label>
                         <select name="status" class="form-control mr-2">
                             <option value="">Semua</option>
@@ -55,8 +61,13 @@
                             <option value="completed" <?= ($this->input->get('status') == 'completed') ? 'selected' : '' ?>>Completed</option>
                             <option value="cancelled" <?= ($this->input->get('status') == 'cancelled') ? 'selected' : '' ?>>Cancelled</option>
                         </select>
-                        <button type="submit" class="btn btn-primary">Filter</button>
-                        <a href="<?= site_url('user/bookings') ?>" class="btn btn-secondary ml-2">Reset</a>
+						</div>
+						<div class="col-lg-3"> 
+                        <button type="submit" class="btn btn-primary mt-4">Filter</button>
+						 
+                        <a href="<?= site_url('user/bookings') ?>" class="btn btn-secondary ml-2 mt-4">Reset</a>
+						</div>
+						</div>
                     </form>
                 </div>
             </div>
@@ -65,7 +76,7 @@
             <div class="card">
                 <div class="card-body">
                     <?php if (empty($bookings)): ?>
-                        <div class="alert alert-info">
+                        <div class="">
                             <i class="fas fa-info-circle"></i> Anda belum memiliki booking.
                             <a href="<?= site_url('booking') ?>" class="btn btn-primary btn-sm ml-2">Buat Booking Baru</a>
                         </div>
@@ -129,3 +140,5 @@
         </div>
     </div>
 </div>
+
+ 

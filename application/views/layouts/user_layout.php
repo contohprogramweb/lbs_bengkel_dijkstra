@@ -188,6 +188,7 @@
                     </div>
                 </div>
                 
+				 
                 <!-- Flash Messages with SweetAlert -->
                 <?php if ($this->session->flashdata('success')): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -214,55 +215,7 @@
                     </div>
                 <?php endif; ?>
                 
-                <!-- Stats Cards -->
-                <?php if (isset($stats)): ?>
-                <div class="row mb-4">
-                    <div class="col-md-6 col-lg-3 mb-3">
-                        <div class="card card-stat bg-primary text-white p-3 h-100">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-0">Total Booking</h6>
-                                    <h3 class="mb-0"><?php echo $stats['total_bookings'] ?? 0; ?></h3>
-                                </div>
-                                <div class="icon"><i class="fas fa-calendar-check"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mb-3">
-                        <div class="card card-stat bg-warning text-white p-3 h-100">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-0">Pending</h6>
-                                    <h3 class="mb-0"><?php echo $stats['pending_bookings'] ?? 0; ?></h3>
-                                </div>
-                                <div class="icon"><i class="fas fa-clock"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mb-3">
-                        <div class="card card-stat bg-success text-white p-3 h-100">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-0">Selesai</h6>
-                                    <h3 class="mb-0"><?php echo $stats['completed_bookings'] ?? 0; ?></h3>
-                                </div>
-                                <div class="icon"><i class="fas fa-check"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mb-3">
-                        <div class="card card-stat bg-info text-white p-3 h-100">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-0">Kendaraan</h6>
-                                    <h3 class="mb-0"><?php echo $stats['total_vehicles'] ?? 0; ?></h3>
-                                </div>
-                                <div class="icon"><i class="fas fa-car"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php endif; ?>
+              
                 
                 <!-- Main Content Area -->
                 <?php echo $content_for_layout ?? ''; ?>

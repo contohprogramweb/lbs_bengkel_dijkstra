@@ -12,12 +12,30 @@
         .stat-card { border-radius: 10px; transition: transform 0.2s; }
         .stat-card:hover { transform: translateY(-5px); }
         
-        .setting-card { min-height: 250px; }
-        .sidebar { min-height: calc(100vh - 56px); background-color: #343a40; }
-        .sidebar a { color: #fff; text-decoration: none; padding: 10px 15px; display: block; }
-        .sidebar a:hover, .sidebar a.active { background-color: #495057; }
-        .sidebar i { width: 25px; }
+        .setting-card { min-height: 250px; } 
         .log-detail { font-family: monospace; font-size: 0.9em; background: #f8f9fa; padding: 10px; border-radius: 5px; }
+		.sidebar { 
+            min-height: 100vh; 
+            background: #212529; 
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar a { 
+            color: #adb5bd; 
+            text-decoration: none; 
+            padding: 10px 15px; 
+            display: block; 
+            transition: all 0.3s;
+        }
+        .sidebar a:hover, .sidebar a.active { 
+            background: #343a40; 
+            color: #fff; 
+            border-left: 3px solid #0d6efd;
+        }
+        .sidebar-sub { 
+            padding-left: 30px !important; 
+            font-size: 0.9em;
+        }
+        .sidebar-dropdown .dropdown-toggle::after { display: none; }
     </style>
 </head>
 <body>
@@ -146,7 +164,7 @@
                                         <span class="badge bg-info"><?php echo htmlspecialchars($log->action_type); ?></span>
                                     </td>
                                     <td>
-                                        <small><?php echo htmlspecialchars($log->description); ?></small>
+                                        <small><?php echo htmlspecialchars($log->action_description); ?></small>
                                     </td>
                                     <td>
                                         <?php if($log->target_type === 'user' && !empty($log->target_id)): ?>
@@ -198,12 +216,11 @@
                     </nav>
                     <?php endif; ?>
                 <?php endif; ?>
-            </div>
-        </div>
-    </div>
-            </div>
-        </div>
-    </div>
+            </div><!-- /.card-body -->
+        </div><!-- /.card -->
+            </div><!-- /.col-md-10 main content -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

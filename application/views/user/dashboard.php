@@ -1,7 +1,7 @@
 <?php
 /**
  * User Dashboard View
- * 
+ *
  * @var array $stats Statistics data
  */
 ?>
@@ -18,73 +18,57 @@
             </div>
         </div>
     </div>
-    
-    <!-- Stats Cards -->
-    <div class="row g-3 mb-4">
-        <div class="col-md-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="text-muted mb-2">Total Booking</h6>
-                            <h3 class="mb-0 fw-bold"><?php echo $stats['total_bookings'] ?? 0; ?></h3>
+
+
+	  <!-- Stats Cards -->
+                <?php if (isset($stats)): ?>
+                <div class="row mb-4">
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card card-stat bg-primary text-white p-3 h-100">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Total Booking</h6>
+                                    <h3 class="mb-0"><?php echo $stats['total_bookings'] ?? 0; ?></h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-calendar-check"></i></div>
+                            </div>
                         </div>
-                        <div class="bg-primary bg-opacity-10 rounded-circle p-3">
-                            <i class="fas fa-calendar-check fa-2x text-primary"></i>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card card-stat bg-warning text-white p-3 h-100">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Pending</h6>
+                                    <h3 class="mb-0"><?php echo $stats['pending_bookings'] ?? 0; ?></h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-clock"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card card-stat bg-success text-white p-3 h-100">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Selesai</h6>
+                                    <h3 class="mb-0"><?php echo $stats['completed_bookings'] ?? 0; ?></h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-check"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-3">
+                        <div class="card card-stat bg-info text-white p-3 h-100">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Kendaraan</h6>
+                                    <h3 class="mb-0"><?php echo $stats['total_vehicles'] ?? 0; ?></h3>
+                                </div>
+                                <div class="icon"><i class="fas fa-car"></i></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="text-muted mb-2">Pending</h6>
-                            <h3 class="mb-0 fw-bold text-warning"><?php echo $stats['pending_bookings'] ?? 0; ?></h3>
-                        </div>
-                        <div class="bg-warning bg-opacity-10 rounded-circle p-3">
-                            <i class="fas fa-clock fa-2x text-warning"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="text-muted mb-2">Selesai</h6>
-                            <h3 class="mb-0 fw-bold text-success"><?php echo $stats['completed_bookings'] ?? 0; ?></h3>
-                        </div>
-                        <div class="bg-success bg-opacity-10 rounded-circle p-3">
-                            <i class="fas fa-check-circle fa-2x text-success"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="text-muted mb-2">Kendaraan</h6>
-                            <h3 class="mb-0 fw-bold text-info"><?php echo $stats['total_vehicles'] ?? 0; ?></h3>
-                        </div>
-                        <div class="bg-info bg-opacity-10 rounded-circle p-3">
-                            <i class="fas fa-car fa-2x text-info"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                <?php endif; ?>
     
     <!-- Quick Actions -->
     <div class="row mb-4">
@@ -120,7 +104,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Recent Bookings -->
     <div class="row">
         <div class="col-12">
@@ -149,7 +133,7 @@
                                         <td><?php echo e($booking->workshop_name); ?></td>
                                         <td><?php echo date('d/m/Y H:i', strtotime($booking->booking_date)); ?></td>
                                         <td>
-                                            <?php 
+                                            <?php
                                             $status_badges = [
                                                 'pending' => 'warning',
                                                 'confirmed' => 'info',

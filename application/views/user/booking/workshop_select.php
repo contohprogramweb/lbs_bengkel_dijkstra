@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <h2><?= $page_title ?></h2>
             <p class="text-muted">Pilih bengkel yang ingin Anda kunjungi untuk melakukan servis kendaraan.</p>
-            
+
             <?php if (empty($workshops)): ?>
                 <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle"></i> Belum ada bengkel tersedia saat ini.

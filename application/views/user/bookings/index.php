@@ -89,8 +89,8 @@
                 <hr>
                 <?php foreach ($pending_approvals as $approval): ?>
                 <div class="mb-2">
-                    <strong>Booking #<?= esc($approval['booking_number']) ?></strong>: 
-                    <?= esc($approval['description']) ?> - 
+                    <strong>Booking #<?= esc($approval['booking_number']) ?></strong>:
+                    <?= esc($approval['description']) ?> -
                     <span class="text-danger">Rp <?= number_format($approval['additional_amount'], 0, ',', '.') ?></span>
                     <a href="<?= site_url('booking_management/detail/' . $approval['booking_id']) ?>" class="btn btn-sm btn-primary ml-2">
                         Lihat Detail

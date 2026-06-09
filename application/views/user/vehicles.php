@@ -17,6 +17,7 @@
 </div>
 
 <?php if (empty($vehicles)): ?>
+	<div class="mx-3">
     <div class="card border-0 shadow-sm">
         <div class="card-body text-center py-5">
             <i class="fas fa-car-side fa-4x text-muted mb-3"></i>
@@ -29,6 +30,7 @@
             <?php endif; ?>
         </div>
     </div>
+	 </div>
 <?php else: ?>
     <div class="row">
         <?php foreach ($vehicles as $vehicle): ?>

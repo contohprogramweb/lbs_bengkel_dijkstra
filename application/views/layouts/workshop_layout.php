@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($page_title) ? e($page_title) . ' - ' : ''; ?><?php echo e($app_name); ?></title>
-    
+
     <!-- CSRF Token -->
     <meta name="csrf_token_name" content="<?php echo $this->security->get_csrf_token_name(); ?>">
     <meta name="csrf_token_hash" content="<?php echo $this->security->get_csrf_hash(); ?>">
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -19,13 +19,13 @@
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-    
+
     <style>
         :root {
             --sidebar-bg-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
-        body { 
-            background-color: #f8f9fa; 
+        body {
+            background-color: #f8f9fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .sidebar {
@@ -44,8 +44,8 @@
         .sidebar a:hover, .sidebar a.active { color: white; background: rgba(255,255,255,0.1); }
         .sidebar-brand { font-size: 1.3rem; font-weight: bold; padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.2); }
         .nav-link { padding: 12px 20px; }
-        .main-content { 
-            padding: 20px; 
+        .main-content {
+            padding: 20px;
             margin-left: 250px;
             transition: margin-left 0.3s ease;
         }
@@ -55,7 +55,7 @@
         .card-stat { border-radius: 15px; border: none; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .card-stat:hover { transform: translateY(-5px); }
         .card-stat .icon { font-size: 2.5rem; opacity: 0.3; }
-        
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .sidebar {
@@ -72,7 +72,7 @@
             }
             .card-stat { margin-bottom: 15px; }
         }
-        
+
         .sidebar-toggle {
             display: none;
             background: var(--sidebar-bg-gradient);
@@ -89,7 +89,7 @@
     <button class="sidebar-toggle d-md-none" onclick="toggleSidebar()">
         <i class="fas fa-bars"></i>
     </button>
-    
+
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->

@@ -702,16 +702,25 @@ class Booking_model extends CI_Model {
 
         // Pending bookings
         $this->db->select('COUNT(*) as pending');
+		$this->db->from($this->table_bookings);
+        $this->db->where('user_id', $user_id);
+        $this->db->where('is_deleted', 0);
         $this->db->where('status', 'pending');
         $stats['pending'] = $this->db->get()->row()->pending;
 
         // Completed bookings
         $this->db->select('COUNT(*) as completed');
+		$this->db->from($this->table_bookings);
+        $this->db->where('user_id', $user_id);
+        $this->db->where('is_deleted', 0);
         $this->db->where('status', 'completed');
         $stats['completed'] = $this->db->get()->row()->completed;
 
         // Upcoming bookings
         $this->db->select('COUNT(*) as upcoming');
+		$this->db->from($this->table_bookings);
+        $this->db->where('user_id', $user_id);
+        $this->db->where('is_deleted', 0);
         $this->db->where_in('status', ['pending', 'accepted', 'approved']);
         $this->db->where('scheduled_date >=', date('Y-m-d'));
         $stats['upcoming'] = $this->db->get()->row()->upcoming;

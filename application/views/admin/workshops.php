@@ -11,10 +11,29 @@
 	<style>
 	
 		 
-        .sidebar { min-height: calc(100vh - 56px); background-color: #343a40; }
-        .sidebar a { color: #fff; text-decoration: none; padding: 10px 15px; display: block; }
-        .sidebar a:hover, .sidebar a.active { background-color: #495057; }
-        .sidebar i { width: 25px; }
+        .sidebar { 
+            min-height: 100vh; 
+            background: #212529; 
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar a { 
+            color: #adb5bd; 
+            text-decoration: none; 
+            padding: 10px 15px; 
+            display: block; 
+            transition: all 0.3s;
+        }
+        .sidebar a:hover, .sidebar a.active { 
+            background: #343a40; 
+            color: #fff; 
+            border-left: 3px solid #0d6efd;
+        }
+        .sidebar-sub { 
+            padding-left: 30px !important; 
+            font-size: 0.9em;
+        }
+        .sidebar-dropdown .dropdown-toggle::after { display: none; }
+        .main-content { padding: 20px; }
 		
 	</style>
 </head>
@@ -81,7 +100,7 @@
                     <table id="workshopsTable" class="table table-striped table-hover" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th width="5%">No</th>
+                                <th>ID</th>
                                 <th>Nama Bengkel</th>
                                 <th>Pemilik</th>
                                 <th>Lokasi</th>
@@ -141,12 +160,7 @@
                     }
                 },
                 columns: [
-                    { 
-                        data: null,
-                        render: function(data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }
-                    },
+                    { data: 'id' },
                     { 
                         data: 'name',
                         render: function(data, type, row) {
@@ -198,7 +212,7 @@
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/id.json'
                 },
-                order: [[1, 'asc']]
+                order: [[0, 'desc']]
             });
 
             $('#verificationFilter').on('change', function() {
