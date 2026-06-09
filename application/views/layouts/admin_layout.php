@@ -8,6 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf_token_name" content="<?php echo $this->security->get_csrf_token_name(); ?>">
     <meta name="csrf_token_hash" content="<?php echo $this->security->get_csrf_hash(); ?>">
+    <meta name="csrf-token" content="<?php echo $this->security->get_csrf_hash(); ?>">
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
