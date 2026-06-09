@@ -231,6 +231,15 @@
         .bg-admin-danger { background-color: var(--admin-danger) !important; color: white; }
         .bg-admin-secondary { background-color: var(--admin-secondary) !important; color: white; }
         .bg-admin-dark { background-color: var(--admin-dark) !important; color: white; }
+        
+        /* Badge dark theme variants */
+        .badge-dark-theme-info { background-color: var(--admin-info); color: #212529; padding: 0.35em 0.65em; border-radius: 0.25rem; font-weight: 500; }
+        .badge-dark-theme-success { background-color: var(--admin-success); color: white; padding: 0.35em 0.65em; border-radius: 0.25rem; font-weight: 500; }
+        .badge-dark-theme-danger { background-color: var(--admin-danger); color: white; padding: 0.35em 0.65em; border-radius: 0.25rem; font-weight: 500; }
+        .badge-dark-theme-warning { background-color: var(--admin-warning); color: #212529; padding: 0.35em 0.65em; border-radius: 0.25rem; font-weight: 500; }
+        .badge-dark-theme-primary { background-color: var(--admin-primary); color: white; padding: 0.35em 0.65em; border-radius: 0.25rem; font-weight: 500; }
+        .badge-dark-theme-secondary { background-color: var(--admin-secondary); color: white; padding: 0.35em 0.65em; border-radius: 0.25rem; font-weight: 500; }
+        .badge-dark-theme-dark { background-color: var(--admin-dark); color: white; padding: 0.35em 0.65em; border-radius: 0.25rem; font-weight: 500; }
     </style>
 </head>
 <body>
