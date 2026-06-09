@@ -1,32 +1,14 @@
-```php
 # Compiled and build artifacts
 *.pyc
-*.class
-*.o
-*.obj
-*.out
-*.exe
-*.dll
-*.so
-*.a
+__pycache__/
 
 # Dependencies
-node_modules/
-venv/
-.venv/
-__pycache__/
-dist/
-build/
-target/
-.gradle/
-.mypy_cache/
-.pytest_cache/
+vendor/
+composer.lock
 
 # Logs and temp files
 *.log
 *.tmp
-*.swp
-*.swo
 
 # Environment
 .env
@@ -37,36 +19,32 @@ target/
 .vscode/
 .idea/
 
-# System files
+# OS generated files
 .DS_Store
 Thumbs.db
 
-# Coverage
-coverage/
-htmlcov/
-.coverage
+# Backup files
+*~
+*.bak
+*.swp
 
-# Compressed files
-*.zip
-*.gz
-*.tar
-*.tgz
-*.bz2
-*.xz
-*.7z
-*.rar
-*.zst
-*.lz4
-*.lzh
-*.cab
-*.arj
-*.rpm
-*.deb
-*.Z
-*.lz
-*.lzo
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.tar.zst
-```
+# Cache directories
+.cache/
+.php_cs.cache
+
+# Distribution and build artifacts
+dist/
+build/
+*.phar
+
+# Testing
+.phpunit.result.cache
+test/tmp/
+tests/tmp/
+
+# Web server
+.htaccess
+.webserver-config.php
+
+# Original rules preserved
+*.log
