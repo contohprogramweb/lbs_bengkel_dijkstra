@@ -89,12 +89,14 @@
             transition: margin-left 0.3s ease;
             background-color: var(--content-light-bg);
             min-height: 100vh;
-            width: 100%;
-            max-width: 100vw;
+            width: calc(100% - 250px);
+            max-width: calc(100vw - 250px);
             overflow-x: hidden;
         }
         .main-content.expanded {
             margin-left: 0;
+            width: 100%;
+            max-width: 100vw;
         }
         .card-stat { 
             border-radius: 10px; 
@@ -150,8 +152,20 @@
         }
 
         /* Prevent horizontal scroll */
-        .container-fluid {
+        body, html {
+            overflow-x: hidden;
             max-width: 100vw;
+        }
+        .container-fluid {
+            max-width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .row > [class*="col-"] {
             padding-left: 15px;
             padding-right: 15px;
         }
