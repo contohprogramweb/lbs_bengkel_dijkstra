@@ -64,6 +64,7 @@ $route['admin/workshops_data'] = 'admin/workshops_data';
 $route['admin/view_workshop/(:num)'] = 'admin/view_workshop/$1';
 $route['admin/verify_workshop/(:num)'] = 'admin/verify_workshop/$1';
 $route['admin/set_featured/(:num)'] = 'admin/set_featured/$1';
+$route['admin/get_csrf_token'] = 'admin/get_csrf_token';
 $route['admin/pending_verification'] = 'admin/pending_verification';
 $route['admin/review_moderation'] = 'admin/review_moderation';
 $route['admin/pending_reviews_data'] = 'admin/pending_reviews_data';

@@ -272,6 +272,22 @@ class Admin extends Admin_Controller {
     }
 
     /**
+     * Get CSRF token (AJAX endpoint)
+     */
+    public function get_csrf_token()
+    {
+        // Only allow admin users
+        $this->require_admin();
+        
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode([
+                'csrf_token' => $this->security->get_csrf_token_name(),
+                'csrf_hash' => $this->security->get_csrf_hash()
+            ]));
+    }
+
+    /**
      * Pending verification workshops
      */
     public function pending_verification()
