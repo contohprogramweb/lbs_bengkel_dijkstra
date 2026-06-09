@@ -13,22 +13,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage  Controllers
  * @version     4.1
  */
-class Report extends CI_Controller {
+class Report extends Admin_Controller {
 
     public function __construct()
     {
         parent::__construct();
-        
-        // Check authentication
-        if (!$this->session->userdata('logged_in')) {
-            redirect('auth/login');
-        }
-
-        // Check role - admin only
-        $role = $this->session->userdata('role');
-        if ($role !== 'admin') {
-            show_error('Akses ditolak. Halaman ini hanya untuk administrator.', 403);
-        }
         
         $this->load->model('billing_model');
         $this->load->helper(['form', 'text']);
