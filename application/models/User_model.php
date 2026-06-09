@@ -54,6 +54,7 @@ class User_model extends CI_Model {
     public function find_by_id($id)
     {
         return $this->db
+            ->select('id, email, password, full_name, phone, role, is_active, is_deleted, avatar, last_login_at as last_login, created_at, updated_at, deleted_at')
             ->where('id', $id)
             ->where('is_deleted', 0)
             ->get($this->table)

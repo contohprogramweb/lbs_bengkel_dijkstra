@@ -96,7 +96,7 @@
                         </tr>
                         <tr>
                             <td class="info-label">Terakhir Login</td>
-                            <td><?php echo $user_detail->last_login ? date('d F Y, H:i', strtotime($user_detail->last_login)) : 'Belum pernah'; ?></td>
+                            <td><?php echo isset($user_detail->last_login) && $user_detail->last_login ? date('d F Y, H:i', strtotime($user_detail->last_login)) : 'Belum pernah'; ?></td>
                         </tr>
                     </table>
                 </div>
