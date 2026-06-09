@@ -196,9 +196,10 @@ class MY_Controller extends CI_Controller {
      * @param string $view View file path
      * @param array $data Data to pass to view
      * @param bool $return Whether to return instead of output
+     * @param string|null $layout Layout to use (null for auto-detect)
      * @return string|void
      */
-    protected function render($view, $data = [], $return = FALSE)
+    protected function render($view, $data = [], $return = FALSE, $layout = NULL)
     {
         // Common data for all views
         $common_data = [
@@ -215,17 +216,19 @@ class MY_Controller extends CI_Controller {
         // Render the view content first
         $content = $this->load->view($view, $data, TRUE);
 
-        // Determine which layout to use based on user role
-        $layout = 'layouts/user_layout';
-        if ($this->user_role === 'customer') {
+        // Determine which layout to use based on user role or explicit parameter
+        if ($layout === NULL) {
             $layout = 'layouts/user_layout';
-        } elseif ($this->user_role === 'workshop_owner' || $this->user_role === 'mechanic') {
-            $layout = 'layouts/workshop_layout';
+            if ($this->user_role === 'customer') {
+                $layout = 'layouts/user_layout';
+            } elseif ($this->user_role === 'workshop_owner' || $this->user_role === 'mechanic') {
+                $layout = 'layouts/workshop_layout';
+            }
         }
 
         // Merge content into layout data
         $layout_data = array_merge($data, ['content_for_layout' => $content]);
-	
+        
         if ($return) {
              
 			return $this->load->view($layout, $layout_data, TRUE);

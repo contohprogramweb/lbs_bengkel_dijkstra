@@ -40,7 +40,7 @@ class Auth extends Public_Controller {
         $data['page_title'] = 'Login';
         $data['roles'] = ['customer', 'workshop_owner'];
 
-        $this->render('auth/login', $data);
+        $this->render('auth/login', $data, FALSE, 'layouts/auth_layout');
     }
 
     /**
@@ -107,7 +107,7 @@ class Auth extends Public_Controller {
         $data['page_title'] = 'Daftar Akun Baru';
         $data['roles'] = ['customer', 'workshop_owner'];
 
-        $this->render('auth/register', $data);
+        $this->render('auth/register', $data, FALSE, 'layouts/auth_layout');
     }
 
     /**

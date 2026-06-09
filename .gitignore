@@ -2,8 +2,6 @@
 # Compiled and build artifacts
 *.pyc
 __pycache__/
-*.o
-*.obj
 
 # Dependencies
 vendor/
@@ -12,7 +10,6 @@ composer.lock
 # Logs and temp files
 *.log
 *.tmp
-*.swp
 
 # Environment
 .env
@@ -26,11 +23,4 @@ composer.lock
 # OS generated files
 .DS_Store
 Thumbs.db
-
-# CodeIgniter specific
-application/cache/
-application/logs/
-application/sessions/
-system/
-!system/*
 ```
