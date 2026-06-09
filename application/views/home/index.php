@@ -209,6 +209,16 @@
             padding: 40px 0 20px;
         }
         
+        footer h5 {
+            color: white !important;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        footer p {
+            color: rgba(255,255,255,0.9) !important;
+        }
+        
         footer a {
             color: rgba(255,255,255,0.8);
             text-decoration: none;
@@ -216,6 +226,14 @@
         
         footer a:hover {
             color: white;
+        }
+        
+        footer hr {
+            border-color: rgba(255,255,255,0.2) !important;
+        }
+        
+        footer .text-muted {
+            color: rgba(255,255,255,0.9) !important;
         }
         
         /* Responsive */
