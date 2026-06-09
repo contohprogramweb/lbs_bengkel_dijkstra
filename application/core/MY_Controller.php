@@ -223,6 +223,8 @@ class MY_Controller extends CI_Controller {
                 $layout = 'layouts/user_layout';
             } elseif ($this->user_role === 'workshop_owner' || $this->user_role === 'mechanic') {
                 $layout = 'layouts/workshop_layout';
+            } elseif ($this->user_role === 'admin') {
+                $layout = 'layouts/admin_layout';
             }
         }
 

@@ -63,9 +63,7 @@ class Report extends CI_Controller {
         $data['summary'] = $report['summary'];
         $data['by_workshop'] = $report['by_workshop'];
 
-        $this->load->view('admin/layouts/header', $data);
-        $this->load->view('admin/report/global', $data);
-        $this->load->view('admin/layouts/footer');
+        $this->render('admin/report/global', $data);
     }
 
     /**
@@ -152,8 +150,6 @@ class Report extends CI_Controller {
         $data['transactions'] = $report['transactions'];
         $data['summary'] = $report['summary'];
 
-        $this->load->view('admin/layouts/header', $data);
-        $this->load->view('admin/report/workshop_detail', $data);
-        $this->load->view('admin/layouts/footer');
+        $this->render('admin/report/workshop_detail', $data);
     }
 }
