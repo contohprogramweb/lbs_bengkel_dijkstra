@@ -66,8 +66,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Setujui</button>
+                    <button type="button" class="btn btn-admin-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-admin-success">Setujui</button>
                 </div>
             </form>
         </div>
@@ -92,8 +92,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger">Tolak</button>
+                    <button type="button" class="btn btn-admin-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-admin-danger">Tolak</button>
                 </div>
             </form>
         </div>
@@ -163,8 +163,8 @@ $(document).ready(function() {
                 data: null,
                 orderable: false,
                 render: function(data, type, row) {
-                    return '<button class="btn btn-sm btn-success" onclick="openApproveModal(' + row.id + ')"><i class="fas fa-check"></i></button> ' +
-                           '<button class="btn btn-sm btn-danger" onclick="openRejectModal(' + row.id + ')"><i class="fas fa-times"></i></button>';
+                    return '<button class="btn btn-sm btn-admin-success" onclick="openApproveModal(' + row.id + ')"><i class="fas fa-check"></i></button> ' +
+                           '<button class="btn btn-sm btn-admin-danger" onclick="openRejectModal(' + row.id + ')"><i class="fas fa-times"></i></button>';
                 }
             }
         ],

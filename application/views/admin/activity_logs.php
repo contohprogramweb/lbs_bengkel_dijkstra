@@ -53,10 +53,10 @@
                            value="<?php echo htmlspecialchars($filters['date_to'] ?? ''); ?>">
                 </div>
                 <div class="col-md-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary me-2">
+                    <button type="submit" class="btn btn-admin-primary me-2">
                         <i class="fas fa-search"></i> Filter
                     </button>
-                    <a href="<?php echo site_url('admin/activity_logs'); ?>" class="btn btn-secondary">
+                    <a href="<?php echo site_url('admin/activity_logs'); ?>" class="btn btn-admin-secondary">
                         <i class="fas fa-redo"></i> Reset
                     </a>
                 </div>

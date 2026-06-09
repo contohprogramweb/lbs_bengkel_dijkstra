@@ -69,10 +69,10 @@
                         <td><?php echo date('d M Y', strtotime($workshop->created_at)); ?></td>
                         <td>
                             <a href="<?php echo site_url('admin/view_workshop/'.$workshop->id); ?>"
-                               class="btn btn-sm btn-info">
+                               class="btn btn-sm btn-admin-info">
                                 <i class="fas fa-eye"></i> Detail
                             </a>
-                            <a href="#" class="btn btn-sm btn-success"
+                            <a href="#" class="btn btn-sm btn-admin-success"
                                onclick="confirmAction('<?php echo site_url('admin/verify_workshop/'.$workshop->id); ?>', 'Verifikasi Bengkel', 'Verifikasi bengkel ini?', 'Ya, Verifikasi', '#198754')">
                                 <i class="fas fa-check"></i> Verifikasi
                             </a>
@@ -87,7 +87,7 @@
 <?php endif; ?>
 
 <div class="mt-3">
-    <a href="<?php echo site_url('admin/workshops'); ?>" class="btn btn-secondary">
+    <a href="<?php echo site_url('admin/workshops'); ?>" class="btn btn-admin-secondary">
         <i class="fas fa-arrow-left"></i> Kembali ke Daftar Bengkel
     </a>
 </div>

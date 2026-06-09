@@ -22,7 +22,7 @@
                 <option value="pending">Pending</option>
                 <option value="not_submitted">Belum Diajukan</option>
             </select>
-            <a href="<?php echo site_url('admin/pending_verification'); ?>" class="btn btn-sm btn-warning ms-2">
+            <a href="<?php echo site_url('admin/pending_verification'); ?>" class="btn btn-sm btn-admin-warning ms-2">
                 <i class="fas fa-clock"></i> Pending Verification
             </a>
         </div>
@@ -64,8 +64,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-admin-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-admin-primary">Simpan</button>
                 </div>
             </form>
         </div>
@@ -92,13 +92,13 @@ $(document).ready(function() {
                 data: null,
                 orderable: false,
                 render: function(data, type, row) {
-                    var actions = '<a href="<?php echo site_url("admin/view_workshop/"); ?>' + row.id + '" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a> ';
+                    var actions = '<a href="<?php echo site_url("admin/view_workshop/"); ?>' + row.id + '" class="btn btn-sm btn-admin-info"><i class="fas fa-eye"></i></a> ';
                     
                     if (!row.verified_at) {
-                        actions += '<a href="#" class="btn btn-sm btn-success" onclick="confirmAction(\'<?php echo site_url("admin/verify_workshop/"); ?>' + row.id + '\', \'Verifikasi Bengkel\', \'Verifikasi bengkel ini?\', \'Ya, Verifikasi\', \'#198754\')"><i class="fas fa-check"></i></a> ';
+                        actions += '<a href="#" class="btn btn-sm btn-admin-success" onclick="confirmAction(\'<?php echo site_url("admin/verify_workshop/"); ?>' + row.id + '\', \'Verifikasi Bengkel\', \'Verifikasi bengkel ini?\', \'Ya, Verifikasi\', \'#198754\')"><i class="fas fa-check"></i></a> ';
                     }
                     
-                    actions += '<button class="btn btn-sm btn-primary" onclick="openFeaturedModal(' + row.id + ', ' + (row.is_featured == 1 ? 'true' : 'false') + ')"><i class="fas fa-star"></i></button>';
+                    actions += '<button class="btn btn-sm btn-admin-primary" onclick="openFeaturedModal(' + row.id + ', ' + (row.is_featured == 1 ? 'true' : 'false') + ')"><i class="fas fa-star"></i></button>';
                     
                     return actions;
                 }
