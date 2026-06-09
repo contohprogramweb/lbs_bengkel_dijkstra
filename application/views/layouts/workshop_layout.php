@@ -74,9 +74,13 @@
             transition: margin-left 0.3s ease;
             background-color: var(--content-light-bg);
             min-height: 100vh;
+            width: calc(100% - 250px);
+            max-width: calc(100% - 250px);
         }
         .main-content.expanded {
             margin-left: 0;
+            width: 100%;
+            max-width: 100%;
         }
         .card-stat { 
             border-radius: 10px; 
@@ -109,6 +113,8 @@
             }
             .main-content {
                 margin-left: 0;
+                width: 100%;
+                max-width: 100%;
             }
             .sidebar-toggle {
                 display: block !important;
@@ -145,67 +151,65 @@
         <i class="fas fa-bars"></i>
     </button>
 
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar p-0" id="sidebar">
-                <div class="sidebar-brand">
-                    <i class="fas fa-tools"></i> Workshop Owner
-                </div>
-                <nav class="nav flex-column mt-3">
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/dashboard'); ?>">
-                        <i class="fas fa-home"></i> Dashboard
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'profile' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/profile'); ?>">
-                        <i class="fas fa-store"></i> Profil Bengkel
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'services' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/services'); ?>">
-                        <i class="fas fa-tools"></i> Kelola Layanan
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'schedule' || strpos($this->uri->segment(2), 'booking') !== false ? 'active' : ''; ?>" href="<?php echo site_url('workshop/schedule'); ?>">
-                        <i class="fas fa-calendar-alt"></i> Jadwal Booking
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'orders' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/orders'); ?>">
-                        <i class="fas fa-clipboard-list"></i> Order
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'mechanics' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/mechanics'); ?>">
-                        <i class="fas fa-user-cog"></i> Mekanik
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'billing' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/billing'); ?>">
-                        <i class="fas fa-file-invoice-dollar"></i> Billing
-                    </a>
-                    <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
-                    <a class="nav-link" href="<?php echo site_url('auth/logout'); ?>">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                </nav>
+    <!-- Sidebar -->
+    <div class="sidebar p-0" id="sidebar">
+        <div class="sidebar-brand">
+            <i class="fas fa-tools"></i> Workshop Owner
+        </div>
+        <nav class="nav flex-column mt-3">
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/dashboard'); ?>">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'profile' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/profile'); ?>">
+                <i class="fas fa-store"></i> Profil Bengkel
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'services' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/services'); ?>">
+                <i class="fas fa-tools"></i> Kelola Layanan
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'schedule' || strpos($this->uri->segment(2), 'booking') !== false ? 'active' : ''; ?>" href="<?php echo site_url('workshop/schedule'); ?>">
+                <i class="fas fa-calendar-alt"></i> Jadwal Booking
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'orders' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/orders'); ?>">
+                <i class="fas fa-clipboard-list"></i> Order
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'mechanics' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/mechanics'); ?>">
+                <i class="fas fa-user-cog"></i> Mekanik
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'billing' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/billing'); ?>">
+                <i class="fas fa-file-invoice-dollar"></i> Billing
+            </a>
+            <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
+            <a class="nav-link" href="<?php echo site_url('auth/logout'); ?>">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div class="d-flex align-items-center">
+                <button class="sidebar-toggle d-md-none me-2" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 class="mb-0"><?php echo e($page_title); ?></h2>
             </div>
+            <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-user-circle"></i> <?php echo e($current_user->full_name ?? 'User'); ?>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="<?php echo site_url('workshop/profile'); ?>"><i class="fas fa-store"></i> Profil Bengkel</a></li>
+                    <li><a class="dropdown-item" href="<?php echo site_url('workshop/edit_profile'); ?>"><i class="fas fa-user-edit"></i> Edit Profil Pribadi</a></li>
+                    <li><a class="dropdown-item" href="<?php echo site_url('user/change_password'); ?>"><i class="fas fa-key"></i> Ubah Password</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="<?php echo site_url('auth/logout'); ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
 
-            <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 main-content" id="mainContent">
-                <!-- Header -->
-                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-                    <div class="d-flex align-items-center">
-                        <button class="sidebar-toggle d-md-none me-2" onclick="toggleSidebar()">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <h2 class="mb-0"><?php echo e($page_title); ?></h2>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle"></i> <?php echo e($current_user->full_name ?? 'User'); ?>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="<?php echo site_url('workshop/profile'); ?>"><i class="fas fa-store"></i> Profil Bengkel</a></li>
-                            <li><a class="dropdown-item" href="<?php echo site_url('workshop/edit_profile'); ?>"><i class="fas fa-user-edit"></i> Edit Profil Pribadi</a></li>
-                            <li><a class="dropdown-item" href="<?php echo site_url('user/change_password'); ?>"><i class="fas fa-key"></i> Ubah Password</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="<?php echo site_url('auth/logout'); ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Flash Messages with SweetAlert -->
+        <!-- Flash Messages with SweetAlert -->
                 <?php if ($this->session->flashdata('success')): ?>
                     <script>
                         $(document).ready(function() {
@@ -274,8 +278,6 @@
                 <!-- Main Content Area -->
                 <?php echo $content_for_layout ?? ''; ?>
             </div>
-        </div>
-    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
