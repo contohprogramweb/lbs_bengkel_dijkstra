@@ -70,7 +70,8 @@ class Admin extends Admin_Controller {
      */
     public function users_data()
     {
-        $request = $this->input->get();
+        // Get all GET parameters for DataTables
+        $request = $_GET;
         $role_filter = $this->input->get('role_filter');
         
         $result = $this->admin_model->get_users_datatables($request, $role_filter);
@@ -210,7 +211,8 @@ class Admin extends Admin_Controller {
      */
     public function workshops_data()
     {
-        $request = $this->input->get();
+        // Get all GET parameters for DataTables
+        $request = $_GET;
         $verification_status = $this->input->get('verification_status');
         
         $result = $this->admin_model->get_workshops_datatables($request, $verification_status);

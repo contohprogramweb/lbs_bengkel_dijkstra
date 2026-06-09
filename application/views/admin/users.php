@@ -77,7 +77,15 @@ $(document).ready(function() {
         serverSide: true,
         ajax: {
             url: '<?php echo site_url("admin/users_data"); ?>',
-            data: function(d) { d.role_filter = $('#roleFilter').val(); }
+            type: 'GET',
+            data: function(d) { 
+                d.role_filter = $('#roleFilter').val();
+                // Add CSRF token if needed
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (csrfToken) {
+                    d.csrf_token = csrfToken;
+                }
+            }
         },
         columns: [
             { data: null, render: function(data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; } },

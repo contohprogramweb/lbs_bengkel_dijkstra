@@ -1,10 +1,11 @@
 ```
-# Compiled and binary files
+# Compiled and build artifacts
 *.pyc
 __pycache__/
 
 # Dependencies
 vendor/
+composer.lock
 
 # Logs and temp files
 *.log
@@ -22,9 +23,4 @@ vendor/
 # OS generated files
 .DS_Store
 Thumbs.db
-
-# Build artifacts
-dist/
-build/
-target/
 ```
