@@ -225,36 +225,28 @@ class Admin_model extends CI_Model {
             $this->db->group_end();
         }
         
-		 
-        // Column-specific search
-        foreach ($request['columns'] as $key => $column) {
-            if ($column['searchable'] == 'true' && !empty($column['search']['value'])) {
-                $search_value = $column['search']['value'];
-                if ($key == 3) { // role
-                    $this->db->where('u.role', $search_value);
-                } elseif ($key == 4) { // is_active
-                    $this->db->where('u.is_active', $search_value == 'true' ? 1 : 0);
-                }
-            }
-        }
-		 
-        
         // Ordering
         if (!empty($request['order'])) {
             foreach ($request['order'] as $order) {
                 $column_index = $order['column'];
-                $column_name = $columns[$column_index];
-                $dir = $order['dir'];
-                $this->db->order_by($column_name, $dir);
+                if (isset($columns[$column_index])) {
+                    $column_name = $columns[$column_index];
+                    $dir = $order['dir'];
+                    $this->db->order_by($column_name, $dir);
+                }
             }
         } else {
             $this->db->order_by('u.created_at', 'DESC');
         }
         
-        // Pagination
-        $limit = $request['length'];
-        $offset = $request['start'];
-        $this->db->limit($limit, $offset);
+        // Pagination - use null coalescing to handle missing parameters
+        $limit = isset($request['length']) ? (int)$request['length'] : 10;
+        $offset = isset($request['start']) ? (int)$request['start'] : 0;
+        
+        // Only apply limit if length is not -1 (DataTables convention for "no limit")
+        if ($limit > 0) {
+            $this->db->limit($limit, $offset);
+        }
         
         // Execute query
         $query = $this->db->get();
@@ -408,10 +400,14 @@ class Admin_model extends CI_Model {
             $this->db->order_by('w.created_at', 'DESC');
         }
         
-        // Pagination
-        $limit = $request['length'];
-        $offset = $request['start'];
-        $this->db->limit($limit, $offset);
+        // Pagination - use null coalescing to handle missing parameters
+        $limit = isset($request['length']) ? (int)$request['length'] : 10;
+        $offset = isset($request['start']) ? (int)$request['start'] : 0;
+        
+        // Only apply limit if length is not -1 (DataTables convention for "no limit")
+        if ($limit > 0) {
+            $this->db->limit($limit, $offset);
+        }
         
         // Execute query
         $query = $this->db->get();
