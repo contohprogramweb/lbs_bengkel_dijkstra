@@ -52,6 +52,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="POST" id="setFeaturedForm">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                 <div class="modal-header">
                     <h5 class="modal-title">Set Featured Workshop</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -116,6 +117,13 @@ function openFeaturedModal(workshopId, isFeatured) {
     $('#featuredWorkshopId').val(workshopId);
     $('#isFeaturedCheck').prop('checked', isFeatured);
     $('#setFeaturedForm').attr('action', '<?php echo site_url("admin/set_featured/"); ?>' + workshopId);
+    // Update CSRF token on each modal open
+    $.get('<?php echo site_url("admin/get_csrf_token"); ?>', function(response) {
+        $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(response.csrf_hash);
+    }).fail(function() {
+        // Fallback: use the current CSRF hash from the page if AJAX fails
+        console.log('Using existing CSRF token');
+    });
     $('#setFeaturedModal').modal('show');
 }
 </script>

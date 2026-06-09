@@ -467,7 +467,8 @@ $config['csrf_exclude_uris'] = array(
     'api/.*',
     'admin/users_data',
     'admin/workshops_data',
-    'admin/pending_reviews_data'
+    'admin/pending_reviews_data',
+    'admin/get_csrf_token'
 );
 
 /*

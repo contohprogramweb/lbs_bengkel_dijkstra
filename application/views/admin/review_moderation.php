@@ -54,6 +54,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="POST" id="approveForm">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="">
                 <div class="modal-header">
                     <h5 class="modal-title">Setujui Review</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -79,6 +80,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="POST" id="rejectForm">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="">
                 <div class="modal-header">
                     <h5 class="modal-title">Tolak Review</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -102,6 +104,30 @@
 
 <script>
 $(document).ready(function() {
+    // Function to refresh CSRF token
+    function refreshCsrfToken() {
+        $.ajax({
+            url: '<?php echo site_url("admin/get_csrf_token"); ?>',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(response.csrf_hash);
+            }
+        });
+    }
+    
+    // Refresh token on page load
+    refreshCsrfToken();
+    
+    // Refresh token when modal is shown
+    $('#approveModal').on('show.bs.modal', function() {
+        refreshCsrfToken();
+    });
+    
+    $('#rejectModal').on('show.bs.modal', function() {
+        refreshCsrfToken();
+    });
+
     $('#reviewsTable').DataTable({
         processing: true,
         serverSide: true,
@@ -178,12 +204,32 @@ $(document).ready(function() {
 function openApproveModal(reviewId) {
     $('#approveReviewId').val(reviewId);
     $('#approveForm').attr('action', '<?php echo site_url("admin/approve_review/"); ?>' + reviewId);
+    // Refresh CSRF token before opening modal
+    $.ajax({
+        url: '<?php echo site_url("admin/get_csrf_token"); ?>',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(response) {
+            $('#approveForm input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(response.csrf_hash);
+        }
+    });
     $('#approveModal').modal('show');
 }
 
 function openRejectModal(reviewId) {
     $('#rejectReviewId').val(reviewId);
     $('#rejectForm').attr('action', '<?php echo site_url("admin/reject_review/"); ?>' + reviewId);
+    // Refresh CSRF token before opening modal
+    $.ajax({
+        url: '<?php echo site_url("admin/get_csrf_token"); ?>',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function(response) {
+            $('#rejectForm input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(response.csrf_hash);
+        }
+    });
     $('#rejectModal').modal('show');
 }
 </script>
