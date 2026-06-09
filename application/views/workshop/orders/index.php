@@ -65,7 +65,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Pesanan Terbaru</h5>
-                    <a href="<?= site_url('order/bookings') ?>" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+                    <a href="<?= site_url('order/bookings') ?>" class="btn btn-sm btn-outline-primary-primary">Lihat Semua</a>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
@@ -125,7 +125,7 @@
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <a href="<?= site_url('order/detail/' . $booking['id']) ?>" class="btn btn-sm btn-outline-primary">Detail</a>
+                                        <a href="<?= site_url('order/detail/' . $booking['id']) ?>" class="btn btn-sm btn-outline-primary-primary">Detail</a>
                                     </td>
                                 </tr>
                                     <?php endforeach; ?>

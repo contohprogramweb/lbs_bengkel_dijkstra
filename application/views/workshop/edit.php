@@ -223,7 +223,7 @@ $services_offered = json_decode($workshop->services_offered, TRUE) ?? [];
 
                 <!-- Submit Button -->
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary btn-lg">
+                    <button type="submit" class="btn btn-primary-primary btn-lg">
                         <i class="fas fa-save"></i> Simpan Perubahan
                     </button>
                     <a href="<?= site_url('workshop/profile') ?>" class="btn btn-secondary">
