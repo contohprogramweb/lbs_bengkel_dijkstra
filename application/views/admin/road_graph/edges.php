@@ -1,4 +1,3 @@
-<?php $this->load->view('admin/layouts/header'); ?>
 
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -91,4 +90,3 @@ $(document).ready(function() {
 });
 </script>
 
-<?php $this->load->view('admin/layouts/footer'); ?>

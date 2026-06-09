@@ -1,4 +1,3 @@
-<?php $this->load->view('admin/layouts/header'); ?>
 
 <div class="container-fluid">
     <div class="row mb-4">
@@ -169,4 +168,3 @@
 .document-list img { max-width: 150px; margin: 5px; border-radius: 5px; }
 </style>
 
-<?php $this->load->view('admin/layouts/footer'); ?>

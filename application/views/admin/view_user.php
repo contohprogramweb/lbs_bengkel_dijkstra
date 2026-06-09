@@ -1,4 +1,3 @@
-<?php $this->load->view('admin/layouts/header'); ?>
 
 <div class="container-fluid">
     <div class="row mb-4">
@@ -154,4 +153,3 @@
 .info-label { font-weight: 600; color: #a0a0a0; }
 </style>
 
-<?php $this->load->view('admin/layouts/footer'); ?>

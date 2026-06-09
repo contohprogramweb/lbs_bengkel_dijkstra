@@ -1,4 +1,3 @@
-<?php $this->load->view('admin/layouts/header'); ?>
 
 <div class="container-fluid">
     <div class="row mb-4">
@@ -245,4 +244,3 @@
 .progress { background-color: #e9ecef; }
 </style>
 
-<?php $this->load->view('admin/layouts/footer'); ?>
