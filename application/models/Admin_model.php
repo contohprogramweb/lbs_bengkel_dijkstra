@@ -751,7 +751,8 @@ class Admin_model extends CI_Model {
     public function get_action_types()
     {
         return $this->db
-            ->select('DISTINCT action_type')
+            ->distinct()
+            ->select('action_type')
             ->order_by('action_type', 'ASC')
             ->get($this->activity_logs_table)
             ->result_array();
