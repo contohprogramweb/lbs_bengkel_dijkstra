@@ -407,19 +407,20 @@
             <div class="sidebar-header">
                 <h3><?= $page_title ?></h3>
                 <div class="progress-steps">
-                    <div class="step <?= $step >= 1 ? 'active' : '' ?> <?= $step > 1 ? 'completed' : '' ?>">
+                    <?php $current_step = isset($step) ? $step : 0; ?>
+                    <div class="step <?= $current_step >= 1 ? 'active' : '' ?> <?= $current_step > 1 ? 'completed' : '' ?>">
                         <div class="step-number">1</div>
                         <span>Kendaraan</span>
                     </div>
-                    <div class="step <?= $step >= 2 ? 'active' : '' ?> <?= $step > 2 ? 'completed' : '' ?>">
+                    <div class="step <?= $current_step >= 2 ? 'active' : '' ?> <?= $current_step > 2 ? 'completed' : '' ?>">
                         <div class="step-number">2</div>
                         <span>Jadwal</span>
                     </div>
-                    <div class="step <?= $step >= 3 ? 'active' : '' ?> <?= $step > 3 ? 'completed' : '' ?>">
+                    <div class="step <?= $current_step >= 3 ? 'active' : '' ?> <?= $current_step > 3 ? 'completed' : '' ?>">
                         <div class="step-number">3</div>
                         <span>Layanan</span>
                     </div>
-                    <div class="step <?= $step >= 4 ? 'active' : '' ?>">
+                    <div class="step <?= $current_step >= 4 ? 'active' : '' ?>">
                         <div class="step-number">4</div>
                         <span>Konfirmasi</span>
                     </div>
