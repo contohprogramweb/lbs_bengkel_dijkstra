@@ -317,6 +317,9 @@ class Mechanic_dashboard extends Mechanic_Controller {
      */
     public function update_profile()
     {
+        // Read JSON input
+        $input = json_decode(file_get_contents('php://input'), TRUE);
+        
         $mechanic = $this->mechanic_model->find_by_user_id($this->user_id);
         
         if (!$mechanic) {
@@ -324,19 +327,26 @@ class Mechanic_dashboard extends Mechanic_Controller {
             return;
         }
         
-        // Validate
-        $this->form_validation->set_rules('specialization[]', 'Spesialisasi', 'required');
-        $this->form_validation->set_rules('experience_years', 'Pengalaman', 'integer|greater_than_equal_to[0]');
+        // Get specialization from JSON input
+        $specialization = isset($input['specialization']) ? $input['specialization'] : [];
+        $experience_years = isset($input['experience_years']) ? (int)$input['experience_years'] : 0;
+        $certification = isset($input['certification']) ? $input['certification'] : '';
         
-        if ($this->form_validation->run() === FALSE) {
-            $this->json_error(validation_errors(), 400);
+        // Validate
+        if (empty($specialization)) {
+            $this->json_error('Spesialisasi harus dipilih', 400);
+            return;
+        }
+        
+        if ($experience_years < 0 || $experience_years > 50) {
+            $this->json_error('Pengalaman harus antara 0-50 tahun', 400);
             return;
         }
         
         $update_data = [
-            'specialization' => $this->input->post('specialization', TRUE),
-            'experience_years' => $this->input->post('experience_years', TRUE) ?? 0,
-            'certification' => $this->input->post('certification', TRUE)
+            'specialization' => $specialization,
+            'experience_years' => $experience_years,
+            'certification' => $certification
         ];
         
         if ($this->mechanic_model->update_mechanic($mechanic['id'], $update_data)) {
