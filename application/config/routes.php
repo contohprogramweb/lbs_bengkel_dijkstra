@@ -36,7 +36,19 @@ $route['user/bookings'] = 'booking/my_bookings';
 $route['user/bookings/detail/(:num)'] = 'booking/detail/$1';
 $route['user/bookings/cancel/(:num)'] = 'booking/cancel/$1';
 $route['user/bookings/reschedule/(:num)'] = 'booking/reschedule/$1';
-$route['user/bookings/create'] = 'booking';
+$route['user/bookings/create'] = 'booking/index';
+
+// Booking flow routes (multi-step)
+$route['booking'] = 'booking/index';
+$route['booking/step1/(:num)'] = 'booking/step1/$1';
+$route['booking/step2/(:num)'] = 'booking/step2/$1';
+$route['booking/step3/(:num)'] = 'booking/step3/$1';
+$route['booking/step4/(:num)'] = 'booking/step4/$1';
+$route['booking/success/(:num)'] = 'booking/success/$1';
+
+// Booking AJAX endpoints
+$route['booking/ajax_get_slots/(:num)'] = 'booking/ajax_get_slots/$1';
+$route['booking/ajax_check_slot/(:num)'] = 'booking/ajax_check_slot/$1';
 
 
 
