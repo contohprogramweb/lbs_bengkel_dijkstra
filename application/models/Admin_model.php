@@ -99,7 +99,7 @@ class Admin_model extends CI_Model {
         $stats['bookings_by_status'] = [
             'pending' => $this->db->where('DATE(created_at)', $today)->where('status', 'pending')->where('is_deleted', 0)->count_all_results($this->bookings_table),
             'accepted' => $this->db->where('DATE(created_at)', $today)->where('status', 'accepted')->where('is_deleted', 0)->count_all_results($this->bookings_table),
-            'processed' => $this->db->where('DATE(created_at)', $today)->where('status', 'processed')->where('is_deleted', 0)->count_all_results($this->bookings_table),
+            'in_progress' => $this->db->where('DATE(created_at)', $today)->where('status', 'in_progress')->where('is_deleted', 0)->count_all_results($this->bookings_table),
             'completed' => $this->db->where('DATE(created_at)', $today)->where('status', 'completed')->where('is_deleted', 0)->count_all_results($this->bookings_table),
             'cancelled' => $this->db->where('DATE(created_at)', $today)->where('status', 'cancelled')->where('is_deleted', 0)->count_all_results($this->bookings_table)
         ];

@@ -146,13 +146,13 @@ class Order extends Workshop_Controller {
         // Check if can perform actions based on state
         $data['can_accept'] = $booking['status'] === 'pending';
         $data['can_process'] = $booking['status'] === 'accepted';
-        $data['can_add_finding'] = in_array($booking['status'], ['accepted', 'processed']) && $booking['approval_status'] !== 'pending';
-        $data['can_complete'] = $booking['status'] === 'processed' && $booking['approval_status'] !== 'pending';
+        $data['can_add_finding'] = in_array($booking['status'], ['accepted', 'in_progress']) && $booking['approval_status'] !== 'pending';
+        $data['can_complete'] = $booking['status'] === 'in_progress' && $booking['approval_status'] !== 'pending';
         $data['can_cancel'] = in_array($booking['status'], ['pending', 'accepted']);
         
         // Check timeout for pending approvals
         $data['approval_timeout_expired'] = FALSE;
-        if ($booking['status'] === 'processed' && $booking['approval_status'] === 'pending') {
+        if ($booking['status'] === 'in_progress' && $booking['approval_status'] === 'pending') {
             $latest_approval = reset($data['approvals']);
             if ($latest_approval && isset($latest_approval['expires_at'])) {
                 $data['approval_timeout_expired'] = strtotime($latest_approval['expires_at']) < time();
@@ -261,7 +261,7 @@ class Order extends Workshop_Controller {
     }
 
     /**
-     * Start processing (Accepted → Processed)
+     * Start processing (Accepted → In Progress)
      * @param int $booking_id
      */
     public function start_processing($booking_id)
@@ -280,15 +280,15 @@ class Order extends Workshop_Controller {
         }
         
         // Update status
-        $result = $this->booking_model->update_status($booking_id, 'processed', $this->user_id);
+        $result = $this->booking_model->update_status($booking_id, 'in_progress', $this->user_id);
         
         if ($result) {
             // Log activity
-            $this->booking_model->log_activity($booking_id, 'processed', 'Pekerjaan dimulai', $this->user_id);
+            $this->booking_model->log_activity($booking_id, 'in_progress', 'Pekerjaan dimulai', $this->user_id);
             
             $this->json_response([
                 'redirect' => site_url('order/detail/' . $booking_id)
-            ], 200, 'Status diubah menjadi Diproses');
+            ], 200, 'Status diubah menjadi Sedang Dikerjakan');
         } else {
             $this->json_error('Gagal mengubah status', 500);
         }
@@ -303,7 +303,7 @@ class Order extends Workshop_Controller {
     {
         $booking = $this->booking_model->find_by_id($booking_id);
         
-        if (!$booking || !in_array($booking['status'], ['accepted', 'processed'])) {
+        if (!$booking || !in_array($booking['status'], ['accepted', 'in_progress'])) {
             $this->json_error('Tidak dapat menambah temuan pada pesanan dengan status ini', 400);
             return;
         }
@@ -374,14 +374,14 @@ class Order extends Workshop_Controller {
     }
 
     /**
-     * Complete booking (Processed → Completed)
+     * Complete booking (In Progress → Completed)
      * @param int $booking_id
      */
     public function complete($booking_id)
     {
         $booking = $this->booking_model->find_by_id($booking_id);
         
-        if (!$booking || $booking['status'] !== 'processed') {
+        if (!$booking || $booking['status'] !== 'in_progress') {
             $this->json_error('Pesanan belum dapat diselesaikan (status: ' . $booking['status'] . ')', 400);
             return;
         }
@@ -454,7 +454,7 @@ class Order extends Workshop_Controller {
     {
         $booking = $this->booking_model->find_by_id($booking_id);
         
-        if (!$booking || $booking['status'] !== 'processed' || $booking['approval_status'] !== 'pending') {
+        if (!$booking || $booking['status'] !== 'in_progress' || $booking['approval_status'] !== 'pending') {
             $this->json_error('Tidak ada approval yang menunggu timeout', 400);
             return;
         }

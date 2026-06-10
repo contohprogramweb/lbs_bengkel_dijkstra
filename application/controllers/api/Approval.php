@@ -47,7 +47,7 @@ class Approval extends MY_Controller
             ->join('vehicles v', 'b.vehicle_id = v.id', 'left')
             ->where('b.workshop_id', $workshop['id'])
             ->where('b.approval_status', 'pending')
-            ->where('b.status', 'processed')
+            ->where('b.status', 'in_progress')
             ->where('b.is_deleted', 0)
             ->order_by('b.created_at', 'DESC')
             ->get()
@@ -79,8 +79,8 @@ class Approval extends MY_Controller
             return;
         }
 
-        // Can only approve if status is processed and approval_status is pending
-        if ($booking['status'] !== 'processed' || $booking['approval_status'] !== 'pending') {
+        // Can only approve if status is in_progress and approval_status is pending
+        if ($booking['status'] !== 'in_progress' || $booking['approval_status'] !== 'pending') {
             $this->json_error('Booking ini tidak memerlukan approval saat ini.', 400);
             return;
         }
@@ -142,8 +142,8 @@ class Approval extends MY_Controller
             return;
         }
 
-        // Can only reject if status is processed and approval_status is pending
-        if ($booking['status'] !== 'processed' || $booking['approval_status'] !== 'pending') {
+        // Can only reject if status is in_progress and approval_status is pending
+        if ($booking['status'] !== 'in_progress' || $booking['approval_status'] !== 'pending') {
             $this->json_error('Booking ini tidak memerlukan approval saat ini.', 400);
             return;
         }
