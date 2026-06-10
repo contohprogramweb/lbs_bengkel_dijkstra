@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label for="address">Alamat</label>
                             <textarea class="form-control" id="address" name="address" rows="3"
-                                      placeholder="Masukkan alamat lengkap"><?php echo set_value('address', $user->address); ?></textarea>
+                                      placeholder="Masukkan alamat lengkap"><?php echo set_value('address', isset($user->address) ? $user->address : ''); ?></textarea>
                         </div>
 
                         <div class="form-group">
