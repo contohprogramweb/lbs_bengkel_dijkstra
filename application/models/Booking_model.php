@@ -824,32 +824,42 @@ class Booking_model extends CI_Model {
 
         // Pending bookings
         $this->db->select('COUNT(*) as pending');
+        $this->db->from($this->table_bookings);
         $this->db->where('workshop_id', $workshop_id);
         $this->db->where('status', 'pending');
+        $this->db->where('is_deleted', 0);
         $stats['pending'] = $this->db->get()->row()->pending ?? 0;
 
         // Accepted bookings
         $this->db->select('COUNT(*) as accepted');
+        $this->db->from($this->table_bookings);
         $this->db->where('workshop_id', $workshop_id);
         $this->db->where('status', 'accepted');
+        $this->db->where('is_deleted', 0);
         $stats['accepted'] = $this->db->get()->row()->accepted ?? 0;
 
         // Processed bookings
         $this->db->select('COUNT(*) as processed');
+        $this->db->from($this->table_bookings);
         $this->db->where('workshop_id', $workshop_id);
         $this->db->where('status', 'processed');
+        $this->db->where('is_deleted', 0);
         $stats['processed'] = $this->db->get()->row()->processed ?? 0;
 
         // Completed bookings
         $this->db->select('COUNT(*) as completed');
+        $this->db->from($this->table_bookings);
         $this->db->where('workshop_id', $workshop_id);
         $this->db->where('status', 'completed');
+        $this->db->where('is_deleted', 0);
         $stats['completed'] = $this->db->get()->row()->completed ?? 0;
 
         // Pending approvals
         $this->db->select('COUNT(*) as pending_approval');
+        $this->db->from($this->table_bookings);
         $this->db->where('workshop_id', $workshop_id);
         $this->db->where('approval_status', 'pending');
+        $this->db->where('is_deleted', 0);
         $stats['pending_approval'] = $this->db->get()->row()->pending_approval ?? 0;
 
         return $stats;
