@@ -80,9 +80,11 @@ class Billing extends Workshop_Controller {
         );
         $data['summary'] = $report['summary'];
 
-        $this->load->view('workshop/layouts/header', $data);
-        $this->load->view('workshop/billing/invoices', $data);
-        $this->load->view('workshop/layouts/footer');
+        // Render view content
+        $data['content_for_layout'] = $this->load->view('workshop/billing/invoices', $data, TRUE);
+        
+        // Load full layout
+        $this->load->view('layouts/workshop_layout', $data);
     }
 
     /**
@@ -145,9 +147,11 @@ class Billing extends Workshop_Controller {
         $this->db->order_by('payment_date', 'DESC');
         $data['payments'] = $this->db->get('invoice_payments')->result_array();
 
-        $this->load->view('workshop/layouts/header', $data);
-        $this->load->view('workshop/billing/invoice_detail', $data);
-        $this->load->view('workshop/layouts/footer');
+        // Render view content
+        $data['content_for_layout'] = $this->load->view('workshop/billing/invoice_detail', $data, TRUE);
+        
+        // Load full layout
+        $this->load->view('layouts/workshop_layout', $data);
     }
 
     /**
@@ -225,9 +229,11 @@ class Billing extends Workshop_Controller {
         $data['invoice'] = $invoice;
         $data['remaining'] = $invoice->total_amount - $invoice->paid_amount;
 
-        $this->load->view('workshop/layouts/header', $data);
-        $this->load->view('workshop/billing/payment_form', $data);
-        $this->load->view('workshop/layouts/footer');
+        // Render view content
+        $data['content_for_layout'] = $this->load->view('workshop/billing/payment_form', $data, TRUE);
+        
+        // Load full layout
+        $this->load->view('layouts/workshop_layout', $data);
     }
 
     /**
@@ -258,9 +264,11 @@ class Billing extends Workshop_Controller {
         $data['transactions'] = $report['transactions'];
         $data['summary'] = $report['summary'];
 
-        $this->load->view('workshop/layouts/header', $data);
-        $this->load->view('workshop/billing/report', $data);
-        $this->load->view('workshop/layouts/footer');
+        // Render view content
+        $data['content_for_layout'] = $this->load->view('workshop/billing/report', $data, TRUE);
+        
+        // Load full layout
+        $this->load->view('layouts/workshop_layout', $data);
     }
 
     /**
