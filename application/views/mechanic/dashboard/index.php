@@ -229,14 +229,18 @@ function toggleAvailability() {
         cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
+            // Get current button state from the class
+            var btn = $('#availability-btn');
+            var isCurrentlyAvailable = btn.hasClass('btn-success');
+            
             $.ajax({
-                url: '<?php echo site_url('mechanic_dashboard/toggle_availability'); ?>',
+                url: '<?php echo site_url('mechanic/toggle_availability'); ?>',
                 type: 'POST',
                 dataType: 'json',
+                data: { is_available: isCurrentlyAvailable ? 0 : 1 },
                 success: function(response) {
                     if (response.success) {
                         // Update button color and text without reload
-                        var btn = $('#availability-btn');
                         if (response.is_available) {
                             btn.removeClass('btn-danger').addClass('btn-success');
                             btn.html('<i class="fas fa-toggle-on"></i> Status: Tersedia');
@@ -255,7 +259,8 @@ function toggleAvailability() {
                         Swal.fire('Error!', response.message, 'error');
                     }
                 },
-                error: function() {
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
                     Swal.fire('Error!', 'Gagal mengubah status', 'error');
                 }
             });
