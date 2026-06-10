@@ -48,7 +48,7 @@ class Booking extends Customer_Controller {
         $data['page_title'] = 'Pilih Bengkel';
         $data['workshops'] = $this->workshop_model->get_active_workshops();
         
-        $this->render('user/booking/workshop_select', $data);
+        $this->render('user/booking/workshop_select', $data, FALSE, 'layouts/booking_layout');
     }
 
     // ================================================================
@@ -101,7 +101,7 @@ class Booking extends Customer_Controller {
             redirect('booking/step2/' . $workshop_id);
         }
 
-        $this->render('user/booking/step1_vehicle', $data);
+        $this->render('user/booking/step1_vehicle', $data, FALSE, 'layouts/booking_layout');
     }
 
     // ================================================================
@@ -181,7 +181,7 @@ class Booking extends Customer_Controller {
             redirect('booking/step3/' . $workshop_id);
         }
 
-        $this->render('user/booking/step2_schedule', $data);
+        $this->render('user/booking/step2_schedule', $data, FALSE, 'layouts/booking_layout');
     }
 
     /**
@@ -338,7 +338,7 @@ class Booking extends Customer_Controller {
             redirect('booking/step4/' . $workshop_id);
         }
 
-        $this->render('user/booking/step3_services', $data);
+        $this->render('user/booking/step3_services', $data, FALSE, 'layouts/booking_layout');
     }
 
     // ================================================================
@@ -416,7 +416,7 @@ class Booking extends Customer_Controller {
             }
         }
 
-        $this->render('user/booking/step4_confirm', $data);
+        $this->render('user/booking/step4_confirm', $data, FALSE, 'layouts/booking_layout');
     }
 
     // ================================================================
@@ -440,7 +440,7 @@ class Booking extends Customer_Controller {
         $data['workshop'] = $this->workshop_model->find_by_id($booking['workshop_id']);
         $data['vehicle'] = $this->vehicle_model->find_by_id($booking['vehicle_id']);
 
-        $this->render('user/booking/success', $data);
+        $this->render('user/booking/success', $data, FALSE, 'layouts/user_layout');
     }
 
     /**
@@ -460,7 +460,7 @@ class Booking extends Customer_Controller {
         $data['workshop'] = $this->workshop_model->find_by_id($booking['workshop_id']);
         $data['vehicle'] = $this->vehicle_model->find_by_id($booking['vehicle_id']);
 
-        $this->render('user/booking/detail', $data);
+        $this->render('user/booking/detail', $data, FALSE, 'layouts/user_layout');
     }
 
     /**
@@ -499,7 +499,7 @@ class Booking extends Customer_Controller {
         $data['page_title'] = 'Batalkan Booking';
         $data['booking'] = $booking;
 
-        $this->render('user/booking/cancel', $data);
+        $this->render('user/booking/cancel', $data, FALSE, 'layouts/user_layout');
     }
 
     /**
@@ -553,7 +553,7 @@ class Booking extends Customer_Controller {
             }
         }
 
-        $this->render('user/booking/reschedule', $data);
+        $this->render('user/booking/reschedule', $data, FALSE, 'layouts/user_layout');
     }
 
     // ================================================================
@@ -576,7 +576,7 @@ class Booking extends Customer_Controller {
         $data['bookings'] = $this->booking_model->get_user_bookings($this->user_id, $filters);
         $data['stats'] = $this->booking_model->get_user_statistics($this->user_id);
 
-        $this->render('user/booking/my_bookings', $data);
+        $this->render('user/booking/my_bookings', $data, FALSE, 'layouts/user_layout');
     }
 
     // ================================================================
