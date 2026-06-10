@@ -1119,3 +1119,157 @@ class Booking_model extends CI_Model {
 
 /* End of file Booking_model.php */
 /* Location: ./application/models/Booking_model.php */
+    // ================================================================
+    // MECHANIC-SPECIFIC BOOKING METHODS
+    // ================================================================
+
+    /**
+     * Count bookings assigned to a mechanic
+     *
+     * @param int $mechanic_id
+     * @return int
+     */
+    public function count_mechanic_bookings($mechanic_id)
+    {
+        $this->db->select('COUNT(DISTINCT b.id) as total');
+        $this->db->from($this->table_booking_mechanics . ' bm');
+        $this->db->join($this->table_bookings . ' b', 'bm.booking_id = b.id');
+        $this->db->where('bm.mechanic_id', $mechanic_id);
+        $this->db->where('bm.is_deleted', 0);
+        $this->db->where('b.is_deleted', 0);
+
+        $result = $this->db->get()->row_array();
+        return (int) ($result['total'] ?? 0);
+    }
+
+    /**
+     * Count bookings by status for a mechanic
+     *
+     * @param int $mechanic_id
+     * @param string $status
+     * @return int
+     */
+    public function count_mechanic_bookings_by_status($mechanic_id, $status)
+    {
+        $this->db->select('COUNT(DISTINCT b.id) as total');
+        $this->db->from($this->table_booking_mechanics . ' bm');
+        $this->db->join($this->table_bookings . ' b', 'bm.booking_id = b.id');
+        $this->db->where('bm.mechanic_id', $mechanic_id);
+        $this->db->where('bm.is_deleted', 0);
+        $this->db->where('b.is_deleted', 0);
+        $this->db->where('b.status', $status);
+
+        $result = $this->db->get()->row_array();
+        return (int) ($result['total'] ?? 0);
+    }
+
+    /**
+     * Get today's bookings for a mechanic
+     *
+     * @param int $mechanic_id
+     * @return array
+     */
+    public function get_mechanic_bookings_today($mechanic_id)
+    {
+        $today = date('Y-m-d');
+
+        $this->db->select('b.*, bm.assigned_at');
+        $this->db->from($this->table_booking_mechanics . ' bm');
+        $this->db->join($this->table_bookings . ' b', 'bm.booking_id = b.id');
+        $this->db->where('bm.mechanic_id', $mechanic_id);
+        $this->db->where('bm.is_deleted', 0);
+        $this->db->where('b.is_deleted', 0);
+        $this->db->where('b.scheduled_date', $today);
+        $this->db->order_by('b.scheduled_time', 'ASC');
+
+        return $this->db->get()->result_array();
+    }
+
+    /**
+     * Get recent bookings for a mechanic
+     *
+     * @param int $mechanic_id
+     * @param int $limit
+     * @return array
+     */
+    public function get_mechanic_recent_bookings($mechanic_id, $limit = 5)
+    {
+        $this->db->select('b.*, bm.assigned_at');
+        $this->db->from($this->table_booking_mechanics . ' bm');
+        $this->db->join($this->table_bookings . ' b', 'bm.booking_id = b.id');
+        $this->db->where('bm.mechanic_id', $mechanic_id);
+        $this->db->where('bm.is_deleted', 0);
+        $this->db->where('b.is_deleted', 0);
+        $this->db->order_by('b.scheduled_date', 'DESC');
+        $this->db->order_by('b.scheduled_time', 'DESC');
+        $this->db->limit($limit);
+
+        return $this->db->get()->result_array();
+    }
+
+    /**
+     * Get all bookings for a mechanic with optional status filter
+     *
+     * @param int $mechanic_id
+     * @param string $status_filter 'all', 'pending', 'in_progress', 'completed', etc.
+     * @return array
+     */
+    public function get_mechanic_all_bookings($mechanic_id, $status_filter = 'all')
+    {
+        $this->db->select('b.*, bm.assigned_at, bm.notes as assignment_notes');
+        $this->db->from($this->table_booking_mechanics . ' bm');
+        $this->db->join($this->table_bookings . ' b', 'bm.booking_id = b.id');
+        $this->db->where('bm.mechanic_id', $mechanic_id);
+        $this->db->where('bm.is_deleted', 0);
+        $this->db->where('b.is_deleted', 0);
+
+        if ($status_filter !== 'all') {
+            $this->db->where('b.status', $status_filter);
+        }
+
+        $this->db->order_by('b.scheduled_date', 'DESC');
+        $this->db->order_by('b.scheduled_time', 'DESC');
+
+        return $this->db->get()->result_array();
+    }
+
+    /**
+     * Check if a mechanic is assigned to a booking
+     *
+     * @param int $booking_id
+     * @param int $mechanic_id
+     * @return bool
+     */
+    public function is_mechanic_assigned($booking_id, $mechanic_id)
+    {
+        $this->db->where('booking_id', $booking_id);
+        $this->db->where('mechanic_id', $mechanic_id);
+        $this->db->where('is_deleted', 0);
+
+        return $this->db->get($this->table_booking_mechanics)->num_rows() > 0;
+    }
+
+    /**
+     * Get completed bookings for a mechanic in date range
+     *
+     * @param int $mechanic_id
+     * @param string $start_date
+     * @param string $end_date
+     * @return array
+     */
+    public function get_mechanic_completed_bookings($mechanic_id, $start_date, $end_date)
+    {
+        $this->db->select('b.*, bm.assigned_at, bm.completed_at');
+        $this->db->from($this->table_booking_mechanics . ' bm');
+        $this->db->join($this->table_bookings . ' b', 'bm.booking_id = b.id');
+        $this->db->where('bm.mechanic_id', $mechanic_id);
+        $this->db->where('bm.is_deleted', 0);
+        $this->db->where('b.is_deleted', 0);
+        $this->db->where('b.status', 'completed');
+        $this->db->where('b.scheduled_date >=', $start_date);
+        $this->db->where('b.scheduled_date <=', $end_date);
+        $this->db->order_by('b.scheduled_date', 'DESC');
+
+        return $this->db->get()->result_array();
+    }
+}

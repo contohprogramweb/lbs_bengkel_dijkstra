@@ -76,7 +76,7 @@ class Mechanic_dashboard extends Mechanic_Controller {
         // Get recent bookings
         $data['recent_bookings'] = $this->booking_model->get_mechanic_recent_bookings($mechanic['id'], 5);
         
-        $this->render('mechanic/dashboard', $data);
+        $this->render('mechanic/dashboard/index', $data);
     }
 
     /**
