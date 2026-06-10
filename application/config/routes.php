@@ -52,6 +52,7 @@ $route['mechanic/bookings'] = 'mechanic_dashboard/my_bookings';
 $route['mechanic/booking_detail/(:num)'] = 'mechanic_dashboard/booking_detail/$1';
 $route['mechanic/productivity'] = 'mechanic_dashboard/my_productivity';
 $route['mechanic/profile'] = 'mechanic_dashboard/profile';
+$route['mechanic/toggle_availability'] = 'mechanic_dashboard/toggle_availability';
 
 
 // Admin routes
