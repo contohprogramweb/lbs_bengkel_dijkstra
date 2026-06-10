@@ -415,8 +415,8 @@ class Mechanic_dashboard extends Mechanic_Controller {
                 } else {
                     $this->load->model('user_model');
                     if ($this->user_model->update_password($this->user_id, $new_password)) {
-                        $this->session->set_flashdata('success', 'Password berhasil diubah.');
-                        redirect('mechanic/profile');
+                        $this->session->set_flashdata('success', 'Password berhasil diubah. Silakan login ulang dengan password baru.');
+                        redirect('auth/logout');
                     } else {
                         $this->session->set_flashdata('error', 'Gagal mengubah password.');
                     }
@@ -424,6 +424,6 @@ class Mechanic_dashboard extends Mechanic_Controller {
             }
         }
 
-        $this->render('user/change_password', $data);
+        $this->render('mechanic/profile/change_password', $data);
     }
 }

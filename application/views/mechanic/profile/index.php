@@ -86,6 +86,9 @@
                             <button type="button" class="btn btn-secondary" onclick="toggleAvailability()">
                                 <i class="fas fa-toggle-on"></i> Toggle Ketersediaan
                             </button>
+                            <a href="<?php echo site_url('mechanic/change_password'); ?>" class="btn btn-outline-primary">
+                                <i class="fas fa-key"></i> Ubah Password
+                            </a>
                         </div>
                     </form>
                 </div>
