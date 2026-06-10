@@ -134,7 +134,8 @@ class Booking_model extends CI_Model {
      */
     public function check_slot_availability($workshop_id, $date, $time)
     {
-        // Lock the row for update to prevent race condition
+        // Use SELECT ... FOR UPDATE to lock the row during transaction
+        // This is better than LOCK TABLES as it works within transactions
         $this->db->select('remaining_capacity');
         $this->db->from($this->table_booking_slots);
         $this->db->where('workshop_id', $workshop_id);
@@ -142,12 +143,10 @@ class Booking_model extends CI_Model {
         $this->db->where('slot_time', $time);
         $this->db->where('is_active', 1);
         
-        // Use FOR UPDATE lock
-        $this->db->query('LOCK TABLES ' . $this->table_booking_slots . ' WRITE');
-        
-        $slot = $this->db->get()->row_array();
-        
-        $this->db->query('UNLOCK TABLES');
+        // Add FOR UPDATE clause for row-level locking (works with transactions)
+        $query = $this->db->get_compiled_select();
+        $query .= ' FOR UPDATE';
+        $slot = $this->db->query($query)->row_array();
 
         if (!$slot) {
             return ['available' => FALSE, 'remaining' => 0];
