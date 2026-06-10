@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-6">
-                    <div class="card stat-card bg-purple text-white">
+                    <div class="card stat-card stat-card-purple bg-purple text-white">
                         <div class="card-body text-center">
                             <h3><?= $stats['processed'] ?? 0 ?></h3>
                             <small>Diproses</small>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-6">
-                    <div class="card stat-card bg-danger text-white">
+                    <div class="card stat-card stat-card-danger bg-danger text-white">
                         <div class="card-body text-center">
                             <h3><?= $stats['pending_approval'] ?? 0 ?></h3>
                             <small>Approval Pending</small>

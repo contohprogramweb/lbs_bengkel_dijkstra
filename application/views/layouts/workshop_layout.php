@@ -104,6 +104,8 @@
         .stat-card-warning { border-left: 4px solid var(--warning-color); }
         .stat-card-success { border-left: 4px solid var(--success-color); }
         .stat-card-info { border-left: 4px solid var(--info-color); }
+        .stat-card-purple { border-left: 4px solid #6f42c1; }
+        .stat-card-danger { border-left: 4px solid var(--danger-color); }
         .text-primary-opacity { color: rgba(13, 110, 253, 0.3); }
         .text-warning-opacity { color: rgba(255, 193, 7, 0.3); }
         .text-success-opacity { color: rgba(25, 135, 84, 0.3); }
