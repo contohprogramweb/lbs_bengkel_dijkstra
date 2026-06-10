@@ -49,7 +49,7 @@
             left: 0;
             width: 250px;
             transition: transform 0.3s ease;
-            z-index: 1000;
+            z-index: 999;
         }
         .sidebar.collapsed {
             transform: translateX(-100%);
@@ -67,6 +67,9 @@
             min-height: 100vh;
             box-sizing: border-box;
             overflow-x: hidden;
+            position: relative;
+            z-index: 1000;
+            padding-top: 80px;
         }
         .main-content.expanded {
             margin-left: 0;
@@ -103,6 +106,7 @@
                 margin-left: 0;
                 min-width: 100%;
                 padding: 15px;
+                padding-top: 70px;
             }
             .sidebar-toggle {
                 display: block !important;
@@ -126,12 +130,14 @@
             padding: 10px 15px;
             border-radius: 5px;
             margin-right: 15px;
+            z-index: 1002;
+            position: relative;
         }
     </style>
 </head>
 <body>
     <!-- Mobile Toggle Button -->
-    <button class="sidebar-toggle d-md-none" onclick="toggleSidebar()" style="position: fixed; top: 15px; left: 15px; z-index: 1001;">
+    <button class="sidebar-toggle d-md-none" onclick="toggleSidebar()" style="position: fixed; top: 15px; left: 15px; z-index: 1003;">
         <i class="fas fa-bars"></i>
     </button>
     

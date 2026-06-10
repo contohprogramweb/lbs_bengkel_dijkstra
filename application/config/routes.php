@@ -36,7 +36,7 @@ $route['user/bookings'] = 'booking/my_bookings';
 $route['user/bookings/detail/(:num)'] = 'booking/detail/$1';
 $route['user/bookings/cancel/(:num)'] = 'booking/cancel/$1';
 $route['user/bookings/reschedule/(:num)'] = 'booking/reschedule/$1';
-$route['user/bookings/create'] = 'booking/index';
+$route['user/bookings/create'] = 'booking';
 
 
 
