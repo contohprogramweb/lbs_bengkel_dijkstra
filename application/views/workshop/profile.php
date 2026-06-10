@@ -36,7 +36,7 @@
                 <span class="badge badge-<?= $workshop->status === 'active' ? 'success' : ($workshop->status === 'pending' ? 'warning' : 'danger') ?> me-2">
                     <?= ucfirst($workshop->status) ?>
                 </span>
-                <a href="<?= site_url('workshop/edit') ?>" class="btn btn-sm btn-primary">
+                <a href="<?= site_url('workshop/edit') ?>" class="btn btn-sm btn-primary-primary">
                     <i class="fas fa-edit"></i> Edit Profil
                 </a>
             </div>
@@ -157,10 +157,10 @@
 
                     <!-- Quick Actions -->
                     <div class="d-grid gap-2">
-                        <a href="<?= site_url('workshop/services') ?>" class="btn btn-outline-primary">
+                        <a href="<?= site_url('workshop/services') ?>" class="btn btn-outline-primary-primary">
                             <i class="fas fa-tools"></i> Kelola Layanan
                         </a>
-                        <a href="<?= site_url('workshop/schedule') ?>" class="btn btn-outline-primary">
+                        <a href="<?= site_url('workshop/schedule') ?>" class="btn btn-outline-primary-primary">
                             <i class="fas fa-calendar-alt"></i> Jadwal Booking
                         </a>
                         <a href="<?= site_url('workshop/dashboard') ?>" class="btn btn-outline-secondary">
@@ -176,7 +176,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-tools"></i> Layanan Tersedia (<?= count($services) ?>)</h6>
-            <a href="<?= site_url('workshop/services') ?>" class="btn btn-sm btn-primary">
+            <a href="<?= site_url('workshop/services') ?>" class="btn btn-sm btn-primary-primary">
                 <i class="fas fa-plus"></i> Tambah Layanan Baru
             </a>
         </div>
@@ -223,7 +223,7 @@
                                         <?php endif; ?>
                                     </td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-outline-primary" onclick="editService(<?= $service->id ?>)">
+                                        <button class="btn btn-sm btn-outline-primary-primary" onclick="editService(<?= $service->id ?>)">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                     </td>
@@ -234,10 +234,10 @@
                 </div>
             <?php else: ?>
                 <div class="text-center py-5">
-                    <i class="fas fa-tools fa-4x text-gray-300 mb-3"></i>
+                    <i class="fas fa-tools fa-4x text-muted mb-3"></i>
                     <h5>Belum Ada Layanan</h5>
                     <p class="text-muted">Anda belum menambahkan layanan apapun. Mulai tambahkan layanan untuk menarik pelanggan.</p>
-                    <a href="<?= site_url('workshop/services') ?>" class="btn btn-primary">
+                    <a href="<?= site_url('workshop/services') ?>" class="btn btn-primary-primary">
                         <i class="fas fa-plus"></i> Tambah Layanan Pertama
                     </a>
                 </div>
@@ -248,10 +248,10 @@
     <!-- No Workshop -->
     <div class="card shadow mb-4">
         <div class="card-body text-center py-5">
-            <i class="fas fa-store fa-4x text-gray-300 mb-3"></i>
+            <i class="fas fa-store fa-4x text-muted mb-3"></i>
             <h4>Anda Belum Memiliki Profil Bengkel</h4>
             <p class="text-muted mb-4">Buat profil bengkel Anda untuk mulai menerima booking dari pelanggan dan mengelola layanan.</p>
-            <a href="<?= site_url('workshop/create') ?>" class="btn btn-primary btn-lg">
+            <a href="<?= site_url('workshop/create') ?>" class="btn btn-primary-primary btn-lg">
                 <i class="fas fa-plus"></i> Buat Profil Bengkel Sekarang
             </a>
         </div>
@@ -307,7 +307,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary" onclick="saveServiceChanges()">Simpan Perubahan</button>
+                <button type="button" class="btn btn-primary-primary" onclick="saveServiceChanges()">Simpan Perubahan</button>
             </div>
         </div>
     </div>

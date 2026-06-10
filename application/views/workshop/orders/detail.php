@@ -205,7 +205,7 @@
                             <?php if ($approval_timeout_expired): ?>
                             <hr>
                             <h6 class="text-danger"><i class="fas fa-exclamation-triangle"></i> Approval Timeout</h6>
-                            <button type="button" class="btn btn-outline-primary btn-sm btn-block mb-2" onclick="handleTimeout(<?= $booking['id'] ?>, 'continue')">
+                            <button type="button" class="btn btn-outline-primary-primary btn-sm btn-block mb-2" onclick="handleTimeout(<?= $booking['id'] ?>, 'continue')">
                                 Lanjutkan (Tanpa Tambahan)
                             </button>
                             <button type="button" class="btn btn-outline-secondary btn-sm btn-block" onclick="handleTimeout(<?= $booking['id'] ?>, 'cancel_additional')">

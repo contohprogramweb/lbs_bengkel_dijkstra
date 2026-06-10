@@ -257,7 +257,7 @@
 
                 <!-- Submit Button -->
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary btn-lg">
+                    <button type="submit" class="btn btn-primary-primary btn-lg">
                         <i class="fas fa-save"></i> Buat Profil Bengkel
                     </button>
                     <a href="<?= site_url('workshop/dashboard') ?>" class="btn btn-secondary">

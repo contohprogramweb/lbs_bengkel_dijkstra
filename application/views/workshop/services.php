@@ -123,7 +123,7 @@
         <hr>
 
         <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary-primary">
                 <i class="fas fa-save"></i> Simpan Layanan
             </button>
             <a href="<?= site_url('workshop/profile') ?>" class="btn btn-secondary">
@@ -213,7 +213,7 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-primary" onclick="editService(<?= $service->id ?>)" title="Edit">
+                                        <button class="btn btn-outline-primary-primary" onclick="editService(<?= $service->id ?>)" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn btn-outline-<?= $service->is_available ? 'warning' : 'success' ?>"
@@ -233,7 +233,7 @@
             </div>
         <?php else: ?>
             <div class="text-center py-5">
-                <i class="fas fa-tools fa-4x text-gray-300 mb-3"></i>
+                <i class="fas fa-tools fa-4x text-muted mb-3"></i>
                 <h5>Belum Ada Layanan</h5>
                 <p class="text-muted">Anda belum menambahkan layanan apapun. Gunakan form di atas untuk menambah layanan pertama Anda.</p>
             </div>
@@ -313,7 +313,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary" onclick="saveServiceChanges()">
+                <button type="button" class="btn btn-primary-primary" onclick="saveServiceChanges()">
                     <i class="fas fa-save"></i> Simpan Perubahan
                 </button>
             </div>

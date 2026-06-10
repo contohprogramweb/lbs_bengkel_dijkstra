@@ -30,6 +30,12 @@
             --header-dark-bg: #121212;
             --content-light-bg: #f8f9fa;
             --border-color: #dee2e6;
+            --primary-color: #0d6efd;
+            --primary-hover: #0b5ed7;
+            --success-color: #198754;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --danger-color: #dc3545;
         }
         body {
             background-color: var(--content-light-bg);
@@ -74,29 +80,71 @@
             transition: margin-left 0.3s ease;
             background-color: var(--content-light-bg);
             min-height: 100vh;
+            width: calc(100% - 250px);
+            max-width: calc(100% - 250px);
         }
         .main-content.expanded {
             margin-left: 0;
+            width: 100%;
+            max-width: 100%;
         }
-        .card-stat { 
-            border-radius: 10px; 
-            border: none; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
+        
+        /* Stat Cards Styling */
+        .stat-card {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             transition: transform 0.2s;
             background: #fff;
+            overflow: hidden;
+            position: relative;
         }
-        .card-stat:hover { transform: translateY(-3px); }
-        .card-stat .icon { font-size: 2.5rem; opacity: 0.3; }
+        .stat-card:hover { transform: translateY(-3px); }
+        .stat-card-primary { border-left: 4px solid var(--primary-color); }
+        .stat-card-warning { border-left: 4px solid var(--warning-color); }
+        .stat-card-success { border-left: 4px solid var(--success-color); }
+        .stat-card-info { border-left: 4px solid var(--info-color); }
+        .text-primary-opacity { color: rgba(13, 110, 253, 0.3); }
+        .text-warning-opacity { color: rgba(255, 193, 7, 0.3); }
+        .text-success-opacity { color: rgba(25, 135, 84, 0.3); }
+        .text-info-opacity { color: rgba(13, 202, 240, 0.3); }
         
         /* Card styling for light content */
         .card {
             border: 1px solid var(--border-color);
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background-color: #fff;
+            border-radius: 8px;
         }
         .card-header {
             background-color: #fff;
             border-bottom: 1px solid var(--border-color);
             font-weight: 600;
+        }
+        .card-body {
+            background-color: #fff;
+        }
+
+        /* Button styling */
+        .btn-primary-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+        }
+        .btn-primary-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            color: #fff;
+        }
+        .btn-outline-primary-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            background-color: transparent;
+        }
+        .btn-outline-primary-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
         }
 
         /* Mobile Responsive */
@@ -109,11 +157,13 @@
             }
             .main-content {
                 margin-left: 0;
+                width: 100%;
+                max-width: 100%;
             }
             .sidebar-toggle {
                 display: block !important;
             }
-            .card-stat { margin-bottom: 15px; }
+            .stat-card { margin-bottom: 15px; }
         }
 
         .sidebar-toggle {
@@ -137,6 +187,14 @@
             background-color: #f8f9fa;
             border-bottom: 2px solid var(--border-color);
         }
+        
+        /* List group styling */
+        .list-group-item {
+            border-color: var(--border-color);
+        }
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+        }
     </style>
 </head>
 <body>
@@ -145,67 +203,65 @@
         <i class="fas fa-bars"></i>
     </button>
 
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar p-0" id="sidebar">
-                <div class="sidebar-brand">
-                    <i class="fas fa-tools"></i> Workshop Owner
-                </div>
-                <nav class="nav flex-column mt-3">
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/dashboard'); ?>">
-                        <i class="fas fa-home"></i> Dashboard
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'profile' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/profile'); ?>">
-                        <i class="fas fa-store"></i> Profil Bengkel
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'services' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/services'); ?>">
-                        <i class="fas fa-tools"></i> Kelola Layanan
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'schedule' || strpos($this->uri->segment(2), 'booking') !== false ? 'active' : ''; ?>" href="<?php echo site_url('workshop/schedule'); ?>">
-                        <i class="fas fa-calendar-alt"></i> Jadwal Booking
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'orders' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/orders'); ?>">
-                        <i class="fas fa-clipboard-list"></i> Order
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'mechanics' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/mechanics'); ?>">
-                        <i class="fas fa-user-cog"></i> Mekanik
-                    </a>
-                    <a class="nav-link <?php echo $this->uri->segment(2) == 'billing' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/billing'); ?>">
-                        <i class="fas fa-file-invoice-dollar"></i> Billing
-                    </a>
-                    <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
-                    <a class="nav-link" href="<?php echo site_url('auth/logout'); ?>">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                </nav>
+    <!-- Sidebar -->
+    <div class="sidebar p-0" id="sidebar">
+        <div class="sidebar-brand">
+            <i class="fas fa-tools"></i> Workshop Owner
+        </div>
+        <nav class="nav flex-column mt-3">
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/dashboard'); ?>">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'profile' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/profile'); ?>">
+                <i class="fas fa-store"></i> Profil Bengkel
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'services' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/services'); ?>">
+                <i class="fas fa-tools"></i> Kelola Layanan
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'schedule' || strpos($this->uri->segment(2), 'booking') !== false ? 'active' : ''; ?>" href="<?php echo site_url('workshop/schedule'); ?>">
+                <i class="fas fa-calendar-alt"></i> Jadwal Booking
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'orders' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/orders'); ?>">
+                <i class="fas fa-clipboard-list"></i> Order
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'mechanics' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/mechanics'); ?>">
+                <i class="fas fa-user-cog"></i> Mekanik
+            </a>
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'billing' ? 'active' : ''; ?>" href="<?php echo site_url('workshop/billing'); ?>">
+                <i class="fas fa-file-invoice-dollar"></i> Billing
+            </a>
+            <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
+            <a class="nav-link" href="<?php echo site_url('auth/logout'); ?>">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div class="d-flex align-items-center">
+                <button class="sidebar-toggle d-md-none me-2" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 class="mb-0"><?php echo e($page_title); ?></h2>
             </div>
+            <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-user-circle"></i> <?php echo e($current_user->full_name ?? 'User'); ?>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="<?php echo site_url('workshop/profile'); ?>"><i class="fas fa-store"></i> Profil Bengkel</a></li>
+                    <li><a class="dropdown-item" href="<?php echo site_url('workshop/edit_profile'); ?>"><i class="fas fa-user-edit"></i> Edit Profil Pribadi</a></li>
+                    <li><a class="dropdown-item" href="<?php echo site_url('user/change_password'); ?>"><i class="fas fa-key"></i> Ubah Password</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="<?php echo site_url('auth/logout'); ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
 
-            <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 main-content" id="mainContent">
-                <!-- Header -->
-                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-                    <div class="d-flex align-items-center">
-                        <button class="sidebar-toggle d-md-none me-2" onclick="toggleSidebar()">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <h2 class="mb-0"><?php echo e($page_title); ?></h2>
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle"></i> <?php echo e($current_user->full_name ?? 'User'); ?>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="<?php echo site_url('workshop/profile'); ?>"><i class="fas fa-store"></i> Profil Bengkel</a></li>
-                            <li><a class="dropdown-item" href="<?php echo site_url('workshop/edit_profile'); ?>"><i class="fas fa-user-edit"></i> Edit Profil Pribadi</a></li>
-                            <li><a class="dropdown-item" href="<?php echo site_url('user/change_password'); ?>"><i class="fas fa-key"></i> Ubah Password</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="<?php echo site_url('auth/logout'); ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Flash Messages with SweetAlert -->
+        <!-- Flash Messages with SweetAlert -->
                 <?php if ($this->session->flashdata('success')): ?>
                     <script>
                         $(document).ready(function() {
@@ -274,8 +330,6 @@
                 <!-- Main Content Area -->
                 <?php echo $content_for_layout ?? ''; ?>
             </div>
-        </div>
-    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

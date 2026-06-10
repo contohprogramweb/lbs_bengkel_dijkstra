@@ -25,7 +25,7 @@
                             <p class="text-muted mb-2">Klik pada tanggal di kalender untuk memblokir hari tersebut.</p>
                         </div>
                         <div class="col-md-4 text-end">
-                            <a href="<?= site_url('workshop_schedule') ?>" class="btn btn-outline-primary">
+                            <a href="<?= site_url('workshop_schedule') ?>" class="btn btn-outline-primary-primary">
                                 <i class="fas fa-arrow-left me-2"></i>Kembali ke Konfigurasi
                             </a>
                         </div>
