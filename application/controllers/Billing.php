@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage  Controllers
  * @version     4.1
  */
-class Billing extends CI_Controller {
+class Billing extends Workshop_Controller {
 
     private $workshop_id;
 
@@ -23,17 +23,6 @@ class Billing extends CI_Controller {
     {
         parent::__construct();
         
-        // Check authentication
-        if (!$this->session->userdata('logged_in')) {
-            redirect('auth/login');
-        }
-
-        // Check role
-        $role = $this->session->userdata('role');
-        if ($role !== 'workshop_owner') {
-            show_error('Akses ditolak. Halaman ini hanya untuk pemilik bengkel.', 403);
-        }
-
         $this->workshop_id = $this->session->userdata('workshop_id');
         
         $this->load->model('billing_model');
@@ -91,9 +80,11 @@ class Billing extends CI_Controller {
         );
         $data['summary'] = $report['summary'];
 
-        $this->load->view('workshop/layouts/header', $data);
-        $this->load->view('workshop/billing/invoices', $data);
-        $this->load->view('workshop/layouts/footer');
+        // Render view content
+        $data['content_for_layout'] = $this->load->view('workshop/billing/invoices', $data, TRUE);
+        
+        // Load full layout
+        $this->load->view('layouts/workshop_layout', $data);
     }
 
     /**
@@ -156,9 +147,11 @@ class Billing extends CI_Controller {
         $this->db->order_by('payment_date', 'DESC');
         $data['payments'] = $this->db->get('invoice_payments')->result_array();
 
-        $this->load->view('workshop/layouts/header', $data);
-        $this->load->view('workshop/billing/invoice_detail', $data);
-        $this->load->view('workshop/layouts/footer');
+        // Render view content
+        $data['content_for_layout'] = $this->load->view('workshop/billing/invoice_detail', $data, TRUE);
+        
+        // Load full layout
+        $this->load->view('layouts/workshop_layout', $data);
     }
 
     /**
@@ -236,9 +229,11 @@ class Billing extends CI_Controller {
         $data['invoice'] = $invoice;
         $data['remaining'] = $invoice->total_amount - $invoice->paid_amount;
 
-        $this->load->view('workshop/layouts/header', $data);
-        $this->load->view('workshop/billing/payment_form', $data);
-        $this->load->view('workshop/layouts/footer');
+        // Render view content
+        $data['content_for_layout'] = $this->load->view('workshop/billing/payment_form', $data, TRUE);
+        
+        // Load full layout
+        $this->load->view('layouts/workshop_layout', $data);
     }
 
     /**
@@ -269,9 +264,11 @@ class Billing extends CI_Controller {
         $data['transactions'] = $report['transactions'];
         $data['summary'] = $report['summary'];
 
-        $this->load->view('workshop/layouts/header', $data);
-        $this->load->view('workshop/billing/report', $data);
-        $this->load->view('workshop/layouts/footer');
+        // Render view content
+        $data['content_for_layout'] = $this->load->view('workshop/billing/report', $data, TRUE);
+        
+        // Load full layout
+        $this->load->view('layouts/workshop_layout', $data);
     }
 
     /**
