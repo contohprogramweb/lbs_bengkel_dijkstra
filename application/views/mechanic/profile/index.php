@@ -154,8 +154,10 @@ function toggleAvailability() {
     fetch('<?php echo site_url("mechanic/toggle_availability"); ?>', {
         method: 'POST',
         headers: {
+            'Content-Type': 'application/json',
             '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
-        }
+        },
+        body: JSON.stringify({})
     })
     .then(res => res.json())
     .then(result => {
@@ -168,6 +170,13 @@ function toggleAvailability() {
                 text: result.message
             });
         }
+    })
+    .catch(err => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Terjadi kesalahan pada sistem'
+        });
     });
 }
 </script>
