@@ -545,4 +545,67 @@ class Mechanic_model extends CI_Model {
 
         return $this->db->get()->result_array();
     }
+
+    /**
+     * Get mechanic productivity stats by mechanic ID
+     * 
+     * @param int $mechanic_id
+     * @param string $start_date
+     * @param string $end_date
+     * @return array
+     */
+    public function get_mechanic_productivity($mechanic_id, $start_date, $end_date)
+    {
+        $this->db->select('COUNT(DISTINCT b.id) as total_bookings');
+        $this->db->select('SUM(CASE WHEN b.status = "completed" THEN 1 ELSE 0 END) as completed_count');
+        $this->db->select('SUM(CASE WHEN b.status = "in_progress" THEN 1 ELSE 0 END) as in_progress_count');
+        $this->db->select('AVG(b.customer_rating) as avg_rating');
+        $this->db->select('COUNT(r.id) as review_count');
+        $this->db->select('COALESCE(SUM(bm.sparepart_cost), 0) as total_sparepart_cost');
+        
+        $this->db->from($this->table_booking_mechanics . ' bm');
+        $this->db->join($this->table_bookings . ' b', 'bm.booking_id = b.id AND b.is_deleted = 0', 'inner');
+        $this->db->join($this->table_reviews . ' r', 'b.id = r.booking_id AND r.is_deleted = 0', 'left');
+        
+        $this->db->where('bm.mechanic_id', $mechanic_id);
+        $this->db->where('bm.is_deleted', 0);
+        
+        if ($start_date && $end_date) {
+            $this->db->where('b.completed_at >=', $start_date . ' 00:00:00');
+            $this->db->where('b.completed_at <=', $end_date . ' 23:59:59');
+        }
+        
+        $result = $this->db->get()->row_array();
+        
+        return [
+            'total_bookings' => (int) ($result['total_bookings'] ?? 0),
+            'completed_count' => (int) ($result['completed_count'] ?? 0),
+            'in_progress_count' => (int) ($result['in_progress_count'] ?? 0),
+            'avg_rating' => !empty($result['avg_rating']) ? round($result['avg_rating'], 2) : 0,
+            'review_count' => (int) ($result['review_count'] ?? 0),
+            'total_sparepart_cost' => (float) ($result['total_sparepart_cost'] ?? 0)
+        ];
+    }
+
+    /**
+     * Add work note or sparepart record
+     * 
+     * @param array $data
+     * @return bool
+     */
+    public function add_work_note($data)
+    {
+        $table_notes = 'booking_mechanic_notes';
+        
+        $note_data = [
+            'booking_id' => $data['booking_id'],
+            'mechanic_id' => $data['mechanic_id'],
+            'note_type' => $data['note_type'],
+            'content' => $data['content'],
+            'sparepart_cost' => $data['sparepart_cost'] ?? 0,
+            'created_at' => $data['created_at']
+        ];
+        
+        return $this->db->insert($table_notes, $note_data);
+    }
 }

@@ -1,10 +1,11 @@
+```
 # Compiled and build artifacts
 *.pyc
 __pycache__/
 
 # Dependencies
 vendor/
-composer.lock
+node_modules/
 
 # Logs and temp files
 *.log
@@ -24,25 +25,44 @@ composer.lock
 .DS_Store
 Thumbs.db
 
-# Backup and swap files
+# CodeIgniter specific
+application/cache/
+application/logs/
+application/temp/
+system/
+!system/index.html
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
 *~
 *.bak
 *.backup
 
-# Coverage reports
-coverage/
-htmlcov/
-.coverage
-
-# PHP specific
-*.php~
-.htaccess
-web.config
-
-# Session files
-sess_*
-
-# Cache directories
-cache/
-tmp/
-temp/
+# Compression archives
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+```

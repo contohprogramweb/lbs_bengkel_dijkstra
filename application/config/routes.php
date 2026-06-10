@@ -46,7 +46,12 @@ $route['workshop/dashboard'] = 'workshop/dashboard';
 $route['workshop/profile'] = 'workshop/profile';
 $route['workshop/edit_profile'] = 'workshop/edit_profile';
 
-
+// Mechanic routes
+$route['mechanic/dashboard'] = 'mechanic_dashboard/dashboard';
+$route['mechanic/bookings'] = 'mechanic_dashboard/my_bookings';
+$route['mechanic/booking_detail/(:num)'] = 'mechanic_dashboard/booking_detail/$1';
+$route['mechanic/productivity'] = 'mechanic_dashboard/my_productivity';
+$route['mechanic/profile'] = 'mechanic_dashboard/profile';
 
 
 // Admin routes
