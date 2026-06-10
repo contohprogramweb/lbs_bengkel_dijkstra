@@ -195,6 +195,80 @@
         .list-group-item:hover {
             background-color: #f8f9fa;
         }
+        
+        /* Badge and Background colors for light theme */
+        .badge.bg-primary, .bg-primary {
+            background-color: var(--primary-color) !important;
+            color: #fff;
+        }
+        .badge.bg-success, .bg-success {
+            background-color: var(--success-color) !important;
+            color: #fff;
+        }
+        .badge.bg-warning, .bg-warning {
+            background-color: var(--warning-color) !important;
+            color: #000;
+        }
+        .badge.bg-info, .bg-info {
+            background-color: var(--info-color) !important;
+            color: #000;
+        }
+        .badge.bg-danger, .bg-danger {
+            background-color: var(--danger-color) !important;
+            color: #fff;
+        }
+        .badge.bg-secondary, .bg-secondary {
+            background-color: #6c757d !important;
+            color: #fff;
+        }
+        .badge.bg-dark, .bg-dark {
+            background-color: #212529 !important;
+            color: #fff;
+        }
+        .badge.bg-light, .bg-light {
+            background-color: #f8f9fa !important;
+            color: #000;
+            border: 1px solid #dee2e6;
+        }
+        
+        /* Card background colors for statistics */
+        .card.bg-primary {
+            background-color: var(--primary-color) !important;
+            color: #fff;
+        }
+        .card.bg-success {
+            background-color: var(--success-color) !important;
+            color: #fff;
+        }
+        .card.bg-warning {
+            background-color: var(--warning-color) !important;
+            color: #000;
+        }
+        .card.bg-info {
+            background-color: var(--info-color) !important;
+            color: #000;
+        }
+        .card.bg-danger {
+            background-color: var(--danger-color) !important;
+            color: #fff;
+        }
+        .card.bg-secondary {
+            background-color: #6c757d !important;
+            color: #fff;
+        }
+        .card.bg-dark {
+            background-color: #212529 !important;
+            color: #fff;
+        }
+        .card.bg-light {
+            background-color: #f8f9fa !important;
+            color: #000;
+            border: 1px solid #dee2e6;
+        }
+        .card.bg-purple {
+            background-color: #6f42c1 !important;
+            color: #fff;
+        }
     </style>
 </head>
 <body>

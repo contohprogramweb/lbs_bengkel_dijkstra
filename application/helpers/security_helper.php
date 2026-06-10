@@ -24,6 +24,18 @@ if (!function_exists('e')) {
 }
 
 /**
+ * Alias for e() function - compatible with CI3 esc()
+ * 
+ * @param string $str Input string
+ * @return string Escaped string
+ */
+if (!function_exists('esc')) {
+    function esc($str) {
+        return e($str);
+    }
+}
+
+/**
  * Validate uploaded file for security
  * 
  * @param array $file $_FILES['field'] array

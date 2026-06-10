@@ -12,7 +12,7 @@
             <!-- Statistics Cards -->
             <div class="row mb-4">
                 <div class="col-md-2 col-sm-6">
-                    <div class="card bg-primary text-white">
+                    <div class="card stat-card stat-card-primary bg-primary text-white">
                         <div class="card-body text-center">
                             <h3><?= $stats['total'] ?? 0 ?></h3>
                             <small>Total Pesanan</small>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-6">
-                    <div class="card bg-warning text-white">
+                    <div class="card stat-card stat-card-warning bg-warning text-dark">
                         <div class="card-body text-center">
                             <h3><?= $stats['pending'] ?? 0 ?></h3>
                             <small>Pending</small>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-6">
-                    <div class="card bg-info text-white">
+                    <div class="card stat-card stat-card-info bg-info text-dark">
                         <div class="card-body text-center">
                             <h3><?= $stats['accepted'] ?? 0 ?></h3>
                             <small>Diterima</small>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-6">
-                    <div class="card bg-purple text-white">
+                    <div class="card stat-card bg-purple text-white">
                         <div class="card-body text-center">
                             <h3><?= $stats['processed'] ?? 0 ?></h3>
                             <small>Diproses</small>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-6">
-                    <div class="card bg-success text-white">
+                    <div class="card stat-card stat-card-success bg-success text-white">
                         <div class="card-body text-center">
                             <h3><?= $stats['completed'] ?? 0 ?></h3>
                             <small>Selesai</small>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-6">
-                    <div class="card bg-danger text-white">
+                    <div class="card stat-card bg-danger text-white">
                         <div class="card-body text-center">
                             <h3><?= $stats['pending_approval'] ?? 0 ?></h3>
                             <small>Approval Pending</small>
@@ -111,17 +111,17 @@
                                         ];
                                         $badge = $status_badges[$booking['status']] ?? 'secondary';
                                         ?>
-                                        <span class="badge badge-<?= $badge ?>"><?= ucfirst($booking['status']) ?></span>
+                                        <span class="badge bg-<?= $badge ?>"><?= ucfirst($booking['status']) ?></span>
                                     </td>
                                     <td>
                                         <?php if ($booking['approval_status'] === 'pending'): ?>
-                                            <span class="badge badge-danger">Menunggu Approval</span>
+                                            <span class="badge bg-danger">Menunggu Approval</span>
                                         <?php elseif ($booking['approval_status'] === 'approved'): ?>
-                                            <span class="badge badge-success">Disetujui</span>
+                                            <span class="badge bg-success">Disetujui</span>
                                         <?php elseif ($booking['approval_status'] === 'rejected'): ?>
-                                            <span class="badge badge-secondary">Ditolak</span>
+                                            <span class="badge bg-secondary">Ditolak</span>
                                         <?php else: ?>
-                                            <span class="badge badge-light">-</span>
+                                            <span class="badge bg-light">-</span>
                                         <?php endif; ?>
                                     </td>
                                     <td>
@@ -140,5 +140,5 @@
 </div>
 
 <style>
-.bg-purple { background-color: #6f42c1 !important; }
+.bg-purple { background-color: #6f42c1 !important; color: #fff; }
 </style>
