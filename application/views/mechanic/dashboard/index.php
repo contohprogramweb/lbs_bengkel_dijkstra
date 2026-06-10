@@ -10,7 +10,9 @@
                     <p class="mb-0"><i class="fas fa-store"></i> <?php echo e($workshop->name ?? 'Bengkel'); ?></p>
                 </div>
                 <div class="col-md-4 text-end">
-                    <button onclick="toggleAvailability()" class="btn btn-light btn-sm">
+                    <button onclick="toggleAvailability()" 
+                            class="btn btn-sm <?php echo $mechanic['is_available'] ? 'btn-success' : 'btn-danger'; ?>"
+                            id="availability-btn">
                         <i class="fas fa-toggle-<?php echo $mechanic['is_available'] ? 'on' : 'off'; ?>"></i>
                         Status: <?php echo $mechanic['is_available'] ? 'Tersedia' : 'Tidak Tersedia'; ?>
                     </button>
@@ -233,7 +235,22 @@ function toggleAvailability() {
                 dataType: 'json',
                 success: function(response) {
                     if (response.success) {
-                        location.reload();
+                        // Update button color and text without reload
+                        var btn = $('#availability-btn');
+                        if (response.is_available) {
+                            btn.removeClass('btn-danger').addClass('btn-success');
+                            btn.html('<i class="fas fa-toggle-on"></i> Status: Tersedia');
+                        } else {
+                            btn.removeClass('btn-success').addClass('btn-danger');
+                            btn.html('<i class="fas fa-toggle-off"></i> Status: Tidak Tersedia');
+                        }
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: 'Status ketersediaan berhasil diubah',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
                     } else {
                         Swal.fire('Error!', response.message, 'error');
                     }

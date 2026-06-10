@@ -374,7 +374,8 @@ class Mechanic_dashboard extends Mechanic_Controller {
         
         if ($this->mechanic_model->update_mechanic($mechanic['id'], ['is_available' => $new_status])) {
             $this->json_response([
-                'is_available' => $new_status
+                'success' => true,
+                'is_available' => (bool)$new_status
             ], 200, 'Status ketersediaan berhasil diubah');
         } else {
             $this->json_error('Gagal mengubah status', 500);
