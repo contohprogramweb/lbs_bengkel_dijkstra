@@ -54,6 +54,7 @@ $route['mechanic/productivity'] = 'mechanic_dashboard/my_productivity';
 $route['mechanic/profile'] = 'mechanic_dashboard/profile';
 $route['mechanic/update_profile'] = 'mechanic_dashboard/update_profile';
 $route['mechanic/toggle_availability'] = 'mechanic_dashboard/toggle_availability';
+$route['mechanic/change_password'] = 'mechanic_dashboard/change_password';
 
 
 // Admin routes

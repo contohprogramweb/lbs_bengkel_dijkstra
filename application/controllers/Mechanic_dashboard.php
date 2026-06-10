@@ -389,4 +389,41 @@ class Mechanic_dashboard extends Mechanic_Controller {
             $this->json_error('Gagal mengubah status', 500);
         }
     }
+
+    /**
+     * Change password
+     */
+    public function change_password()
+    {
+        $data['page_title'] = 'Ubah Password';
+
+        if ($this->input->post()) {
+            // Validate form
+            $this->form_validation->set_rules('current_password', 'Password Saat Ini', 'required');
+            $this->form_validation->set_rules('new_password', 'Password Baru', 'required|min_length[6]|max_length[50]');
+            $this->form_validation->set_rules('confirm_password', 'Konfirmasi Password', 'required|matches[new_password]');
+
+            if ($this->form_validation->run() === FALSE) {
+                $this->session->set_flashdata('error', validation_errors());
+            } else {
+                $user = $this->current_user;
+                $current_password = $this->input->post('current_password', TRUE);
+                $new_password = $this->input->post('new_password', TRUE);
+
+                if (!password_verify($current_password, $user->password)) {
+                    $this->session->set_flashdata('error', 'Password saat ini salah.');
+                } else {
+                    $this->load->model('user_model');
+                    if ($this->user_model->update_password($this->user_id, $new_password)) {
+                        $this->session->set_flashdata('success', 'Password berhasil diubah.');
+                        redirect('mechanic/profile');
+                    } else {
+                        $this->session->set_flashdata('error', 'Gagal mengubah password.');
+                    }
+                }
+            }
+        }
+
+        $this->render('user/change_password', $data);
+    }
 }

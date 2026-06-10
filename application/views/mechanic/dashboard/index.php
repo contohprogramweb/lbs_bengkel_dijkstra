@@ -232,21 +232,30 @@ function toggleAvailability() {
             // Get current button state from the class
             var btn = $('#availability-btn');
             var isCurrentlyAvailable = btn.hasClass('btn-success');
+            var newStatus = isCurrentlyAvailable ? 0 : 1;
+            
+            console.log('Current status:', isCurrentlyAvailable, 'New status will be:', newStatus);
             
             $.ajax({
                 url: '<?php echo site_url('mechanic/toggle_availability'); ?>',
                 type: 'POST',
                 dataType: 'json',
-                data: { is_available: isCurrentlyAvailable ? 0 : 1 },
+                data: { is_available: newStatus },
+                beforeSend: function() {
+                    btn.prop('disabled', true);
+                },
                 success: function(response) {
+                    console.log('Response:', response);
                     if (response.success) {
                         // Update button color and text without reload
-                        if (response.is_available) {
+                        if (response.is_available === true || response.is_available == 1) {
                             btn.removeClass('btn-danger').addClass('btn-success');
                             btn.html('<i class="fas fa-toggle-on"></i> Status: Tersedia');
+                            console.log('Button updated to: Tersedia (green)');
                         } else {
                             btn.removeClass('btn-success').addClass('btn-danger');
                             btn.html('<i class="fas fa-toggle-off"></i> Status: Tidak Tersedia');
+                            console.log('Button updated to: Tidak Tersedia (red)');
                         }
                         Swal.fire({
                             icon: 'success',
@@ -256,12 +265,16 @@ function toggleAvailability() {
                             showConfirmButton: false
                         });
                     } else {
-                        Swal.fire('Error!', response.message, 'error');
+                        Swal.fire('Error!', response.message || 'Gagal mengubah status', 'error');
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('AJAX Error:', status, error);
-                    Swal.fire('Error!', 'Gagal mengubah status', 'error');
+                    console.error('Response Text:', xhr.responseText);
+                    Swal.fire('Error!', 'Gagal mengubah status: ' + error, 'error');
+                },
+                complete: function() {
+                    btn.prop('disabled', false);
                 }
             });
         }
