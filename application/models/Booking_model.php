@@ -839,13 +839,13 @@ class Booking_model extends CI_Model {
         $this->db->where('is_deleted', 0);
         $stats['accepted'] = $this->db->get()->row()->accepted ?? 0;
 
-        // Processed bookings
-        $this->db->select('COUNT(*) as processed');
+        // In Progress bookings
+        $this->db->select('COUNT(*) as in_progress');
         $this->db->from($this->table_bookings);
         $this->db->where('workshop_id', $workshop_id);
-        $this->db->where('status', 'processed');
+        $this->db->where('status', 'in_progress');
         $this->db->where('is_deleted', 0);
-        $stats['processed'] = $this->db->get()->row()->processed ?? 0;
+        $stats['in_progress'] = $this->db->get()->row()->in_progress ?? 0;
 
         // Completed bookings
         $this->db->select('COUNT(*) as completed');
@@ -1279,7 +1279,7 @@ class Booking_model extends CI_Model {
      */
     public function get_mechanic_completed_bookings($mechanic_id, $start_date, $end_date)
     {
-        $this->db->select('b.*, bm.assigned_at, bm.completed_at');
+        $this->db->select('b.*, bm.assigned_at');
         $this->db->from($this->table_booking_mechanics . ' bm');
         $this->db->join($this->table_bookings . ' b', 'bm.booking_id = b.id');
         $this->db->where('bm.mechanic_id', $mechanic_id);
