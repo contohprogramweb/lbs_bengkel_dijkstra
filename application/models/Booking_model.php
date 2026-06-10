@@ -764,7 +764,7 @@ class Booking_model extends CI_Model {
      */
     public function get_workshop_bookings($workshop_id, $filters = [])
     {
-        $this->db->select('b.*, u.name as user_name, u.phone as user_phone, v.brand, v.model, v.license_plate');
+        $this->db->select('b.*, u.full_name as user_name, u.phone as user_phone, v.brand, v.model, v.vehicle_number');
         $this->db->from($this->table_bookings . ' b');
         $this->db->join($this->table_users . ' u', 'b.user_id = u.id', 'left');
         $this->db->join($this->table_vehicles . ' v', 'b.vehicle_id = v.id', 'left');
@@ -782,8 +782,8 @@ class Booking_model extends CI_Model {
         if (!empty($filters['search'])) {
             $this->db->group_start();
             $this->db->like('b.booking_number', $filters['search']);
-            $this->db->or_like('u.name', $filters['search']);
-            $this->db->or_like('v.license_plate', $filters['search']);
+            $this->db->or_like('u.full_name', $filters['search']);
+            $this->db->or_like('v.vehicle_number', $filters['search']);
             $this->db->group_end();
         }
 
@@ -997,7 +997,7 @@ class Booking_model extends CI_Model {
      */
     public function get_booking_approvals($booking_id, $status = NULL)
     {
-        $this->db->select('ba.*, u.name as requested_by_name');
+        $this->db->select('ba.*, u.full_name as requested_by_name');
         $this->db->from('booking_approvals ba');
         $this->db->join('users u', 'ba.requested_by = u.id', 'left');
         $this->db->where('ba.booking_id', $booking_id);
@@ -1085,7 +1085,7 @@ class Booking_model extends CI_Model {
      */
     public function get_booking_activity_logs($booking_id)
     {
-        $this->db->select('bal.*, u.name as user_name');
+        $this->db->select('bal.*, u.full_name as user_name');
         $this->db->from('booking_activity_logs bal');
         $this->db->join('users u', 'bal.user_id = u.id', 'left');
         $this->db->where('bal.booking_id', $booking_id);
