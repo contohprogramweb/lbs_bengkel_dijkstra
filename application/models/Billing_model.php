@@ -21,6 +21,7 @@ class Billing_model extends CI_Model {
     private $table_booking_additional_charges = 'booking_additional_charges';
     private $table_workshops = 'workshops';
     private $table_users = 'users';
+    private $table_vehicles = 'vehicles';
     private $table_report_settings = 'report_settings';
 
     /**
@@ -499,8 +500,42 @@ class Billing_model extends CI_Model {
             $this->db->group_end();
         }
 
-        // Get total count
-        $total = $this->db->count_all_results();
+        // Get total count - need to clone the query first because count_all_results resets the QB
+        $this->db->select('COUNT(*) as total_count', FALSE);
+        $total_row = $this->db->get()->row();
+        $total = (int)$total_row->total_count;
+
+        // Reset and rebuild query for data fetch
+        $this->db->reset_query();
+        
+        $this->db->select('
+            i.*,
+            b.booking_number,
+            u.name as customer_name
+        ');
+        $this->db->from($this->table_invoices . ' i');
+        $this->db->join($this->table_bookings . ' b', 'i.booking_id = b.id');
+        $this->db->join($this->table_users . ' u', 'i.user_id = u.id');
+        $this->db->where('i.workshop_id', $workshop_id);
+        $this->db->where('i.is_deleted', 0);
+
+        // Re-apply filters
+        if (!empty($filters['payment_status'])) {
+            $this->db->where('i.payment_status', $filters['payment_status']);
+        }
+        if (!empty($filters['start_date'])) {
+            $this->db->where('i.issue_date >=', $filters['start_date']);
+        }
+        if (!empty($filters['end_date'])) {
+            $this->db->where('i.issue_date <=', $filters['end_date']);
+        }
+        if (!empty($filters['search'])) {
+            $this->db->group_start();
+            $this->db->like('i.invoice_number', $filters['search']);
+            $this->db->or_like('b.booking_number', $filters['search']);
+            $this->db->or_like('u.name', $filters['search']);
+            $this->db->group_end();
+        }
 
         // Get data
         $this->db->order_by('i.issue_date', 'DESC');

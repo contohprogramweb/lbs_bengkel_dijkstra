@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage  Controllers
  * @version     4.1
  */
-class Billing extends CI_Controller {
+class Billing extends Workshop_Controller {
 
     private $workshop_id;
 
@@ -23,17 +23,6 @@ class Billing extends CI_Controller {
     {
         parent::__construct();
         
-        // Check authentication
-        if (!$this->session->userdata('logged_in')) {
-            redirect('auth/login');
-        }
-
-        // Check role
-        $role = $this->session->userdata('role');
-        if ($role !== 'workshop_owner') {
-            show_error('Akses ditolak. Halaman ini hanya untuk pemilik bengkel.', 403);
-        }
-
         $this->workshop_id = $this->session->userdata('workshop_id');
         
         $this->load->model('billing_model');
