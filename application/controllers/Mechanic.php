@@ -42,7 +42,15 @@ class Mechanic extends Workshop_Controller {
      */
     public function index()
     {
-        $data['page_title'] = 'Manajemen Mekanik';
+        $this->dashboard();
+    }
+
+    /**
+     * Dashboard - Overview for mechanic role
+     */
+    public function dashboard()
+    {
+        $data['page_title'] = 'Dashboard Mekanik';
         
         // Get workshop ID for current owner
         $this->load->model('workshop_model');

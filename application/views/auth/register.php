@@ -106,6 +106,12 @@
                             <i class="fas fa-tools"></i> Pemilik Bengkel (Terima Booking)
                         </label>
                     </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="role_mechanic" value="mechanic">
+                        <label class="form-check-label" for="role_mechanic">
+                            <i class="fas fa-user-cog"></i> Mekanik (Kelola Pekerjaan)
+                        </label>
+                    </div>
                 </div>
                 
                 <div class="mb-3">
