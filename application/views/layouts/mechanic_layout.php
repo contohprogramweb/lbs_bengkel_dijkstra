@@ -166,16 +166,16 @@
             <i class="fas fa-wrench"></i> Mekanik
         </div>
         <nav class="nav flex-column mt-3">
-            <a class="nav-link <?php echo $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>" href="<?php echo site_url('mechanic_dashboard/dashboard'); ?>">
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'dashboard' ? 'active' : ''; ?>" href="<?php echo site_url('mechanic/dashboard'); ?>">
                 <i class="fas fa-home"></i> Dashboard
             </a>
-            <a class="nav-link <?php echo $this->uri->segment(2) == 'my_bookings' ? 'active' : ''; ?>" href="<?php echo site_url('mechanic_dashboard/my_bookings'); ?>">
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'bookings' ? 'active' : ''; ?>" href="<?php echo site_url('mechanic/bookings'); ?>">
                 <i class="fas fa-clipboard-list"></i> Order Saya
             </a>
-            <a class="nav-link <?php echo $this->uri->segment(2) == 'my_productivity' ? 'active' : ''; ?>" href="<?php echo site_url('mechanic_dashboard/my_productivity'); ?>">
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'productivity' ? 'active' : ''; ?>" href="<?php echo site_url('mechanic/productivity'); ?>">
                 <i class="fas fa-chart-bar"></i> Produktivitas
             </a>
-            <a class="nav-link <?php echo $this->uri->segment(2) == 'profile' ? 'active' : ''; ?>" href="<?php echo site_url('mechanic_dashboard/profile'); ?>">
+            <a class="nav-link <?php echo $this->uri->segment(2) == 'profile' ? 'active' : ''; ?>" href="<?php echo site_url('mechanic/profile'); ?>">
                 <i class="fas fa-user"></i> Profil Saya
             </a>
             <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
@@ -200,7 +200,7 @@
                     <i class="fas fa-user-circle"></i> <?php echo e($current_user->full_name ?? 'User'); ?>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="<?php echo site_url('mechanic_dashboard/profile'); ?>"><i class="fas fa-user"></i> Profil Saya</a></li>
+                    <li><a class="dropdown-item" href="<?php echo site_url('mechanic/profile'); ?>"><i class="fas fa-user"></i> Profil Saya</a></li>
                     <li><a class="dropdown-item" href="<?php echo site_url('user/change_password'); ?>"><i class="fas fa-key"></i> Ubah Password</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="<?php echo site_url('auth/logout'); ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>

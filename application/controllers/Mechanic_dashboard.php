@@ -201,7 +201,7 @@ class Mechanic_dashboard extends Mechanic_Controller {
             }
             
             $this->json_response([
-                'redirect' => site_url('mechanic_dashboard/booking_detail/' . $booking_id)
+                'redirect' => site_url('mechanic/booking_detail/' . $booking_id)
             ], 200, 'Status berhasil diperbarui');
         } else {
             $this->json_error('Gagal memperbarui status', 500);
@@ -332,7 +332,7 @@ class Mechanic_dashboard extends Mechanic_Controller {
         
         if ($this->mechanic_model->update_mechanic($mechanic['id'], $update_data)) {
             $this->json_response([
-                'redirect' => site_url('mechanic_dashboard/profile')
+                'redirect' => site_url('mechanic/profile')
             ], 200, 'Profil berhasil diperbarui');
         } else {
             $this->json_error('Gagal memperbarui profil', 500);
