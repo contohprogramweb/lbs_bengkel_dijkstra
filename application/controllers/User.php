@@ -271,14 +271,13 @@ class User extends Customer_Controller {
                     } else {
                         $insert_data = [
                             'user_id' => $this->user_id,
-                            'vehicle_number' => $this->vehicle_model->normalize_plate_number($vehicle_number),
+                            'vehicle_number' => $this->input->post('vehicle_number', TRUE),
                             'vehicle_type' => $this->input->post('vehicle_type', TRUE) ?: 'car',
                             'brand' => $this->input->post('brand', TRUE),
                             'model' => $this->input->post('model', TRUE),
                             'year' => $year,
                             'fuel_type' => $this->input->post('fuel_type', TRUE),
-                            'current_km' => (int) $this->input->post('current_km', TRUE),
-                            'vin' => !empty($this->input->post('vin', TRUE)) ? strtoupper($this->input->post('vin', TRUE)) : NULL,
+                            'current_km' => (int) $this->input->post('current_km', TRUE), 
                             'transmission' => $this->input->post('transmission', TRUE) ?: 'manual',
                             'color' => $this->input->post('color', TRUE),
                             'notes' => $this->input->post('notes', TRUE)
@@ -354,14 +353,13 @@ class User extends Customer_Controller {
                         $this->session->set_flashdata('error', $year_validation['message']);
                     } else {
                         $update_data = [
-                            'vehicle_number' => $this->vehicle_model->normalize_plate_number($vehicle_number),
+                            'vehicle_number' => $this->input->post('vehicle_number', TRUE),
                             'vehicle_type' => $this->input->post('vehicle_type', TRUE) ?: 'car',
                             'brand' => $this->input->post('brand', TRUE),
                             'model' => $this->input->post('model', TRUE),
                             'year' => $year,
                             'fuel_type' => $this->input->post('fuel_type', TRUE),
-                            'current_km' => (int) $this->input->post('current_km', TRUE),
-                            'vin' => !empty($this->input->post('vin', TRUE)) ? strtoupper($this->input->post('vin', TRUE)) : NULL,
+                            'current_km' => (int) $this->input->post('current_km', TRUE), 
                             'transmission' => $this->input->post('transmission', TRUE) ?: 'manual',
                             'color' => $this->input->post('color', TRUE),
                             'notes' => $this->input->post('notes', TRUE)
