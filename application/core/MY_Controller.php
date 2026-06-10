@@ -130,7 +130,7 @@ class MY_Controller extends CI_Controller {
      */
     protected function require_workshop_owner()
     {
-        $this->require_role(['workshop_owner', 'mechanic']);
+        $this->require_role('workshop_owner');
     }
 
     /**
@@ -229,7 +229,9 @@ class MY_Controller extends CI_Controller {
             $layout = 'layouts/user_layout';
             if ($this->user_role === 'customer') {
                 $layout = 'layouts/user_layout';
-            } elseif ($this->user_role === 'workshop_owner' || $this->user_role === 'mechanic') {
+            } elseif ($this->user_role === 'mechanic') {
+                $layout = 'layouts/mechanic_layout';
+            } elseif ($this->user_role === 'workshop_owner') {
                 $layout = 'layouts/workshop_layout';
             } elseif ($this->user_role === 'admin') {
                 $layout = 'layouts/admin_layout';
