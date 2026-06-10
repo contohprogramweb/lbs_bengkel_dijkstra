@@ -37,7 +37,7 @@
                                         <th scope="row" class="text-muted fw-normal">Email</th>
                                         <td>
                                             <?php echo e($user->email); ?>
-                                            <?php if ($user->email_verified_at): ?>
+                                            <?php if (isset($user->email_verified_at) && $user->email_verified_at): ?>
                                                 <span class="badge bg-success ms-2"><i class="fas fa-check-circle me-1"></i>Terverifikasi</span>
                                             <?php else: ?>
                                                 <span class="badge bg-warning text-dark ms-2"><i class="fas fa-clock me-1"></i>Belum Terverifikasi</span>
@@ -54,7 +54,7 @@
                                     </tr>
                                     <tr>
                                         <th scope="row" class="text-muted fw-normal">Terakhir Login</th>
-                                        <td><?php echo $user->last_login_at ? date('d/m/Y H:i', strtotime($user->last_login_at)) : '-'; ?></td>
+                                        <td><?php echo isset($user->last_login_at) && $user->last_login_at ? date('d/m/Y H:i', strtotime($user->last_login_at)) : '-'; ?></td>
                                     </tr>
                                 </tbody>
                             </table>
