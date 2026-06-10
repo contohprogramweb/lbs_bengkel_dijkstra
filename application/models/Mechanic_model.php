@@ -158,6 +158,23 @@ class Mechanic_model extends CI_Model {
     }
 
     /**
+     * Find mechanic by user ID
+     *
+     * @param int $user_id
+     * @return array|null
+     */
+    public function find_by_user_id($user_id)
+    {
+        $this->db->select('m.*, u.name, u.email, u.phone, w.name as workshop_name');
+        $this->db->from($this->table_mechanics . ' m');
+        $this->db->join($this->table_users . ' u', 'm.user_id = u.id', 'left');
+        $this->db->join($this->table_workshops . ' w', 'm.workshop_id = w.id', 'left');
+        $this->db->where('m.user_id', $user_id);
+
+        return $this->db->get()->row_array();
+    }
+
+    /**
      * Get all mechanics for a workshop
      * 
      * @param int $workshop_id
