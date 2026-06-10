@@ -1181,7 +1181,14 @@ class Booking_model extends CI_Model {
         $this->db->where('b.scheduled_date', $today);
         $this->db->order_by('b.scheduled_time', 'ASC');
 
-        return $this->db->get()->result_array();
+        $result = $this->db->get()->result_array();
+        
+        // Add status_label to each booking
+        foreach ($result as &$booking) {
+            $booking['status_label'] = get_booking_status_label($booking['status']);
+        }
+        
+        return $result;
     }
 
     /**
@@ -1203,7 +1210,14 @@ class Booking_model extends CI_Model {
         $this->db->order_by('b.scheduled_time', 'DESC');
         $this->db->limit($limit);
 
-        return $this->db->get()->result_array();
+        $result = $this->db->get()->result_array();
+        
+        // Add status_label to each booking
+        foreach ($result as &$booking) {
+            $booking['status_label'] = get_booking_status_label($booking['status']);
+        }
+        
+        return $result;
     }
 
     /**
@@ -1229,7 +1243,14 @@ class Booking_model extends CI_Model {
         $this->db->order_by('b.scheduled_date', 'DESC');
         $this->db->order_by('b.scheduled_time', 'DESC');
 
-        return $this->db->get()->result_array();
+        $result = $this->db->get()->result_array();
+        
+        // Add status_label to each booking
+        foreach ($result as &$booking) {
+            $booking['status_label'] = get_booking_status_label($booking['status']);
+        }
+        
+        return $result;
     }
 
     /**
@@ -1269,7 +1290,14 @@ class Booking_model extends CI_Model {
         $this->db->where('b.scheduled_date <=', $end_date);
         $this->db->order_by('b.scheduled_date', 'DESC');
 
-        return $this->db->get()->result_array();
+        $result = $this->db->get()->result_array();
+        
+        // Add status_label to each booking
+        foreach ($result as &$booking) {
+            $booking['status_label'] = get_booking_status_label($booking['status']);
+        }
+        
+        return $result;
     }
 
     /**
