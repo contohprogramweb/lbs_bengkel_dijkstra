@@ -88,7 +88,7 @@ class Booking extends Customer_Controller {
 
             // Validate vehicle belongs to user
             $vehicle = $this->vehicle_model->find_by_id($vehicle_id);
-            if (!$vehicle || $vehicle['user_id'] != $this->user_id) {
+            if (!$vehicle || $vehicle->user_id != $this->user_id) {
                 $this->session->set_flashdata('error', 'Kendaraan tidak valid.');
                 redirect('booking/step1/' . $workshop_id);
             }
