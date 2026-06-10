@@ -1063,13 +1063,14 @@ class Booking_model extends CI_Model {
      * @param int|null $user_id
      * @return int|false Activity log ID or FALSE on failure
      */
-    public function log_activity($booking_id, $action, $description = '', $user_id = NULL)
+    public function log_activity($booking_id, $action, $description = '', $user_id = NULL, $user_role = NULL)
     {
         $data = [
             'booking_id' => $booking_id,
             'action' => $action,
             'description' => $description,
             'user_id' => $user_id,
+            'user_role' => $user_role,
             'ip_address' => $this->input->ip_address(),
             'created_at' => date('Y-m-d H:i:s')
         ];
@@ -1269,6 +1270,27 @@ class Booking_model extends CI_Model {
         $this->db->order_by('b.scheduled_date', 'DESC');
 
         return $this->db->get()->result_array();
+    }
+
+    /**
+     * Add mechanic work note to booking
+     *
+     * @param int $booking_id
+     * @param int $mechanic_id
+     * @param string $notes
+     * @return bool
+     */
+    public function add_mechanic_note($booking_id, $mechanic_id, $notes)
+    {
+        $data = [
+            'booking_id' => $booking_id,
+            'mechanic_id' => $mechanic_id,
+            'note_type' => 'work_note',
+            'content' => $notes,
+            'created_at' => date('Y-m-d H:i:s')
+        ];
+
+        return $this->db->insert('booking_mechanic_notes', $data);
     }
 }
 
