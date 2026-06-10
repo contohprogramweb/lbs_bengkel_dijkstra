@@ -288,7 +288,7 @@ class Mechanic_dashboard extends Mechanic_Controller {
         $data['stats'] = $this->mechanic_model->get_mechanic_productivity($mechanic['id'], $start_date, $end_date);
         $data['completed_bookings'] = $this->booking_model->get_mechanic_completed_bookings($mechanic['id'], $start_date, $end_date);
         
-        $this->render('mechanic/productivity', $data);
+        $this->render('mechanic/productivity/index', $data);
     }
 
     /**
@@ -309,7 +309,7 @@ class Mechanic_dashboard extends Mechanic_Controller {
         $data['user'] = $this->current_user;
         $data['specializations'] = ['mesin', 'kelistrikan', 'body', 'ban', 'oli', 'ac', 'transmisi', 'rem'];
         
-        $this->render('mechanic/profile', $data);
+        $this->render('mechanic/profile/index', $data);
     }
 
     /**
