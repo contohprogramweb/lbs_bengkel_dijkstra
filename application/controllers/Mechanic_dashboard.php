@@ -370,7 +370,15 @@ class Mechanic_dashboard extends Mechanic_Controller {
             return;
         }
         
-        $new_status = $mechanic['is_available'] ? 0 : 1;
+        // Get the desired status from POST data, or toggle if not provided
+        $is_available_param = $this->input->post('is_available');
+        
+        if ($is_available_param !== null) {
+            $new_status = (int)$is_available_param;
+        } else {
+            // Toggle behavior (old way)
+            $new_status = $mechanic['is_available'] ? 0 : 1;
+        }
         
         if ($this->mechanic_model->update_mechanic($mechanic['id'], ['is_available' => $new_status])) {
             $this->json_response([
