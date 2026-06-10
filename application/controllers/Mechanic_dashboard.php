@@ -406,24 +406,30 @@ class Mechanic_dashboard extends Mechanic_Controller {
             if ($this->form_validation->run() === FALSE) {
                 $this->session->set_flashdata('error', validation_errors());
             } else {
-                $user = $this->current_user;
-                $current_password = $this->input->post('current_password', TRUE);
-                $new_password = $this->input->post('new_password', TRUE);
-
-                if (!password_verify($current_password, $user->password)) {
-                    $this->session->set_flashdata('error', 'Password saat ini salah.');
+                $this->load->model('user_model');
+                // Ambil data user lengkap dari database termasuk password hash
+                $user = $this->user_model->find_by_id($this->user_id);
+                
+                if (!$user) {
+                    $this->session->set_flashdata('error', 'User tidak ditemukan.');
                 } else {
-                    $this->load->model('user_model');
-                    if ($this->user_model->update_password($this->user_id, $new_password)) {
-                        $this->session->set_flashdata('success', 'Password berhasil diubah.');
-                        redirect('mechanic/profile');
+                    $current_password = $this->input->post('current_password', TRUE);
+                    $new_password = $this->input->post('new_password', TRUE);
+
+                    if (!password_verify($current_password, $user->password)) {
+                        $this->session->set_flashdata('error', 'Password saat ini salah.');
                     } else {
-                        $this->session->set_flashdata('error', 'Gagal mengubah password.');
+                        if ($this->user_model->update_password($this->user_id, $new_password)) {
+                            $this->session->set_flashdata('success', 'Password berhasil diubah. Silakan login ulang dengan password baru.');
+                            redirect('auth/logout');
+                        } else {
+                            $this->session->set_flashdata('error', 'Gagal mengubah password.');
+                        }
                     }
                 }
             }
         }
 
-        $this->render('user/change_password', $data);
+        $this->render('mechanic/profile/change_password', $data);
     }
 }

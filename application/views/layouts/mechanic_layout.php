@@ -201,7 +201,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="<?php echo site_url('mechanic/profile'); ?>"><i class="fas fa-user"></i> Profil Saya</a></li>
-                    <li><a class="dropdown-item" href="<?php echo site_url('user/change_password'); ?>"><i class="fas fa-key"></i> Ubah Password</a></li>
+                    <li><a class="dropdown-item" href="<?php echo site_url('mechanic/change_password'); ?>"><i class="fas fa-key"></i> Ubah Password</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="<?php echo site_url('auth/logout'); ?>"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
