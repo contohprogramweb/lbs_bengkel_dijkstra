@@ -174,7 +174,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadSlots(date) {
         slotsContainer.innerHTML = '<div style="text-align: center; padding: 20px;"><span class="spinner"></span> Memuat slot...</div>';
         
-        fetch(`<?= site_url('booking/ajax_get_slots/') ?>${workshopId}?date=${date}`)
+        fetch(`<?= site_url('booking/ajax_get_slots/') ?>${workshopId}?date=${date}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: `<?= $this->security->get_csrf_token_name() ?>=<?= $this->security->get_csrf_hash() ?>`
+        })
             .then(response => response.json())
             .then(data => {
                 if (data.success && data.data.slots.length > 0) {

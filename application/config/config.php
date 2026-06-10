@@ -471,7 +471,9 @@ $config['csrf_exclude_uris'] = array(
     'admin/get_csrf_token',
     'mechanic/update_profile',
     'mechanic/toggle_availability',
-    'mechanic/change_password'
+    'mechanic/change_password',
+    'booking/ajax_get_slots',
+    'booking/ajax_check_slot'
 );
 
 /*

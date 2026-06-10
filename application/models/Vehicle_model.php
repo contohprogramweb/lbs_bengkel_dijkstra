@@ -72,6 +72,22 @@ class Vehicle_model extends CI_Model {
     }
 
     /**
+     * Get all vehicles for a user as array
+     * 
+     * @param int $user_id User ID
+     * @return array Vehicles array (associative array)
+     */
+    public function get_user_vehicles($user_id)
+    {
+        return $this->db
+            ->where('user_id', $user_id)
+            ->where('is_deleted', 0)
+            ->order_by('created_at', 'DESC')
+            ->get($this->table)
+            ->result_array();
+    }
+
+    /**
      * Count vehicles for a user
      * 
      * @param int $user_id User ID
