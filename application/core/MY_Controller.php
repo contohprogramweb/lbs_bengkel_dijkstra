@@ -130,7 +130,15 @@ class MY_Controller extends CI_Controller {
      */
     protected function require_workshop_owner()
     {
-        $this->require_role('workshop_owner');
+        $this->require_role(['workshop_owner', 'mechanic']);
+    }
+
+    /**
+     * Require mechanic role
+     */
+    protected function require_mechanic()
+    {
+        $this->require_role('mechanic');
     }
 
     /**
@@ -340,6 +348,20 @@ class Workshop_Controller extends MY_Controller {
     {
         parent::__construct();
         $this->require_workshop_owner();
+    }
+}
+
+/**
+ * Mechanic Controller
+ * 
+ * Base controller for mechanic pages
+ */
+class Mechanic_Controller extends MY_Controller {
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->require_mechanic();
     }
 }
 

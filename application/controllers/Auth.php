@@ -38,7 +38,7 @@ class Auth extends Public_Controller {
         }
 
         $data['page_title'] = 'Login';
-        $data['roles'] = ['customer', 'workshop_owner'];
+        $data['roles'] = ['customer', 'workshop_owner', 'mechanic'];
 
         $this->render('auth/login', $data, FALSE, 'layouts/auth_layout');
     }
@@ -105,7 +105,7 @@ class Auth extends Public_Controller {
         }
 
         $data['page_title'] = 'Daftar Akun Baru';
-        $data['roles'] = ['customer', 'workshop_owner'];
+        $data['roles'] = ['customer', 'workshop_owner', 'mechanic'];
 
         $this->render('auth/register', $data, FALSE, 'layouts/auth_layout');
     }
@@ -121,7 +121,7 @@ class Auth extends Public_Controller {
         $this->form_validation->set_rules('phone', 'Telepon', 'trim|max_length[20]');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|max_length[50]');
         $this->form_validation->set_rules('confirm_password', 'Konfirmasi Password', 'required|matches[password]');
-        $this->form_validation->set_rules('role', 'Role', 'required|in_list[customer,workshop_owner]');
+        $this->form_validation->set_rules('role', 'Role', 'required|in_list[customer,workshop_owner,mechanic]');
 
         if ($this->form_validation->run() === FALSE) {
             $this->session->set_flashdata('error', validation_errors());
@@ -191,6 +191,9 @@ class Auth extends Public_Controller {
                 break;
             case 'workshop_owner':
                 redirect('workshop/dashboard');
+                break;
+            case 'mechanic':
+                redirect('mechanic/dashboard');
                 break;
             case 'customer':
                 redirect('user/dashboard');
