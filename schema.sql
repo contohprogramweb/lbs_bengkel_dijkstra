@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   CONSTRAINT `activity_logs_ibfk_4` FOREIGN KEY (`target_workshop_id`) REFERENCES `workshops` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COMMENT='Audit trail for admin actions';
 
--- Dumping data for table dijkstrabengkelbaru.activity_logs: ~9 rows (approximately)
+-- Dumping data for table dijkstrabengkelbaru.activity_logs: ~19 rows (approximately)
 INSERT INTO `activity_logs` (`id`, `user_id`, `workshop_id`, `action_type`, `action_description`, `target_user_id`, `target_workshop_id`, `ip_address`, `user_agent`, `created_at`) VALUES
 	(1, 1, NULL, 'USER_CREATE', 'Admin membuat user baru', NULL, NULL, '127.0.0.1', NULL, '2025-01-01 01:00:00'),
 	(2, 1, NULL, 'WORKSHOP_VERIFY', 'Admin memverifikasi bengkel ID 1', NULL, NULL, '127.0.0.1', NULL, '2025-01-02 02:00:00'),
@@ -47,9 +47,19 @@ INSERT INTO `activity_logs` (`id`, `user_id`, `workshop_id`, `action_type`, `act
 	(4, 1, NULL, 'SYSTEM_SETTING_UPDATE', 'Admin memperbarui pengaturan sistem', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-07 21:12:06'),
 	(5, 1, NULL, 'SYSTEM_SETTING_UPDATE', 'Admin memperbarui pengaturan sistem', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-07 21:12:24'),
 	(6, 1, NULL, 'USER_DEACTIVATE', 'Admin menonaktifkan user ID 7', 7, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-08 03:01:58'),
-	(7, 1, NULL, 'WORKSHOP_VERIFY', 'Admin memverifikasi bengkel ID 1', NULL, 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-08 10:50:54'),
+	(7, 1, NULL, 'WORKSHOP_VERIFY', 'Admin memverifikasi bengkel ID 1', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-08 10:50:54'),
 	(8, 1, NULL, 'SYSTEM_SETTING_UPDATE', 'Admin memperbarui pengaturan sistem', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-08 10:52:23'),
-	(9, 1, NULL, 'USER_ACTIVATE', 'Admin mengaktifkan user ID 7', 7, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-08 15:33:25');
+	(9, 1, NULL, 'USER_ACTIVATE', 'Admin mengaktifkan user ID 7', 7, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-08 15:33:25'),
+	(10, 1, NULL, 'SYSTEM_SETTING_UPDATE', 'Admin memperbarui pengaturan sistem', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-09 04:18:48'),
+	(11, 1, NULL, 'SYSTEM_SETTING_UPDATE', 'Admin memperbarui pengaturan sistem', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-09 05:02:19'),
+	(12, 1, NULL, 'SYSTEM_SETTING_UPDATE', 'Admin memperbarui pengaturan sistem', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-09 05:02:27'),
+	(13, 1, NULL, 'USER_DEACTIVATE', 'Admin menonaktifkan user ID 9', 9, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-09 13:17:29'),
+	(14, 1, NULL, 'USER_ACTIVATE', 'Admin mengaktifkan user ID 9', 9, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-09 13:17:40'),
+	(15, 1, NULL, 'WORKSHOP_VERIFY', 'Admin memverifikasi bengkel ID 2', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-09 13:43:09'),
+	(16, 1, NULL, 'WORKSHOP_FEATURE', 'Menjadikan bengkel featured bengkel ID 2', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-09 14:04:34'),
+	(17, 1, NULL, 'WORKSHOP_UNFEATURE', 'Menghapus status featured bengkel ID 2', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-09 14:04:52'),
+	(18, 1, NULL, 'REVIEW_APPROVE', 'Admin menyetujui review ID 2', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-09 14:12:58'),
+	(19, 1, NULL, 'REVIEW_REJECT', 'Admin menolak review ID 1: xxx', NULL, NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0', '2026-06-09 14:13:08');
 
 -- Dumping structure for table dijkstrabengkelbaru.bookings
 CREATE TABLE IF NOT EXISTS `bookings` (
@@ -115,11 +125,6 @@ CREATE TABLE IF NOT EXISTS `bookings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 -- Dumping data for table dijkstrabengkelbaru.bookings: ~4 rows (approximately)
-INSERT INTO `bookings` (`id`, `booking_number`, `user_id`, `workshop_id`, `vehicle_id`, `service_type`, `service_description`, `scheduled_date`, `scheduled_time`, `estimated_duration`, `estimated_price`, `service_cost`, `sparepart_cost`, `additional_cost`, `final_total`, `payment_status`, `invoice_number`, `invoiced_at`, `paid_at`, `actual_price`, `status`, `approval_status`, `approved_by`, `approved_at`, `rejection_reason`, `completed_at`, `cancelled_at`, `cancelled_by`, `cancellation_reason`, `notes`, `mechanic_notes`, `customer_rating`, `customer_review`, `reschedule_count`, `last_rescheduled_at`, `is_deleted`, `deleted_at`, `created_at`, `updated_at`) VALUES
-	(1, 'B-20250101-0001', 6, 1, 1, 'regular', 'Servis rutin ganti oli', '2025-01-05', '09:00:00', 60, 250000.00, 0.00, 0.00, 0.00, 250000.00, 'paid', NULL, NULL, NULL, 250000.00, 'completed', 'approved', NULL, NULL, NULL, '2025-01-04 18:00:00', NULL, NULL, NULL, NULL, NULL, 5, 'Pelayanan bagus dan cepat', 0, NULL, 0, NULL, '2025-01-01 03:00:00', '2026-06-07 19:22:35'),
-	(2, 'B-20250102-0002', 7, 1, 3, 'regular', 'Ganti kampas rem', '2025-01-06', '10:00:00', 45, 300000.00, 0.00, 0.00, 0.00, 300000.00, 'paid', NULL, NULL, NULL, 300000.00, 'completed', 'approved', NULL, NULL, NULL, '2025-01-05 18:00:00', NULL, NULL, NULL, NULL, NULL, 5, 'Pelayanan bagus dan cepat', 0, NULL, 0, NULL, '2025-01-02 04:00:00', '2026-06-07 19:22:35'),
-	(3, 'B-20250115-0003', 8, 2, 4, 'regular', 'Servis ringan motor', '2025-01-20', '08:00:00', 30, 100000.00, 0.00, 0.00, 0.00, 0.00, 'unpaid', NULL, NULL, NULL, NULL, 'pending', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, '2025-01-15 02:00:00', '2026-06-07 19:22:35'),
-	(4, 'B-20250115-0004', 6, 1, 2, 'repair', 'Cek mesin berisik', '2025-01-22', '14:00:00', 90, 200000.00, 0.00, 0.00, 0.00, 0.00, 'unpaid', NULL, NULL, NULL, NULL, 'accepted', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, '2025-01-15 07:00:00', '2026-06-07 19:22:35');
 
 -- Dumping structure for table dijkstrabengkelbaru.booking_additional_charges
 CREATE TABLE IF NOT EXISTS `booking_additional_charges` (
@@ -183,9 +188,6 @@ CREATE TABLE IF NOT EXISTS `booking_mechanics` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 -- Dumping data for table dijkstrabengkelbaru.booking_mechanics: ~2 rows (approximately)
-INSERT INTO `booking_mechanics` (`id`, `booking_id`, `mechanic_id`, `assigned_at`, `assigned_by`, `notes`, `is_deleted`, `deleted_at`) VALUES
-	(1, 1, 1, '2026-06-07 19:22:35', 2, 'Servis rutin', 0, NULL),
-	(2, 2, 1, '2026-06-07 19:22:35', 2, 'Ganti kampas rem', 0, NULL);
 
 -- Dumping structure for table dijkstrabengkelbaru.booking_service_items
 CREATE TABLE IF NOT EXISTS `booking_service_items` (
@@ -314,9 +316,6 @@ CREATE TABLE IF NOT EXISTS `invoices` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii COMMENT='Invoice formal untuk tagihan';
 
 -- Dumping data for table dijkstrabengkelbaru.invoices: ~2 rows (approximately)
-INSERT INTO `invoices` (`id`, `invoice_number`, `booking_id`, `workshop_id`, `user_id`, `issue_date`, `due_date`, `service_cost`, `sparepart_cost`, `additional_cost`, `discount_amount`, `tax_amount`, `tax_rate`, `total_amount`, `payment_status`, `paid_amount`, `paid_at`, `payment_method`, `payment_note`, `notes`, `is_deleted`, `created_at`, `updated_at`) VALUES
-	(1, 'INV-20250105-0001', 1, 1, 6, '2025-01-05', '2025-01-12', 250000.00, 0.00, 0.00, 0.00, 0.00, 0.00, 250000.00, 'paid', 0.00, '2025-01-05 12:00:00', 'cash', NULL, NULL, 0, '2026-06-08 02:22:36', NULL),
-	(2, 'INV-20250106-0001', 2, 1, 7, '2025-01-06', '2025-01-13', 300000.00, 0.00, 0.00, 0.00, 0.00, 0.00, 300000.00, 'paid', 0.00, '2025-01-06 14:30:00', 'transfer', NULL, NULL, 0, '2026-06-08 02:22:36', NULL);
 
 -- Dumping structure for table dijkstrabengkelbaru.invoice_payments
 CREATE TABLE IF NOT EXISTS `invoice_payments` (
@@ -365,8 +364,8 @@ CREATE TABLE IF NOT EXISTS `mechanics` (
 
 -- Dumping data for table dijkstrabengkelbaru.mechanics: ~2 rows (approximately)
 INSERT INTO `mechanics` (`id`, `user_id`, `workshop_id`, `specialization`, `experience_years`, `certification`, `rating_avg`, `total_reviews`, `is_available`, `is_deleted`, `deleted_at`, `created_at`, `updated_at`) VALUES
-	(1, 4, 1, '["mesin", "transmisi", "rem"]', 5, 'ASTRA Certified', 0.00, 0, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(2, 5, 2, '["motor", "elektrikal"]', 3, 'Yamaha Certified', 0.00, 0, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35');
+	(1, 4, NULL, '["kelistrikan"]', 5, 'ASTRA Certified', 0.00, 0, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-10 04:46:52'),
+	(2, 5, NULL, '["motor", "elektrikal"]', 3, 'Yamaha Certified', 0.00, 0, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35');
 
 -- Dumping structure for table dijkstrabengkelbaru.notification_logs
 CREATE TABLE IF NOT EXISTS `notification_logs` (
@@ -493,9 +492,6 @@ CREATE TABLE IF NOT EXISTS `reviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 -- Dumping data for table dijkstrabengkelbaru.reviews: ~2 rows (approximately)
-INSERT INTO `reviews` (`id`, `booking_id`, `user_id`, `workshop_id`, `mechanic_id`, `rating`, `review_text`, `is_visible`, `moderation_status`, `moderation_notes`, `moderated_by`, `moderated_at`, `report_count`, `admin_response`, `responded_at`, `responded_by`, `helpful_count`, `is_deleted`, `deleted_at`, `created_at`, `updated_at`) VALUES
-	(1, 1, 6, 1, NULL, 5, 'Pelayanan sangat baik, mekanik profesional dan ramah. Harga transparan.', 1, 'approved', NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, NULL, '2025-01-05 05:00:00', '2026-06-07 19:22:35'),
-	(2, 2, 7, 1, NULL, 4, 'Bagus, tapi agak lama menunggu. Overall puas.', 1, 'approved', NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, NULL, '2025-01-06 07:00:00', '2026-06-07 19:22:35');
 
 -- Dumping structure for table dijkstrabengkelbaru.review_photos
 CREATE TABLE IF NOT EXISTS `review_photos` (
@@ -618,17 +614,17 @@ CREATE TABLE IF NOT EXISTS `system_settings` (
 
 -- Dumping data for table dijkstrabengkelbaru.system_settings: ~11 rows (approximately)
 INSERT INTO `system_settings` (`id`, `setting_key`, `setting_value`, `setting_type`, `description`, `category`, `created_at`, `updated_at`) VALUES
-	(13, 'app_name', 'Bengkel Terdekat', 'string', 'Application name displayed in UI', 'general', '2026-06-07 21:11:12', '2026-06-08 10:52:19'),
-	(14, 'timezone', 'Asia/Jakarta', 'string', 'System timezone', 'general', '2026-06-07 21:11:12', '2026-06-08 10:52:20'),
-	(15, 'email_notifications_enabled', '1', 'boolean', 'Enable email notifications', 'notification', '2026-06-07 21:11:12', '2026-06-08 10:52:22'),
-	(16, 'sms_notifications_enabled', '1', 'boolean', 'Enable SMS notifications', 'notification', '2026-06-07 21:11:12', '2026-06-08 10:52:22'),
-	(17, 'whatsapp_notifications_enabled', '1', 'boolean', 'Enable WhatsApp notifications', 'notification', '2026-06-07 21:11:12', '2026-06-08 10:52:22'),
-	(18, 'min_review_length', '20', 'integer', 'Minimum character length for reviews', 'review', '2026-06-07 21:11:12', '2026-06-08 10:52:23'),
-	(19, 'allow_review_photos', '1', 'boolean', 'Allow users to upload photos with reviews', 'review', '2026-06-07 21:11:12', '2026-06-08 10:52:22'),
-	(20, 'max_advance_booking_days', '30', 'integer', 'Maximum days in advance for booking', 'booking', '2026-06-07 21:11:12', '2026-06-08 10:52:20'),
-	(21, 'min_booking_lead_time_hours', '2', 'integer', 'Minimum hours before booking time', 'booking', '2026-06-07 21:11:12', '2026-06-08 10:52:20'),
-	(22, 'cache_ttl_minutes', '60', 'integer', 'Cache time-to-live in minutes', 'system', '2026-06-07 21:11:12', '2026-06-08 10:52:23'),
-	(23, 'maintenance_mode', '1', 'boolean', 'Enable maintenance mode', 'system', '2026-06-07 21:11:12', '2026-06-08 10:52:23');
+	(13, 'app_name', 'Bengkel Terdekat', 'string', 'Application name displayed in UI', 'general', '2026-06-07 21:11:12', '2026-06-09 05:02:26'),
+	(14, 'timezone', 'Asia/Jakarta', 'string', 'System timezone', 'general', '2026-06-07 21:11:12', '2026-06-09 05:02:27'),
+	(15, 'email_notifications_enabled', '1', 'boolean', 'Enable email notifications', 'notification', '2026-06-07 21:11:12', '2026-06-09 05:02:27'),
+	(16, 'sms_notifications_enabled', '1', 'boolean', 'Enable SMS notifications', 'notification', '2026-06-07 21:11:12', '2026-06-09 05:02:27'),
+	(17, 'whatsapp_notifications_enabled', '1', 'boolean', 'Enable WhatsApp notifications', 'notification', '2026-06-07 21:11:12', '2026-06-09 05:02:27'),
+	(18, 'min_review_length', '20', 'integer', 'Minimum character length for reviews', 'review', '2026-06-07 21:11:12', '2026-06-09 05:02:27'),
+	(19, 'allow_review_photos', '1', 'boolean', 'Allow users to upload photos with reviews', 'review', '2026-06-07 21:11:12', '2026-06-09 05:02:27'),
+	(20, 'max_advance_booking_days', '30', 'integer', 'Maximum days in advance for booking', 'booking', '2026-06-07 21:11:12', '2026-06-09 05:02:27'),
+	(21, 'min_booking_lead_time_hours', '2', 'integer', 'Minimum hours before booking time', 'booking', '2026-06-07 21:11:12', '2026-06-09 05:02:27'),
+	(22, 'cache_ttl_minutes', '60', 'integer', 'Cache time-to-live in minutes', 'system', '2026-06-07 21:11:12', '2026-06-09 05:02:27'),
+	(23, 'maintenance_mode', '1', 'boolean', 'Enable maintenance mode', 'system', '2026-06-07 21:11:12', '2026-06-09 05:02:27');
 
 -- Dumping structure for table dijkstrabengkelbaru.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -657,15 +653,15 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Dumping data for table dijkstrabengkelbaru.users: ~9 rows (approximately)
 INSERT INTO `users` (`id`, `email`, `password`, `full_name`, `address`, `phone`, `role`, `avatar`, `is_active`, `is_deleted`, `deleted_at`, `email_verified_at`, `last_login_at`, `created_at`, `updated_at`) VALUES
-	(1, 'admin@bengkel.com', '$2y$10$Z1RLuFUAqgRsqfgMWpir7.QgYmvic8XDM7pvG.FmDgpAzbUreBqJq', 'Administrator', NULL, '081234567890', 'admin', NULL, 1, 0, NULL, '2026-06-07 19:22:34', '2026-06-08 16:38:23', '2026-06-07 19:22:34', '2026-06-08 23:38:23'),
-	(2, 'owner1@bengkel.com', '$2y$10$Z1RLuFUAqgRsqfgMWpir7.QgYmvic8XDM7pvG.FmDgpAzbUreBqJq', 'Budi Santoso', NULL, '081234567891', 'workshop_owner', NULL, 1, 0, NULL, '2026-06-07 19:22:34', '2026-06-08 11:01:33', '2026-06-07 19:22:34', '2026-06-08 18:01:33'),
+	(1, 'admin@bengkel.com', '$2y$10$Z1RLuFUAqgRsqfgMWpir7.QgYmvic8XDM7pvG.FmDgpAzbUreBqJq', 'Administrator', NULL, '081234567890', 'admin', NULL, 1, 0, NULL, '2026-06-07 19:22:34', '2026-06-09 07:49:03', '2026-06-07 19:22:34', '2026-06-09 14:49:03'),
+	(2, 'owner1@bengkel.com', '$2y$10$Z1RLuFUAqgRsqfgMWpir7.QgYmvic8XDM7pvG.FmDgpAzbUreBqJq', 'Budi Santoso', NULL, '081234567891', 'workshop_owner', NULL, 1, 0, NULL, '2026-06-07 19:22:34', '2026-06-09 18:53:10', '2026-06-07 19:22:34', '2026-06-10 01:53:10'),
 	(3, 'owner2@bengkel.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Siti Aminah', NULL, '081234567892', 'workshop_owner', NULL, 1, 0, NULL, '2026-06-07 19:22:34', NULL, '2026-06-07 19:22:34', '2026-06-07 19:22:34'),
-	(4, 'mechanic1@bengkel.com', '$2y$10$Z1RLuFUAqgRsqfgMWpir7.QgYmvic8XDM7pvG.FmDgpAzbUreBqJq', 'Ahmad Hidayat', NULL, '081234567893', 'mechanic', NULL, 1, 0, NULL, '2026-06-07 19:22:34', NULL, '2026-06-07 19:22:34', '2026-06-08 16:40:46'),
+	(4, 'mechanic1@bengkel.com', '$2y$10$00bFQ7Yac3W/SYTV49j2Z.guXTRhGSc6WoZbns5.tdsR49ADC5Z8m', 'Ahmad Hidayat', NULL, '081234567893', 'mechanic', NULL, 1, 0, NULL, '2026-06-07 19:22:34', '2026-06-09 22:40:37', '2026-06-07 19:22:34', '2026-06-10 05:40:37'),
 	(5, 'mechanic2@bengkel.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Rudi Hartono', NULL, '081234567894', 'mechanic', NULL, 1, 0, NULL, '2026-06-07 19:22:34', NULL, '2026-06-07 19:22:34', '2026-06-07 19:22:34'),
 	(6, 'customer1@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Andi Wijaya', NULL, '081234567895', 'customer', NULL, 1, 0, NULL, '2026-06-07 19:22:34', NULL, '2026-06-07 19:22:34', '2026-06-07 19:22:34'),
 	(7, 'customer2@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Dewi Lestari', NULL, '081234567896', 'customer', NULL, 1, 0, NULL, '2026-06-07 19:22:34', NULL, '2026-06-07 19:22:34', '2026-06-08 15:33:25'),
 	(8, 'customer3@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Eko Prasetyo', NULL, '081234567897', 'customer', NULL, 1, 0, NULL, '2026-06-07 19:22:34', NULL, '2026-06-07 19:22:34', '2026-06-07 19:22:34'),
-	(9, 'dedhy2001@yahoo.com', '$2y$10$Z1RLuFUAqgRsqfgMWpir7.QgYmvic8XDM7pvG.FmDgpAzbUreBqJq', 'dedhy', 'Semarang', '-', 'customer', 'uploads/profiles/avatar_9_1780961244.png', 1, 0, NULL, NULL, '2026-06-08 16:34:44', '2026-06-07 19:31:31', '2026-06-08 23:34:44');
+	(9, 'dedhy2001@yahoo.com', '$2y$10$Z1RLuFUAqgRsqfgMWpir7.QgYmvic8XDM7pvG.FmDgpAzbUreBqJq', 'dedhy', 'Semarang', '-', 'customer', 'uploads/profiles/avatar_9_1780961244.png', 1, 0, NULL, NULL, '2026-06-10 01:08:37', '2026-06-07 19:31:31', '2026-06-10 08:08:37');
 
 -- Dumping structure for table dijkstrabengkelbaru.vehicles
 CREATE TABLE IF NOT EXISTS `vehicles` (
@@ -707,7 +703,8 @@ INSERT INTO `vehicles` (`id`, `user_id`, `vehicle_number`, `vehicle_type`, `bran
 	(2, 6, 'B 5678 EF', 'motorcycle', 'Honda', 'Vario 150', '2021', 'Red', NULL, 'cvt', 'petrol', '2024-08-01', 20000, 25000, NULL, NULL, 0, 0, NULL, 1, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
 	(3, 7, 'D 9876 AB', 'car', 'Honda', 'Brio', '2019', 'White', NULL, 'automatic', 'petrol', '2024-05-20', 55000, 60000, NULL, NULL, 1, 0, NULL, 1, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
 	(4, 8, 'F 1111 GG', 'motorcycle', 'Yamaha', 'NMAX', '2022', 'Blue', NULL, 'cvt', 'petrol', '2024-09-01', 10000, 15000, NULL, NULL, 1, 0, NULL, 1, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(5, 8, 'F 2222 HH', 'car', 'Mitsubishi', 'Xpander', '2021', 'Black', NULL, 'automatic', 'petrol', '2024-07-10', 30000, 35000, NULL, NULL, 0, 0, NULL, 1, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35');
+	(5, 8, 'F 2222 HH', 'car', 'Mitsubishi', 'Xpander', '2021', 'Black', NULL, 'automatic', 'petrol', '2024-07-10', 30000, 35000, NULL, NULL, 0, 0, NULL, 1, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
+	(6, 9, 'H3982MM', 'motorcycle', 'Yamaha', 'Vixion', '2012', 'Hitam', NULL, 'manual', 'petrol', NULL, NULL, 36000, '', NULL, 0, 0, NULL, 1, NULL, '2026-06-10 06:28:38', '2026-06-10 06:30:23');
 
 -- Dumping structure for table dijkstrabengkelbaru.workshops
 CREATE TABLE IF NOT EXISTS `workshops` (
@@ -759,8 +756,8 @@ CREATE TABLE IF NOT EXISTS `workshops` (
 
 -- Dumping data for table dijkstrabengkelbaru.workshops: ~2 rows (approximately)
 INSERT INTO `workshops` (`id`, `user_id`, `name`, `description`, `address`, `city`, `province`, `postal_code`, `latitude`, `longitude`, `phone`, `whatsapp`, `logo`, `photos`, `rating_avg`, `total_reviews`, `status`, `is_featured`, `verified_at`, `business_license`, `certification_doc`, `is_active`, `is_deleted`, `deleted_at`, `approved_by`, `approved_at`, `rejection_reason`, `operating_hours`, `services_offered`, `created_at`, `updated_at`) VALUES
-	(1, 2, 'Bengkel Maju Jaya', 'Spesialis servis mobil Jepang dan Eropa', 'Jl. Raya Bogor No. 123', 'Jakarta Timur', 'DKI Jakarta', '13460', -6.22974600, 106.82291700, '021-12345678', '081234567891', NULL, NULL, 4.50, 2, 'pending', 1, '2026-06-08 10:50:53', NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2026-06-07 19:22:35', '2026-06-08 10:50:53'),
-	(2, 3, 'Bengkel Berkah Motor', 'Servis motor dan mobil semua merk', 'Jl. Sudirman No. 45', 'Bandung', 'Jawa Barat', '40123', -6.91746400, 107.61912300, '022-87654321', '081234567892', NULL, NULL, 0.00, 0, 'inactive', 0, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2026-06-07 19:22:35', '2026-06-08 10:49:07');
+	(1, 2, 'Bengkel Maju Jaya', 'Spesialis servis mobil Jepang dan Eropa', 'Jl. Raya Bogor No. 123', 'Jakarta Timur', 'DKI Jakarta', '13460', -6.22974600, 106.82291700, '021-12345678', '081234567891', NULL, NULL, 4.50, 2, 'active', 1, '2026-06-08 03:50:53', NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, '[{"day": "Senin", "open": "08:00", "close": "17:00"}, {"day": "Selasa", "open": "08:00", "close": "17:00"}, {"day": "Rabu", "open": "08:00", "close": "17:00"}, {"day": "Kamis", "open": "08:00", "close": "17:00"}, {"day": "Jumat", "open": "08:00", "close": "17:00"}, {"day": "Sabtu", "open": "09:00", "close": "15:00"}, {"day": "Minggu", "open": null, "close": null}]', NULL, '2026-06-07 12:22:35', '2026-06-10 08:04:22'),
+	(2, 3, 'Bengkel Berkah Motor', 'Servis motor dan mobil semua merk', 'Jl. Sudirman No. 45', 'Bandung', 'Jawa Barat', '40123', -6.91746400, 107.61912300, '022-87654321', '081234567892', NULL, NULL, 0.00, 0, 'active', 0, NULL, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, '[{"day": "Senin", "open": "08:00", "close": "17:00"}, {"day": "Selasa", "open": "08:00", "close": "17:00"}, {"day": "Rabu", "open": "08:00", "close": "17:00"}, {"day": "Kamis", "open": "08:00", "close": "17:00"}, {"day": "Jumat", "open": "08:00", "close": "17:00"}, {"day": "Sabtu", "open": "09:00", "close": "15:00"}, {"day": "Minggu", "open": null, "close": null}]', NULL, '2026-06-07 12:22:35', '2026-06-10 08:04:29');
 
 -- Dumping structure for table dijkstrabengkelbaru.workshop_blocked_dates
 CREATE TABLE IF NOT EXISTS `workshop_blocked_dates` (
@@ -828,19 +825,6 @@ CREATE TABLE IF NOT EXISTS `workshop_schedules` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 -- Dumping data for table dijkstrabengkelbaru.workshop_schedules: ~12 rows (approximately)
-INSERT INTO `workshop_schedules` (`id`, `workshop_id`, `day_of_week`, `open_time`, `close_time`, `is_open`, `slot_interval`, `capacity_per_slot`, `is_deleted`, `deleted_at`, `created_at`, `updated_at`) VALUES
-	(1, 1, 1, '08:00:00', '17:00:00', 1, 60, 3, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(2, 1, 2, '08:00:00', '17:00:00', 1, 60, 3, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(3, 1, 3, '08:00:00', '17:00:00', 1, 60, 3, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(4, 1, 4, '08:00:00', '17:00:00', 1, 60, 3, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(5, 1, 5, '08:00:00', '17:00:00', 1, 60, 3, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(6, 1, 6, '08:00:00', '15:00:00', 1, 60, 2, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(7, 2, 1, '07:00:00', '18:00:00', 1, 30, 5, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(8, 2, 2, '07:00:00', '18:00:00', 1, 30, 5, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(9, 2, 3, '07:00:00', '18:00:00', 1, 30, 5, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(10, 2, 4, '07:00:00', '18:00:00', 1, 30, 5, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(11, 2, 5, '07:00:00', '18:00:00', 1, 30, 5, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(12, 2, 6, '07:00:00', '16:00:00', 1, 30, 3, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35');
 
 -- Dumping structure for table dijkstrabengkelbaru.workshop_services
 CREATE TABLE IF NOT EXISTS `workshop_services` (
@@ -867,16 +851,6 @@ CREATE TABLE IF NOT EXISTS `workshop_services` (
 ) ENGINE=InnoDB DEFAULT CHARSET=ascii;
 
 -- Dumping data for table dijkstrabengkelbaru.workshop_services: ~9 rows (approximately)
-INSERT INTO `workshop_services` (`id`, `workshop_id`, `service_name`, `service_category`, `description`, `price_min`, `price_max`, `unit`, `duration_minutes`, `is_available`, `is_deleted`, `deleted_at`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'Ganti Oli Mesin', 'servis', 'Ganti oli mesin termasuk filter', 150000.00, 300000.00, 'fixed', 30, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(2, 1, 'Servis Rutin', 'servis', 'Servis berkala 10.000 km', 250000.00, 400000.00, 'fixed', 60, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(3, 1, 'Overhaul Mesin', 'servis', 'Turun mesin lengkap', 3000000.00, 5000000.00, 'fixed', 480, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(4, 1, 'Ganti Kampas Rem', 'servis', 'Ganti kampas rem depan/belakang', 200000.00, 400000.00, 'fixed', 45, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(5, 1, 'Spooring & Balancing', 'servis', 'Penyetelan roda dan balancing', 150000.00, 250000.00, 'fixed', 60, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(6, 2, 'Ganti Oli Motor', 'servis', 'Ganti oli motor matic/bebek', 50000.00, 100000.00, 'fixed', 20, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(7, 2, 'Servis Ringan Motor', 'servis', 'Tune up motor', 80000.00, 150000.00, 'fixed', 30, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(8, 2, 'Ganti Ban Motor', 'ban', 'Ganti ban motor termasuk pasang', 200000.00, 500000.00, 'fixed', 30, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35'),
-	(9, 2, 'Ganti Aki', 'aki', 'Ganti aki motor/mobil', 150000.00, 800000.00, 'fixed', 15, 1, 0, NULL, '2026-06-07 19:22:35', '2026-06-07 19:22:35');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
