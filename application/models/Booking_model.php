@@ -15,6 +15,7 @@ class Booking_model extends CI_Model {
 
     private $table_bookings = 'bookings';
     private $table_booking_slots = 'booking_slots';
+    private $table_booking_mechanics = 'booking_mechanics';
     private $table_vehicles = 'vehicles';
     private $table_workshops = 'workshops';
     private $table_workshop_services = 'workshop_services';
@@ -1115,10 +1116,7 @@ class Booking_model extends CI_Model {
 
         return $this->db->affected_rows() > 0;
     }
-}
 
-/* End of file Booking_model.php */
-/* Location: ./application/models/Booking_model.php */
     // ================================================================
     // MECHANIC-SPECIFIC BOOKING METHODS
     // ================================================================
@@ -1273,3 +1271,6 @@ class Booking_model extends CI_Model {
         return $this->db->get()->result_array();
     }
 }
+
+/* End of file Booking_model.php */
+/* Location: ./application/models/Booking_model.php */

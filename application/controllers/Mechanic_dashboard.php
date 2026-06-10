@@ -17,11 +17,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Mechanic_dashboard extends Mechanic_Controller {
 
     /**
-     * Booking model instance
-     */
-    private $booking_model;
-
-    /**
      * Constructor
      */
     public function __construct()
