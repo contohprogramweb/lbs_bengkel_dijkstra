@@ -47,6 +47,7 @@ class Booking extends Customer_Controller {
         // Otherwise, show workshop selection first
         $data['page_title'] = 'Pilih Bengkel';
         $data['workshops'] = $this->workshop_model->get_active_workshops();
+        $data['step'] = 0; // Set step to 0 for workshop selection page
         
         $this->render('user/booking/workshop_select', $data, FALSE, 'layouts/booking_layout');
     }
