@@ -55,7 +55,13 @@ class Mechanic_dashboard extends Mechanic_Controller {
         
         // Get workshop info
         $this->load->model('workshop_model');
-        $data['workshop'] = $this->workshop_model->get_by_id($mechanic['workshop_id']);
+        $workshop_id = $mechanic['workshop_id'];
+        $data['workshop'] = null;
+        
+        if ($workshop_id) {
+            $query = $this->db->get_where('workshops', ['id' => $workshop_id]);
+            $data['workshop'] = $query->row_array();
+        }
         
         // Get statistics
         $data['stats'] = [
@@ -122,7 +128,15 @@ class Mechanic_dashboard extends Mechanic_Controller {
         
         $data['booking'] = $booking;
         $data['mechanic'] = $mechanic;
-        $data['workshop'] = $this->workshop_model->get_by_id($booking['workshop_id']);
+        
+        // Get workshop info
+        $workshop_id = $booking['workshop_id'];
+        $data['workshop'] = null;
+        if ($workshop_id) {
+            $query = $this->db->get_where('workshops', ['id' => $workshop_id]);
+            $data['workshop'] = $query->row_array();
+        }
+        
         $data['assigned_mechanics'] = $this->mechanic_model->get_booking_mechanics($booking_id);
         
         $this->render('mechanic/bookings/detail', $data);
